@@ -24,7 +24,7 @@ export default (date) => {
 		days.push({
 			day,
 			calendarRowPos: getRowPos(day),
-			dayNum: i
+			dayNum: i.toString()
 		});
 	}
 	return {

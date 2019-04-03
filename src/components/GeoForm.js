@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { setWheater } from '../actions/calendar';
+import { setWeather } from '../actions/weather'
 const googleKey = 'AIzaSyAmHxTZ3RTeWx6AI1wokrAp5GYs9gX0QgQ';
-const wheathermapkey = '820e189cf767b78f910c851dc1ef01a4';
+const weathermapkey = '820e189cf767b78f910c851dc1ef01a4';
 
 class GeoForm extends Component {
 	state = {
@@ -26,11 +26,11 @@ class GeoForm extends Component {
 				console.log(geoLocation);
 				return axios(
 					`https://api.openweathermap.org/data/2.5/forecast?lat=${geoLocation.lat}&lon=${geoLocation.lng}&units=metric
-					&appid=${wheathermapkey}`
+					&appid=${weathermapkey}`
 				);
 			})
 			.then((res) => {
-				this.props.setWheater(res.data);
+				this.props.setWeather(res.data);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -50,6 +50,6 @@ class GeoForm extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-	setWheater: (obj) => dispatch(setWheater(obj))
+	setWeather: (obj) => dispatch(setWeather(obj))
 });
 export default connect(undefined, mapDispatchToProps)(GeoForm);

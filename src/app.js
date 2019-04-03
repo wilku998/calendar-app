@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import 'normalize.css/normalize.css';
+import './styles/style.scss';
 import configureStore from './store/configureStore';
 import GeoForm from './components/GeoForm';
 import Calendar from './components/Calendar';
-import './styles/style.scss';
+import { setData } from './actions/database';
 
 const store = configureStore();
+store.dispatch(setData([ 'tasks', 'incomes', 'expenses' ]));
 
 const App = () => (
 	<div>

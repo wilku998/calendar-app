@@ -18,18 +18,17 @@ const setInitialState = () => {
 
 export default (state = { ...setInitialState() }, action) => {
 	const { type } = action;
-
+	const keys = [ 'selectedMonth', 'lastMonth', 'nextMonth' ];
 	switch (type) {
 		case 'CHANGE_MONTH':
 			const { diff } = action;
 			const operation = diff > 0 ? 'add' : 'subtract';
 			const absoluteDiff = Math.abs(diff);
+			
+			const [ selectedMonth, lastMonth, nextMonth ] = keys.map((key) => {
+				return createMonthObject(state[key].momentFunction[operation](absoluteDiff, 'months'));
+			});
 
-			const selectedMonth = createMonthObject(
-				state.selectedMonth.momentFunction[operation](absoluteDiff, 'months')
-			);
-			const lastMonth = createMonthObject(state.lastMonth.momentFunction[operation](absoluteDiff, 'months'));
-			const nextMonth = createMonthObject(state.nextMonth.momentFunction[operation](absoluteDiff, 'months'));
 			return {
 				...state,
 				selectedMonth,

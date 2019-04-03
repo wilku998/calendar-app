@@ -26,7 +26,7 @@ export const DayNum = styled.span`
 	line-height: 1;
 `;
 
-export const DayWheather = styled.div`
+export const DayWeather = styled.div`
 	position: absolute;
 	top: 0;
 	right: 0;

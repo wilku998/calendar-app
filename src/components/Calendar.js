@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { changeMonth } from '../actions/calendar';
-import { CalendarContainer, CalendarSummary, CalendarDay, DayNum, DayWheather } from '../styledComponents/calendar';
-import contactDaysToWheather from '../functions/contactDaysToWheather';
+import { CalendarContainer, CalendarSummary, CalendarDay, DayNum, DayWeather } from '../styledComponents/calendar';
+import contactDaysToWeather from '../functions/contactDaysToWeather';
+import CalendarPopup from './CalendarPopup';
 
 class Calendar extends Component {
-	state = {};
+	state = {
+		modalIsOpen: false,
+		selectedDay: {}
+	};
 
 	dayClick = (day) => {
 		const clikedMonthNum = parseInt(day.monthNum);
@@ -16,15 +20,28 @@ class Calendar extends Component {
 		} else if (clikedMonthNum < selectedMonthNum) {
 			this.props.changeMonth(-1);
 		} else {
-			//fancy things...
+			this.setState(
+				() => ({ selectedDay: day }),
+				() => {
+					this.toggleModal();
+				}
+			);
 		}
+	};
+
+	toggleModal = () => {
+		this.setState((state) => ({
+			modalIsOpen: !state.modalIsOpen
+		}));
 	};
 
 	render() {
 		const { days } = this.props;
 		const { month, year } = this.props.selectedMonth;
+		const { modalIsOpen, selectedDay } = this.state;
 		return (
 			<CalendarContainer>
+				<CalendarPopup selectedDay={selectedDay} modalIsOpen={modalIsOpen} closeModal={this.toggleModal} />
 				<CalendarSummary>
 					{year} {month}
 					<button onClick={() => this.props.changeMonth(-1)}>prev month</button>
@@ -39,12 +56,12 @@ class Calendar extends Component {
 						<DayNum>{day.dayNum}</DayNum>
 						{day.day}
 
-						{day.wheather && (
-							<DayWheather>
-								<img src={`http://openweathermap.org/img/w/${day.wheather[0].weather[0].icon}.png`} />
+						{day.weather && (
+							<DayWeather>
+								<img src={`http://openweathermap.org/img/w/${day.weather[0].weather[0].icon}.png`} />
 
-								{`${day.wheather[0].main.temp} ℃`}
-							</DayWheather>
+								{`${day.weather[0].main.temp} ℃`}
+							</DayWeather>
 						)}
 					</CalendarDay>
 				))}
@@ -56,7 +73,7 @@ class Calendar extends Component {
 const mapStateToProps = (state) => {
 	const { visibleDays, selectedMonth } = state.calendar;
 	return {
-		days: contactDaysToWheather(visibleDays, state.wheather),
+		days: contactDaysToWeather(visibleDays, state.weather),
 		selectedMonth
 	};
 };

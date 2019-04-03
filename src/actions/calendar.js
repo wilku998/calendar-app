@@ -3,7 +3,3 @@ export const changeMonth = (diff) => ({
 	diff
 });
 
-export const setWheater = (fiveDaysWheather) => ({
-	type: 'SET_WHEATER',
-	fiveDaysWheather
-});
