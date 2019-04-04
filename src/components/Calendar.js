@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { changeMonth } from '../actions/calendar';
+import { toggleModal } from '../actions/modal';
 import { CalendarContainer, CalendarSummary, CalendarDay, DayNum, DayWeather } from '../styledComponents/calendar';
 import contactDaysToWeather from '../functions/contactDaysToWeather';
-import CalendarPopup from './CalendarPopup';
-
 class Calendar extends Component {
 	state = {
-		modalIsOpen: false,
-		selectedDay: {}
+
 	};
 
 	dayClick = (day) => {
@@ -20,19 +19,17 @@ class Calendar extends Component {
 		} else if (clikedMonthNum < selectedMonthNum) {
 			this.props.changeMonth(-1);
 		} else {
-			this.setState(
-				() => ({ selectedDay: day }),
-				() => {
-					this.toggleModal();
-				}
-			);
+			this.props.openModal(day)
 		}
 	};
 
-	toggleModal = () => {
-		this.setState((state) => ({
-			modalIsOpen: !state.modalIsOpen
-		}));
+
+	getWeather = (weatherArr) => {
+		const half = Math.ceil(weatherArr.length / 2);
+		const weather = weatherArr[half];
+		const timeInt = parseInt(weather.dt_txt.split(' ')[1]);
+		const pm = timeInt >= 12;
+		return `${pm ? timeInt - 12 : timeInt} ${pm ? 'p.m.' : 'a.m.'} ${weather.main.temp}`;
 	};
 
 	render() {
@@ -41,7 +38,6 @@ class Calendar extends Component {
 		const { modalIsOpen, selectedDay } = this.state;
 		return (
 			<CalendarContainer>
-				<CalendarPopup selectedDay={selectedDay} modalIsOpen={modalIsOpen} closeModal={this.toggleModal} />
 				<CalendarSummary>
 					{year} {month}
 					<button onClick={() => this.props.changeMonth(-1)}>prev month</button>
@@ -60,7 +56,7 @@ class Calendar extends Component {
 							<DayWeather>
 								<img src={`http://openweathermap.org/img/w/${day.weather[0].weather[0].icon}.png`} />
 
-								{`${day.weather[0].main.temp} ℃`}
+								{`${this.getWeather(day.weather)} ℃`}
 							</DayWeather>
 						)}
 					</CalendarDay>
@@ -69,6 +65,11 @@ class Calendar extends Component {
 		);
 	}
 }
+
+Calendar.propTypes = {
+	days: PropTypes.array,
+	selectedMonth: PropTypes.object
+};
 
 const mapStateToProps = (state) => {
 	const { visibleDays, selectedMonth } = state.calendar;
@@ -79,6 +80,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-	changeMonth: (diff) => dispatch(changeMonth(diff))
+	changeMonth: (diff) => dispatch(changeMonth(diff)),
+	openModal: (selectedDay) => dispatch(toggleModal(true, selectedDay))
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Calendar);

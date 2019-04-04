@@ -6,6 +6,7 @@ import weatherReducer from '../reducers/weather';
 import tasksReducer from '../reducers/tasks';
 import budgetReducer from '../reducers/budget';
 import authReducer from '../reducers/auth';
+import modalReducer from '../reducers/modal';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -17,6 +18,7 @@ export default () => {
 			tasks: tasksReducer,
 			auth: authReducer,
 			budget: budgetReducer,
+			modal: modalReducer
 		}),
 		composeEnhancers(applyMiddleware(thunk))
 	);

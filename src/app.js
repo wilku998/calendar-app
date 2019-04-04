@@ -7,15 +7,19 @@ import './styles/style.scss';
 import configureStore from './store/configureStore';
 import GeoForm from './components/GeoForm';
 import Calendar from './components/Calendar';
+import Navigation from './components/Navigation'
 import { setData } from './actions/database';
+import CalendarModal from './components/CalendarModal';
 
 const store = configureStore();
 store.dispatch(setData([ 'tasks', 'incomes', 'expenses' ]));
 
 const App = () => (
 	<div>
+		<CalendarModal />
 		<GeoForm />
 		<Calendar />
+		<Navigation />
 	</div>
 );
 

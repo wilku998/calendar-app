@@ -46,6 +46,7 @@
   },
   "devDependencies": {
     "babel-plugin-styled-components": "^1.10.0",
+    "prop-types": "^15.7.2",
     "webpack-dev-server": "^3.2.1"
   }
 }
