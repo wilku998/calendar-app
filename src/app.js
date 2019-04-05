@@ -1,9 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import 'normalize.css/normalize.css';
 import './styles/style.scss';
+
+import styled from 'styled-components'
 import configureStore from './store/configureStore';
 import GeoForm from './components/GeoForm';
 import Calendar from './components/Calendar';
@@ -15,14 +17,24 @@ const store = configureStore();
 store.dispatch(setData([ 'tasks', 'incomes', 'expenses' ]));
 
 const App = () => (
-	<div>
+	<Fragment>
 		<CalendarModal />
-		<GeoForm />
-		<Calendar />
 		<Navigation />
-	</div>
+		<Main>
+			<GeoForm />
+			<Calendar />
+		</Main>
+	</Fragment>
 );
 
+const Main = styled.main`
+	margin-left: 25rem;
+	color: black;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center
+`
 const AppRouter = () => (
 	<Provider store={store}>
 		<Router>

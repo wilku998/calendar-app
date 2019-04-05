@@ -16,30 +16,32 @@ export const CalendarDay = styled.div`
 	background-color: ${(props) => (props.disabled ? 'grey' : 'white')};
 	display: flex;
 	flex-direction: column;
-	align-items: center;
-	justify-content: center;
+	justify-content: space-between;
 	font-size: 1.2rem;
-	position: relative;
+	padding: .7rem;
+	line-height: 1;
 `;
 export const DayNum = styled.span`
-	font-size: 3rem;
-	line-height: 1;
+	align-self: flex-end;
 `;
 
 export const DayWeather = styled.div`
-	position: absolute;
-	top: 0;
-	right: 0;
-	padding: .5rem;
+	aling-self: flex-start;
 	display: flex;
-	justify-content: space-between;
-	width: 100%;
-
-	& > img {
-		height: 2.5rem;
-		width: 2.5rem;
+	flex-direction: column;
+	 
+	& > span {
+		&:first-child{
+			margin-bottom: .3rem;
+		}
 	}
 `;
+
+export const DayWeatherImage = styled.img`
+	height: 2.5rem;
+	width: 2.5rem;
+	margin-left: -.5rem;
+`
 export const CalendarSummary = styled.div`
 	width: 70.1rem;
 	font-size: 1.6rem;

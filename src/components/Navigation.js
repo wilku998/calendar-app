@@ -1,56 +1,53 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import NavigationItem from './NavigationItem';
 import { toggleModal } from '../actions/modal';
-const NavContainer = styled.nav`
-	background-color: green;
-	height: 100%;
-	position: fixed;
-	top: 0;
-	right: 0;
-	padding: 1rem;
-	width: 20rem;
-`;
-const NavList = styled.ul`
-	list-style: none;
-	display: flex;
-	flex-direction: column;
-`;
+import { Menu, Icon, Button } from 'antd';
+const { SubMenu } = Menu;
 
 class Navigation extends Component {
 	state = {
-		expandedItem: undefined
-	};
+		collapsed: false,
+	}
 
-	setExpanded = (expandedItem) => {
-		this.setState(() => ({
-			expandedItem
-		}));
-	};
+	toggleCollapsed = () => {
+		this.setState({
+		  collapsed: !this.state.collapsed,
+		});
+	  }
 
-	render() {
-		const { items } = this.props;
-		const { expandedItem } = this.state;
+	render(){
+		const { items, openModal } = this.props;
 		return (
-			<NavContainer>
-				navigation
-				<NavList>
-					{items.map((item) => (
-						<NavigationItem
-							isExpanded={expandedItem === item.key}
-							setExpanded={this.setExpanded}
-							item={item}
-							key={item.key}
-						/>
+			<Fragment>
+				<Button type="primary" onClick={this.toggleCollapsed} style={{ marginBottom: 16 }}>
+					<Icon type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'} />
+				</Button>
+				<MenuContainer>
+				<Menu
+					mode="inline"
+					theme="dark"
+					inlineCollapsed={this.state.collapsed}
+					style={{direction: 'ltr', minHeight: '100%'}}
+				>
+					{items.map((item, iSub) => (
+						<SubMenu key={`sub-${iSub}`} title={<span><Icon type="appstore" /><span>{item.key}</span></span>}>
+							{item[item.key].map((e, i) => (
+								<Menu.Item key={`sub-${iSub}-item-${i}`} onClick={() => openModal(e.createdAt)}>{e.title}</Menu.Item>
+							))}
+						</SubMenu>
 					))}
-				</NavList>
-			</NavContainer>
-		);
+				</Menu>
+				</MenuContainer>
+			</Fragment>
+		)
 	}
 }
 
 
+const mapDispatchToProps = (dispatch) => ({
+	openModal: (selectedDay) => dispatch(toggleModal(true, selectedDay))
+});
 
 const mapStateToProps = ({ tasks, budget }) => ({
 	items: [
@@ -59,4 +56,16 @@ const mapStateToProps = ({ tasks, budget }) => ({
 		{ expenses: budget.expenses, key: 'expenses' }
 	]
 });
-export default connect(mapStateToProps)(Navigation);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navigation);
+
+
+const MenuContainer = styled.nav`
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 25rem;
+	overflow-y: auto;
+	direction: rtl;
+`;

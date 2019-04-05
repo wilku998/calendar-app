@@ -12,7 +12,7 @@ export default (state = { ...initialState }, action) => {
 		case 'ADD_BUDGET_ITEM':
 			return {
 				...state,
-				[kind]: [...state[kind], action.item]
+				[kind]: [ ...state[kind], action.item ]
 			};
 		case 'REMOVE_BUDGET_ITEM':
 			const { id } = action;
@@ -25,12 +25,15 @@ export default (state = { ...initialState }, action) => {
 				...state,
 				[kind]: []
 			};
-		case 'SET_INCOMES' || 'SET_EXPENSES':
-			const actionKeys = Object.keys(action);
-			kind = actionKeys.find((e) => e === 'incomes' || e === 'expenses');
+		case 'SET_INCOMES':
 			return {
 				...state,
-				[kind]: action[kind]
+				incomes: action.incomes
+			};
+		case 'SET_EXPENSES':
+			return {
+				...state,
+				expenses: action.expenses
 			};
 		default:
 			return state;

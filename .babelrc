@@ -1,8 +1,12 @@
 {
     "presets": [
       "@babel/preset-env",
-      "@babel/preset-react"
+      "@babel/preset-react",
     ],
-    "plugins": ["syntax-object-rest-spread", "@babel/plugin-proposal-class-properties"]
+    "plugins": [
+      "syntax-object-rest-spread",
+      "@babel/plugin-proposal-class-properties",
+      ["import", { "libraryName": "antd", "libraryDirectory": "es", "style": "css" }]
+    ]
   }
   

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { changeMonth } from '../actions/calendar';
 import { toggleModal } from '../actions/modal';
-import { CalendarContainer, CalendarSummary, CalendarDay, DayNum, DayWeather } from '../styledComponents/calendar';
+import { CalendarContainer, CalendarSummary, CalendarDay, DayNum, DayWeather, DayWeatherImage } from '../styledComponents/calendar';
 import contactDaysToWeather from '../functions/contactDaysToWeather';
 class Calendar extends Component {
 	state = {
@@ -29,9 +29,22 @@ class Calendar extends Component {
 		const weather = weatherArr[half];
 		const timeInt = parseInt(weather.dt_txt.split(' ')[1]);
 		const pm = timeInt >= 12;
-		return `${pm ? timeInt - 12 : timeInt} ${pm ? 'p.m.' : 'a.m.'} ${weather.main.temp}`;
+		return (
+			<DayWeather>
+				<span>
+					{/* <DayWeatherImage src={`http://openweathermap.org/img/w/${weather.weather[0].icon}.png`} /> */}
+					<span>{weather.main.temp} ℃</span>
+				</span>
+				<span>
+					at {pm ? timeInt - 12 : timeInt} {pm ? 'p.m.' : 'a.m.'}
+				</span>
+			</DayWeather>
+		)
 	};
 
+	getTimeForWeather = () => {
+
+	}
 	render() {
 		const { days } = this.props;
 		const { month, year } = this.props.selectedMonth;
@@ -49,16 +62,10 @@ class Calendar extends Component {
 						disabled={day.monthNum !== this.props.selectedMonth.monthNum}
 						onClick={() => this.dayClick(day)}
 					>
-						<DayNum>{day.dayNum}</DayNum>
-						{day.day}
+						<DayNum>{day.dayNum} {day.day}</DayNum>
+						
 
-						{day.weather && (
-							<DayWeather>
-								<img src={`http://openweathermap.org/img/w/${day.weather[0].weather[0].icon}.png`} />
-
-								{`${this.getWeather(day.weather)} ℃`}
-							</DayWeather>
-						)}
+						{day.weather && this.getWeather(day.weather)}
 					</CalendarDay>
 				))}
 			</CalendarContainer>
