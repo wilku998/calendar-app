@@ -14,7 +14,6 @@ import { setData } from './actions/database';
 import CalendarModal from './components/CalendarModal';
 
 const store = configureStore();
-store.dispatch(setData([ 'tasks', 'incomes', 'expenses' ]));
 
 const App = () => (
 	<Fragment>
@@ -34,7 +33,8 @@ const Main = styled.main`
 	flex-direction: column;
 	align-items: center;
 	justify-content: center
-`
+`;
+
 const AppRouter = () => (
 	<Provider store={store}>
 		<Router>
@@ -42,4 +42,13 @@ const AppRouter = () => (
 		</Router>
 	</Provider>
 );
-ReactDOM.render(<AppRouter />, document.getElementById('root'));
+
+const renderApp = () => {
+	ReactDOM.render(<AppRouter />, document.getElementById('root'));
+}
+
+store.dispatch(setData([ 'tasks', 'incomes', 'expenses' ])).then(() => {
+	renderApp();
+});
+
+

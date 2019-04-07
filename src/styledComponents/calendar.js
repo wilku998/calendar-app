@@ -1,5 +1,17 @@
 import styled from 'styled-components';
 
+export const CalendarDayInfo = styled.span `
+	position: absolute;
+	top: .7rem;
+	left: .7rem;
+
+	& > * {
+		display: block;
+		&:not(:last-child){
+			margin-bottom: .5rem;
+		}
+	}
+`
 export const CalendarContainer = styled.div`
 	width: 70.1rem;
 	display: flex;
@@ -20,6 +32,7 @@ export const CalendarDay = styled.div`
 	font-size: 1.2rem;
 	padding: .7rem;
 	line-height: 1;
+	position: relative
 `;
 export const DayNum = styled.span`
 	align-self: flex-end;

@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Select, Icon } from 'antd';
 import PropTypes from 'prop-types';
 import { changeMonth } from '../actions/calendar';
 import { toggleModal } from '../actions/modal';
-import { CalendarContainer, CalendarSummary, CalendarDay, DayNum, DayWeather, DayWeatherImage } from '../styledComponents/calendar';
+import { CalendarContainer, CalendarSummary, CalendarDay, DayNum, DayWeather, CalendarDayInfo } from '../styledComponents/calendar';
 import contactDaysToWeather from '../functions/contactDaysToWeather';
+import { monthsData } from '../fakedata/months';
+import getSumOfBudgetItems from '../functions/getSumOfBudgetItems';
+import filterData from '../functions/filterData';
+
+const { Option } = Select;
 class Calendar extends Component {
 	state = {
-
 	};
 
 	dayClick = (day) => {
@@ -42,28 +47,49 @@ class Calendar extends Component {
 		)
 	};
 
-	getTimeForWeather = () => {
-
+	onMonthChange = (value) => {
+		this.props.changeMonth(value)
 	}
 	render() {
 		const { days } = this.props;
-		const { month, year } = this.props.selectedMonth;
-		const { modalIsOpen, selectedDay } = this.state;
+		const { month, year, monthNum } = this.props.selectedMonth;
+		const monthNumInt = parseInt(monthNum);
+		const yearNumInt = parseInt(year);
+		
+		const years = []
+		for (let i=0; i<=10; i++){
+			years.push({
+				year: yearNumInt + (i-5),
+				value: (i-5)*12
+			})
+		}
+		const months = monthsData.map(e => ({...e, value: e.value-monthNumInt}))
 		return (
 			<CalendarContainer>
 				<CalendarSummary>
-					{year} {month}
-					<button onClick={() => this.props.changeMonth(-1)}>prev month</button>
-					<button onClick={() => this.props.changeMonth(1)}>next month</button>
+
+					{[{years, key: 'year'}, {months, key: 'month'}].map(e => (
+						<Select key={e.key} value={0} onChange={this.onMonthChange} style={{width: '15rem'}}>
+							{e[`${e.key}s`].map(subElement => (
+								<Option key={subElement[e.key]} value={subElement.value}>{subElement[e.key]}</Option>
+							))}
+						</Select>
+					))}
 				</CalendarSummary>
 				{days.map((day, i) => (
 					<CalendarDay
 						key={i}
-						disabled={day.monthNum !== this.props.selectedMonth.monthNum}
+						disabled={day.monthNum !== monthNum}
 						onClick={() => this.dayClick(day)}
 					>
 						<DayNum>{day.dayNum} {day.day}</DayNum>
-						
+
+						<CalendarDayInfo>
+							{day.containTasks && <span><Icon type='book' /></span>}
+							{day.containIncomes && <span><Icon type='rise' /></span>}
+							{day.containExpenses && <span><Icon type='fall' /></span>}
+						</CalendarDayInfo>
+
 
 						{day.weather && this.getWeather(day.weather)}
 					</CalendarDay>
@@ -80,9 +106,37 @@ Calendar.propTypes = {
 
 const mapStateToProps = (state) => {
 	const { visibleDays, selectedMonth } = state.calendar;
+	const { tasks } = state;
+	const { incomes, expenses } = state.budget;
+
+	//filtering data for selected month
+	const [ filteredTasks, filteredIncomes, filteredExpenses ] = [tasks, incomes, expenses].map(items => {
+		return filterData(items, selectedMonth)
+	})
+
+	//checking if is any item created at visible days
+	const containItem = (items, day) => {
+		const i = items.findIndex(e => {
+			const { year, monthNum, dayNum } = e.createdAt;
+			return year === day.year && monthNum === day.monthNum && dayNum === day.dayNum
+		})
+		return i>=0
+	}
+
+	const days = contactDaysToWeather(visibleDays, state.weather).map(e => ({
+		...e,
+		containTasks: containItem(filteredTasks, e),
+		containExpenses: containItem(filteredExpenses, e),
+		containIncomes: containItem(filteredIncomes, e)
+	}))
+
 	return {
-		days: contactDaysToWeather(visibleDays, state.weather),
-		selectedMonth
+		days,
+		selectedMonth,
+		tasksQuantity: filteredTasks.length,
+		expensesQuantity: filteredExpenses.length,
+		incomesQuantity: filteredIncomes.length,
+		budgetForMonth: getSumOfBudgetItems(filteredIncomes) - getSumOfBudgetItems(filteredExpenses)
 	};
 };
 
@@ -91,3 +145,4 @@ const mapDispatchToProps = (dispatch) => ({
 	openModal: (selectedDay) => dispatch(toggleModal(true, selectedDay))
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Calendar);
+

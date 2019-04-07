@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addItem } from '../actions/database';
-import filterDataForDay from '../functions/filterDataForDay';
+import filterData from '../functions/filterData';
 import { toggleModal } from '../actions/modal';
 
 class CelandarModal extends Component {
@@ -132,7 +132,7 @@ const mapDispatchToProps = (dispatch) => ({
 const mapStateToProps = (state) => {
 	const { modalIsOpen, selectedDay } = state.modal;
 	const [ tasks, incomes, expenses ] = [ state.tasks, state.budget.incomes, state.budget.expenses ].map((e) =>
-		filterDataForDay(e, selectedDay)
+		filterData(e, selectedDay)
 	);
 
 	return {
