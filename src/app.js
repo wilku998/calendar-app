@@ -1,54 +1,55 @@
-import React, { Component, Fragment } from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import 'normalize.css/normalize.css';
-import './styles/style.scss';
+import React, { Component, Fragment } from "react";
+import ReactDOM from "react-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Provider } from "react-redux";
+import "normalize.css/normalize.css";
+import "./styles/style.scss";
+import styled, { ThemeProvider } from "styled-components";
 
-import styled from 'styled-components'
-import configureStore from './store/configureStore';
-import GeoForm from './components/GeoForm';
-import Calendar from './components/Calendar';
-import Navigation from './components/Navigation'
-import { setData } from './actions/database';
-import CalendarModal from './components/CalendarModal';
+import theme from "./styledComponentsTheme/styledComponentsTheme";
+import configureStore from "./store/configureStore";
+import GeoForm from "./components/GeoForm";
+import Calendar from "./components/Calendar/Calendar";
+import Navigation from "./components/Navigation";
+import { setData } from "./actions/database";
+import CalendarModal from "./components/CalendarModal/CalendarModal";
 
 const store = configureStore();
 
 const App = () => (
-	<Fragment>
-		<CalendarModal />
-		<Navigation />
-		<Main>
-			<GeoForm />
-			<Calendar />
-		</Main>
-	</Fragment>
+  <ThemeProvider theme={theme}>
+    <Fragment>
+      <CalendarModal />
+      <Navigation />
+      <Main>
+        <GeoForm />
+        <Calendar />
+      </Main>
+    </Fragment>
+  </ThemeProvider>
 );
 
 const Main = styled.main`
-	margin-left: 25rem;
-	color: black;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center
+  margin-left: 25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: ${props => props.theme.colorGreyDark2};
 `;
 
 const AppRouter = () => (
-	<Provider store={store}>
-		<Router>
-			<Route path="/" component={App} />
-		</Router>
-	</Provider>
+  <Provider store={store}>
+    <Router>
+      <Route path="/" component={App} />
+    </Router>
+  </Provider>
 );
 
 const renderApp = () => {
-	ReactDOM.render(<AppRouter />, document.getElementById('root'));
-}
-
-store.dispatch(setData([ 'tasks', 'incomes', 'expenses' ])).then(() => {
-	renderApp();
+  ReactDOM.render(<AppRouter />, document.getElementById("root"));
+};
+// renderApp()
+store.dispatch(setData(["tasks", "incomes", "expenses"])).then(() => {
+  renderApp();
 });
-
-
