@@ -11,7 +11,7 @@ import configureStore from "./store/configureStore";
 import GeoForm from "./components/GeoForm";
 import Calendar from "./components/Calendar/Calendar";
 import Navigation from "./components/Navigation";
-import { setData } from "./actions/database";
+import { setItems } from "./actions/items";
 import CalendarModal from "./components/CalendarModal/CalendarModal";
 
 const store = configureStore();
@@ -50,6 +50,6 @@ const renderApp = () => {
   ReactDOM.render(<AppRouter />, document.getElementById("root"));
 };
 // renderApp()
-store.dispatch(setData(["tasks", "incomes", "expenses"])).then(() => {
+store.dispatch(setItems(["tasks", "incomes", "expenses"])).then(() => {
   renderApp();
 });

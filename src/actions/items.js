@@ -1,6 +1,12 @@
 import database from '../database/firebase';
 
-export const setData = (refs) => {
+const setItemsInRedux = (items, kind) => ({
+	type: 'SET_ITEMS',
+	items,
+	kind
+});
+
+export const setItems = (refs) => {
 	return (dispatch, getState) => {
 		const uid = getState().auth.uid;
 
@@ -8,12 +14,11 @@ export const setData = (refs) => {
 			return database.ref(`users/${uid}/${ref}`).once('value').then((res) => {
 				const result = res.val();
 				if (result) {
-					dispatch({
-						type: `SET_${ref.toUpperCase()}`,
-						[ref]: Object.keys(result).map((id) => {
-							return { ...result[id], id };
-						})
+					const items = Object.keys(result).map((id) => {
+						return { ...result[id], id };
 					});
+
+					dispatch(setItemsInRedux(items, ref));
 				}
 			});
 		});
@@ -21,12 +26,18 @@ export const setData = (refs) => {
 	};
 };
 
+const addItemInRedux = (items, kind) => ({
+	type: 'ADD_ITEM',
+	item,
+	kind
+});
+
 export const addItem = (type, item) => {
 	return async (dispatch, getState) => {
 		const uid = getState().auth.uid;
 		const res = await database.ref(`users/${uid}/${type}`).push(item);
-		type === 'tasks'
-			? dispatch({ type: `ADD_TASK`, task: { ...item, id: res.key } })
-			: dispatch({ type: `ADD_BUDGET_ITEM`, item: { ...item, id: res.key }, kind: type });
+		const item = { ...item, id: res.key }
+		dispatch(addItemInRedux(item, type));
 	};
 };
+

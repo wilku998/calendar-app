@@ -5,10 +5,11 @@ import { connect } from 'react-redux';
 import { Input, InputNumber, Select, Button, Icon } from 'antd';
 
 import theme from '../../styledComponentsTheme/styledComponentsTheme';
-import { addItem } from '../../actions/database';
+import { addItem } from '../../actions/items';
 import filterData from '../../functions/filterData';
 import { toggleModal } from '../../actions/modal';
 import BudgetList from '../BudgetList/BudgetList';
+import getMonthName from '../../functions/getMonthName';
 
 import {
 	StyledModal,
@@ -103,7 +104,7 @@ class CelandarModal extends Component {
 		e.preventDefault();
 		const { title, type, value } = this.state.budgetForm;
 		if (title.valid && value.valid) {
-			console.log('passed')
+			console.log('passed');
 			this.addItem(`${type.value}s`, {
 				title: title.value,
 				value: Math.round(value.value * 100) / 100
@@ -130,7 +131,7 @@ class CelandarModal extends Component {
 		const { modalIsOpen, closeModal, selectedDay, tasks, incomes, expenses } = this.props;
 		const { description: taskDescription, title: taskTitle } = this.state.taskForm;
 		const { value: budgetValue, title: budgetTitle, type: budgetType } = this.state.budgetForm;
-		const { weather } = selectedDay;
+		const { weather, dayNum, monthNum, year } = selectedDay;
 
 		return (
 			<StyledModal style={overlayStyles} isOpen={modalIsOpen} onRequestClose={closeModal} ariaHideApp={false}>
@@ -140,7 +141,9 @@ class CelandarModal extends Component {
 					</CloseButton>
 					<CalendarModalItem>
 						<div>
-							<CalendarModalTitle withoutMargin={!weather}>Weather</CalendarModalTitle>
+							<CalendarModalTitle withoutMargin={!weather}>
+								{dayNum} {getMonthName(monthNum)} {year}
+							</CalendarModalTitle>
 							{weather && (
 								<CalendarModalListContainer>
 									{this.sliceArr(weather).map((arr, i) => (
@@ -284,7 +287,8 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => {
 	const { modalIsOpen, selectedDay } = state.modal;
-	const [ tasks, incomes, expenses ] = [ state.tasks, state.budget.incomes, state.budget.expenses ].map((e) =>
+
+	const [ tasks, incomes, expenses ] = [state.items.tasks, state.items.incomes, state.items.expenses].map((e) =>
 		filterData(e, selectedDay)
 	);
 

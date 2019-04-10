@@ -1,22 +1,24 @@
 import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { toggleModal } from '../actions/modal';
 import { Menu, Icon, Button } from 'antd';
-const { SubMenu } = Menu;
+
+import { toggleModal } from '../actions/modal';
+import theme from '../styledComponentsTheme/styledComponentsTheme'
+const { SubMenu, Item } = Menu;
 
 class Navigation extends Component {
 	state = {
-		collapsed: false,
-	}
+		collapsed: false
+	};
 
 	toggleCollapsed = () => {
 		this.setState({
-		  collapsed: !this.state.collapsed,
+			collapsed: !this.state.collapsed
 		});
-	  }
+	};
 
-	render(){
+	render() {
 		const { items, openModal } = this.props;
 		return (
 			<Fragment>
@@ -24,41 +26,55 @@ class Navigation extends Component {
 					<Icon type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'} />
 				</Button>
 				<MenuContainer>
-				<Menu
-					mode="inline"
-					theme="dark"
-					inlineCollapsed={this.state.collapsed}
-					style={{direction: 'ltr', minHeight: '100%'}}
-				>
-					{items.map((item, iSub) => (
-						<SubMenu key={`sub-${iSub}`} title={<span><Icon type="appstore" /><span>{item.key}</span></span>}>
-							{item[item.key].map((e, i) => (
-								<Menu.Item key={`sub-${iSub}-item-${i}`} onClick={() => openModal(e.createdAt)}>{e.title}</Menu.Item>
-							))}
-						</SubMenu>
-					))}
-				</Menu>
+					<Menu
+						mode="inline"
+						theme="dark"
+						inlineCollapsed={this.state.collapsed}
+						style={{ direction: 'ltr', minHeight: '100%' }}
+					>
+						{items.map((item, iSub) => (
+							<SubMenu
+								key={`sub-${iSub}`}
+								title={
+									<span>
+										<Icon type="appstore" />
+										<span>{item.key}</span>
+									</span>
+								}
+							>
+								{item[item.key].length>0 && (
+									<Item style={{backgroundColor: theme.colorGreyDark3}}>
+										Remove all
+									</Item>
+								)}
+								{item[item.key].map((e, i) => (
+									<Item key={`sub-${iSub}-item-${i}`} onClick={() => openModal(e.createdAt)}>
+										{e.title}
+									</Item>
+								))}
+							</SubMenu>
+						))}
+					</Menu>
 				</MenuContainer>
 			</Fragment>
-		)
+		);
 	}
 }
-
 
 const mapDispatchToProps = (dispatch) => ({
 	openModal: (selectedDay) => dispatch(toggleModal(true, selectedDay))
 });
 
-const mapStateToProps = ({ tasks, budget }) => ({
-	items: [
-		{ tasks, key: 'tasks' },
-		{ incomes: budget.incomes, key: 'incomes' },
-		{ expenses: budget.expenses, key: 'expenses' }
-	]
-});
+const mapStateToProps = ({ items }) => {
+	return {
+		items: Object.keys(items).map((key) => ({
+			key,
+			[key]: items[key]
+		}))
+	};
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navigation);
-
 
 const MenuContainer = styled.nav`
 	height: 100%;

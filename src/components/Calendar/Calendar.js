@@ -144,8 +144,8 @@ Calendar.propTypes = {
 
 const mapStateToProps = state => {
     const { visibleDays, selectedMonth } = state.calendar;
-    const { tasks } = state;
-    const { incomes, expenses } = state.budget;
+    const { tasks, incomes, expenses } = state.items;
+
 
     const [thisMonthTasks, thisMonthIncomes, thisMonthExpenses] = [
         tasks,

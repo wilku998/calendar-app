@@ -3,8 +3,7 @@ import thunk from 'redux-thunk';
 
 import calendarReducer from '../reducers/calendar';
 import weatherReducer from '../reducers/weather';
-import tasksReducer from '../reducers/tasks';
-import budgetReducer from '../reducers/budget';
+import itemsReducer from '../reducers/items';
 import authReducer from '../reducers/auth';
 import modalReducer from '../reducers/modal';
 
@@ -15,9 +14,8 @@ export default () => {
 		combineReducers({
 			calendar: calendarReducer,
 			weather: weatherReducer,
-			tasks: tasksReducer,
+			items: itemsReducer,
 			auth: authReducer,
-			budget: budgetReducer,
 			modal: modalReducer
 		}),
 		composeEnhancers(applyMiddleware(thunk))

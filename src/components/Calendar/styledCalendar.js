@@ -26,15 +26,15 @@ export const CalendarContainer = styled.div`
   width: 70.1rem;
   display: flex;
   flex-wrap: wrap;
-  border-bottom: ${props => props.theme.greyBorder};
-  border-right: ${props => props.theme.greyBorder};
-  border-top: ${props => props.theme.greyBorder};
+  border-bottom: ${props => props.theme.darkBorder};
+  border-right: ${props => props.theme.darkBorder};
+  border-top: ${props => props.theme.darkBorder};
 `;
 export const CalendarDay = styled.div`
   width: 10rem;
   height: 10rem;
-  border-top: ${props => props.theme.greyBorder};
-  border-left: ${props => props.theme.greyBorder};
+  border-top: ${props => props.theme.darkBorder};
+  border-left: ${props => props.theme.darkBorder};
   background: ${props =>
     props.disabled ? props.theme.colorGreyLight3 : props.theme.colorGreyLight1};
   display: flex;
@@ -72,6 +72,6 @@ export const CalendarSummary = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-left: ${props => props.theme.greyBorder};
+  border-left: ${props => props.theme.darkBorder};
   background: ${props => `linear-gradient(to right bottom, ${props.theme.colorGreyLight2}, ${props.theme.colorGreyLight3})`};
 `;
