@@ -37,12 +37,13 @@ export const CloseButton = styled('button')`
 	cursor: pointer;
 	transition: color .2s;
 	&:hover{
-		color: ${props => props.theme.colorBlue}
+		color: ${(props) => props.theme.colorBlue}
 	}
 	&:focus{
 		outline: none;
 	}
-`
+`;
+
 export const CalendarModalItem = styled('div')`
 	padding: 2rem 2rem 0 2rem;
 	& > div {
@@ -50,7 +51,7 @@ export const CalendarModalItem = styled('div')`
 	}
 	&:not(:last-child){
 		& > div {
-			border-bottom: ${props => props.theme.darkBorder}
+			border-bottom: ${(props) => props.theme.darkBorder}
 		}
 	}
 
@@ -58,7 +59,7 @@ export const CalendarModalItem = styled('div')`
 
 export const CalendarModalTitle = styled('h1')`
 	font-weight: 400;
-	margin: ${props => props.withoutMargin ? '0' : '0 0 1rem 0'};
+	margin: ${(props) => (props.withoutMargin ? '0' : '0 0 1rem 0')};
 `;
 
 export const TaskTitle = styled('h3')`
@@ -76,14 +77,13 @@ export const CalendarModalList = styled('ul')`
 	
 	& > li {
 		padding: .5rem 0;
-		${(props => props.calendarList ? 
-			`
+		${(props) =>
+		props.calendarList
+			? `
 			display: flex;
 			justify-content: space-between;
 			`
-				:
-			''
-		)}
+			: ''}
 		&:not(:last-child){
 			border-bottom: ${(props) => props.theme.lightBorder}
 		}
@@ -107,30 +107,28 @@ export const StyledModalContent = styled('div')`
 	max-height: 90vh;
 	width: 70rem;
 	position: relative;
-`
+`;
 
 export const Label = styled('label')`
     margin-right: 1.5rem;
     display: flex;
 	align-items: center;
 	
-	${props => props.breakLine ? 
-		`
+	${(props) =>
+		props.breakLine
+			? `
 			width: 100%;
 			flex-direction: column;
 			align-items: flex-start;
 		`
-			:
-		''
-	}
+			: ''}
 `;
 
 export const SpanLabelDescription = styled('span')`
 	margin: 1rem 0;
-`
+`;
 export const Form = styled('form')`
 	display: flex;
 	margin-bottom: 1rem;
 	flex-wrap: wrap;
 `;
-

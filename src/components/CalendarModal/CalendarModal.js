@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Input, InputNumber, Select, Button, Icon } from 'antd';
 
+import theme from '../../styledComponentsTheme/styledComponentsTheme';
 import { addItem } from '../../actions/database';
 import filterData from '../../functions/filterData';
 import { toggleModal } from '../../actions/modal';
@@ -33,28 +34,65 @@ const { TextArea } = Input;
 class CelandarModal extends Component {
 	state = {
 		taskForm: {
-			title: '',
-			description: ''
+			title: {
+				value: '',
+				valid: false
+			},
+			description: {
+				value: '',
+				valid: true
+			}
 		},
 		budgetForm: {
-			title: '',
-			type: 'income',
-			value: 0
+			title: {
+				value: '',
+				valid: false
+			},
+			type: {
+				value: 'income',
+				valid: true
+			},
+			value: {
+				value: '',
+				valid: false
+			}
 		}
 	};
 
-	setFormPropetyVal = (form, property, val) => {
+	formValidation = (value, property) => {
+		switch (property) {
+			case 'title':
+				return value.length >= 3 && value.length <= 30;
+			case 'description':
+				let wordsValid = true;
+				value.split(' ').forEach((e) => {
+					if (e.length > 20) {
+						wordsValid = false;
+					}
+				});
+				return value.length <= 400 && wordsValid;
+			case 'value':
+				return !isNaN(value) && value > 0 && value < 1000000;
+			default:
+				return true;
+		}
+	};
+
+	setFormPropetyVal = (form, property, value) => {
 		this.setState((state) => ({
 			[form]: {
 				...state[form],
-				[property]: val
+				[property]: {
+					value,
+					valid: this.formValidation(value, property)
+				}
 			}
 		}));
 	};
 
-	addItem = (type, form) => {
+	addItem = (type, item) => {
 		this.props.addItem(type, {
-			...this.state[form],
+			...item,
 			createdAt: {
 				...this.props.selectedDay
 			}
@@ -63,12 +101,25 @@ class CelandarModal extends Component {
 
 	addBudget = (e) => {
 		e.preventDefault();
-		this.addItem(`${this.state.budgetForm.type}s`, 'budgetForm');
+		const { title, type, value } = this.state.budgetForm;
+		if (title.valid && value.valid) {
+			console.log('passed')
+			this.addItem(`${type.value}s`, {
+				title: title.value,
+				value: Math.round(value.value * 100) / 100
+			});
+		}
 	};
 
 	addTask = (e) => {
 		e.preventDefault();
-		this.addItem('tasks', 'taskForm');
+		const { title, description } = this.state.taskForm;
+		if (title.valid && description.valid) {
+			this.addItem('tasks', {
+				title: title.value,
+				description: description.value
+			});
+		}
 	};
 
 	sliceArr(arr) {
@@ -80,39 +131,49 @@ class CelandarModal extends Component {
 		const { description: taskDescription, title: taskTitle } = this.state.taskForm;
 		const { value: budgetValue, title: budgetTitle, type: budgetType } = this.state.budgetForm;
 		const { weather } = selectedDay;
+
 		return (
 			<StyledModal style={overlayStyles} isOpen={modalIsOpen} onRequestClose={closeModal} ariaHideApp={false}>
 				<StyledModalContent>
-					<CloseButton><Icon type="close-circle" /></CloseButton>
-						<CalendarModalItem>
-							<div>
-								<CalendarModalTitle withoutMargin={!weather}>Weather</CalendarModalTitle>
-								{weather && (
-									<CalendarModalListContainer>
-										{this.sliceArr(weather).map((arr, i) => (
-											<CalendarModalList calendarList={true} key={i}>
-												{arr.map((e, i) => (
-													<li key={i}>
-														<span>{e.main.temp}℃</span> <span>{e.dt_txt.split(' ')[1]}</span>
-													</li>
-												))}
-											</CalendarModalList>
-										))}
-									</CalendarModalListContainer>
-								)}
-							</div>
-						</CalendarModalItem>
+					<CloseButton>
+						<Icon type="close-circle" />
+					</CloseButton>
+					<CalendarModalItem>
+						<div>
+							<CalendarModalTitle withoutMargin={!weather}>Weather</CalendarModalTitle>
+							{weather && (
+								<CalendarModalListContainer>
+									{this.sliceArr(weather).map((arr, i) => (
+										<CalendarModalList calendarList={true} key={i}>
+											{arr.map((e, i) => (
+												<li key={i}>
+													<span>{e.main.temp}℃</span> <span>{e.dt_txt.split(' ')[1]}</span>
+												</li>
+											))}
+										</CalendarModalList>
+									))}
+								</CalendarModalListContainer>
+							)}
+						</div>
+					</CalendarModalItem>
 
 					<CalendarModalItem>
 						<div>
 							<CalendarModalTitle>Budget</CalendarModalTitle>
-							<Form onSubmit={this.addBudget}>
+
+							<Form>
 								<Label>
 									Title
 									<Input
-										style={inputStyles}
+										style={{
+											...inputStyles,
+											backgroundColor:
+												budgetTitle.value !== ''
+													? budgetTitle.valid ? theme.colorGreenLight : theme.colorRedLight
+													: 'white'
+										}}
 										onChange={(e) => this.setFormPropetyVal('budgetForm', 'title', e.target.value)}
-										value={budgetTitle}
+										value={budgetTitle.value}
 										size="small"
 									/>
 								</Label>
@@ -120,7 +181,7 @@ class CelandarModal extends Component {
 									Type
 									<Select
 										onChange={(value) => this.setFormPropetyVal('budgetForm', 'type', value)}
-										value={budgetType}
+										value={budgetType.value}
 										size="small"
 										style={selectStyles}
 									>
@@ -131,19 +192,26 @@ class CelandarModal extends Component {
 								<Label>
 									Value
 									<InputNumber
-										style={inputValueStyles}
+										style={{
+											...inputValueStyles,
+											backgroundColor:
+												budgetValue.value !== ''
+													? budgetValue.valid ? theme.colorGreenLight : theme.colorRedLight
+													: 'white'
+										}}
 										onChange={(value) => this.setFormPropetyVal('budgetForm', 'value', value)}
-										value={budgetValue}
+										value={budgetValue.value}
 										size="small"
 									/>
 								</Label>
-								<Button type="primary" size="small">Add</Button>
+								<Button onClick={this.addBudget} type="primary" size="small">
+									Add
+								</Button>
 							</Form>
 
 							<CalendarModalListContainer>
-								{incomes.length > 0 && <BudgetList title='Incomes' items={incomes}/>}
-
-								{expenses.length > 0 && <BudgetList title='Expenses' items={expenses}/>}
+								{incomes.length > 0 && <BudgetList title="Incomes" items={incomes} />}
+								{expenses.length > 0 && <BudgetList title="Expenses" items={expenses} />}
 							</CalendarModalListContainer>
 						</div>
 					</CalendarModalItem>
@@ -151,36 +219,54 @@ class CelandarModal extends Component {
 					<CalendarModalItem>
 						<div>
 							<CalendarModalTitle>Tasks</CalendarModalTitle>
-							<Form onSubmit={this.addTask}>
+
+							<Form>
 								<Label>
 									Title
 									<Input
-										style={inputStyles}
+										style={{
+											...inputStyles,
+											backgroundColor:
+												taskTitle.value !== ''
+													? taskTitle.valid ? theme.colorGreenLight : theme.colorRedLight
+													: 'white'
+										}}
 										onChange={(e) => this.setFormPropetyVal('taskForm', 'title', e.target.value)}
-										value={taskTitle}
+										value={taskTitle.value}
 										size="small"
 									/>
 								</Label>
-								<Button type="primary" size="small">Add</Button>
-
+								<Button type="primary" size="small" onClick={this.addTask}>
+									Add
+								</Button>
 								<Label breakLine={true}>
 									<SpanLabelDescription>Description</SpanLabelDescription>
-									<TextArea placeholder="Autosize height with minimum and maximum number of lines"
-										style={{resize: 'none'}}
+									<TextArea
 										rows={3}
-										onChange={(e) => this.setFormPropetyVal('taskForm', 'description', e.target.value)}
-										value={taskDescription}
+										onChange={(e) =>
+											this.setFormPropetyVal('taskForm', 'description', e.target.value)}
+										value={taskDescription.value}
+										style={{
+											resize: 'none',
+											backgroundColor:
+												taskDescription.value !== ''
+													? taskDescription.valid
+														? theme.colorGreenLight
+														: theme.colorRedLight
+													: 'white'
+										}}
 									/>
 								</Label>
 							</Form>
+
 							{tasks.length > 0 && (
 								<CalendarModalList>
-									{tasks.map((task, i) => <li key={`${task.title}-${i}`}>
-										<li>
-										<TaskTitle>{task.title}</TaskTitle>
+									{tasks.map((task, i) => (
+										<li key={`${task.title}-${i}`}>
+											<TaskTitle>{task.title}</TaskTitle>
 											{task.description}
 										</li>
-									</li>)}
+									))}
 								</CalendarModalList>
 							)}
 						</div>
