@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Menu, Icon, Button } from 'antd';
 
 import { toggleModal } from '../actions/modal';
+import { removeItems } from '../actions/items';
 import theme from '../styledComponentsTheme/styledComponentsTheme'
 const { SubMenu, Item } = Menu;
 
@@ -19,7 +20,7 @@ class Navigation extends Component {
 	};
 
 	render() {
-		const { items, openModal } = this.props;
+		const { items, openModal, removeItems } = this.props;
 		return (
 			<Fragment>
 				<Button type="primary" onClick={this.toggleCollapsed} style={{ marginBottom: 16 }}>
@@ -43,7 +44,7 @@ class Navigation extends Component {
 								}
 							>
 								{item[item.key].length>0 && (
-									<Item style={{backgroundColor: theme.colorGreyDark3}}>
+									<Item style={{backgroundColor: theme.colorGreyDark3}} onClick={() => removeItems(item.key)}>
 										Remove all
 									</Item>
 								)}
@@ -62,7 +63,8 @@ class Navigation extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-	openModal: (selectedDay) => dispatch(toggleModal(true, selectedDay))
+	openModal: (selectedDay) => dispatch(toggleModal(true, selectedDay)),
+	removeItems: (kind) => dispatch(removeItems(kind))
 });
 
 const mapStateToProps = ({ items }) => {

@@ -8,7 +8,8 @@ import theme from '../../styledComponentsTheme/styledComponentsTheme';
 import { addItem } from '../../actions/items';
 import filterData from '../../functions/filterData';
 import { toggleModal } from '../../actions/modal';
-import BudgetList from '../BudgetList/BudgetList';
+import List from '../List/List';
+import { ListItem } from '../List/StyledList';
 import getMonthName from '../../functions/getMonthName';
 
 import {
@@ -23,7 +24,6 @@ import {
 	CalendarModalTitle,
 	CalendarModalList,
 	CalendarModalListContainer,
-	TaskTitle,
 	SpanLabelDescription,
 	CloseButton,
 	inputValueStyles
@@ -32,32 +32,35 @@ import {
 const { Option } = Select;
 const { TextArea } = Input;
 
+const initialState = {
+	taskForm: {
+		title: {
+			value: '',
+			valid: false
+		},
+		description: {
+			value: '',
+			valid: true
+		}
+	},
+	budgetForm: {
+		title: {
+			value: '',
+			valid: false
+		},
+		type: {
+			value: 'income',
+			valid: true
+		},
+		value: {
+			value: null,
+			valid: false
+		}
+	}
+};
 class CelandarModal extends Component {
 	state = {
-		taskForm: {
-			title: {
-				value: '',
-				valid: false
-			},
-			description: {
-				value: '',
-				valid: true
-			}
-		},
-		budgetForm: {
-			title: {
-				value: '',
-				valid: false
-			},
-			type: {
-				value: 'income',
-				valid: true
-			},
-			value: {
-				value: '',
-				valid: false
-			}
-		}
+		...initialState
 	};
 
 	formValidation = (value, property) => {
@@ -91,20 +94,23 @@ class CelandarModal extends Component {
 		}));
 	};
 
-	addItem = (type, item) => {
-		this.props.addItem(type, {
+	addItem = async (type, item) => {
+		await this.props.addItem(type, {
 			...item,
 			createdAt: {
 				...this.props.selectedDay
 			}
 		});
+
+		this.setState(() => ({
+			...initialState
+		}));
 	};
 
 	addBudget = (e) => {
 		e.preventDefault();
 		const { title, type, value } = this.state.budgetForm;
 		if (title.valid && value.valid) {
-			console.log('passed');
 			this.addItem(`${type.value}s`, {
 				title: title.value,
 				value: Math.round(value.value * 100) / 100
@@ -123,10 +129,17 @@ class CelandarModal extends Component {
 		}
 	};
 
-	sliceArr(arr) {
+	sliceArr = (arr) => {
 		const half = Math.floor(arr.length / 2);
 		return [ arr.slice(0, half), arr.slice(half) ];
-	}
+	};
+
+	onAfterOpen = () => {
+		this.setState(() => ({
+			...initialState
+		}));
+	};
+
 	render() {
 		const { modalIsOpen, closeModal, selectedDay, tasks, incomes, expenses } = this.props;
 		const { description: taskDescription, title: taskTitle } = this.state.taskForm;
@@ -134,7 +147,13 @@ class CelandarModal extends Component {
 		const { weather, dayNum, monthNum, year } = selectedDay;
 
 		return (
-			<StyledModal style={overlayStyles} isOpen={modalIsOpen} onRequestClose={closeModal} ariaHideApp={false}>
+			<StyledModal
+				onAfterOpen={this.onAfterOpen}
+				style={overlayStyles}
+				isOpen={modalIsOpen}
+				onRequestClose={closeModal}
+				ariaHideApp={false}
+			>
 				<StyledModalContent>
 					<CloseButton>
 						<Icon type="close-circle" />
@@ -149,9 +168,9 @@ class CelandarModal extends Component {
 									{this.sliceArr(weather).map((arr, i) => (
 										<CalendarModalList calendarList={true} key={i}>
 											{arr.map((e, i) => (
-												<li key={i}>
+												<ListItem padding="small" key={i}>
 													<span>{e.main.temp}℃</span> <span>{e.dt_txt.split(' ')[1]}</span>
-												</li>
+												</ListItem>
 											))}
 										</CalendarModalList>
 									))}
@@ -198,7 +217,7 @@ class CelandarModal extends Component {
 										style={{
 											...inputValueStyles,
 											backgroundColor:
-												budgetValue.value !== ''
+												budgetValue.value !== null
 													? budgetValue.valid ? theme.colorGreenLight : theme.colorRedLight
 													: 'white'
 										}}
@@ -213,8 +232,8 @@ class CelandarModal extends Component {
 							</Form>
 
 							<CalendarModalListContainer>
-								{incomes.length > 0 && <BudgetList title="Incomes" items={incomes} />}
-								{expenses.length > 0 && <BudgetList title="Expenses" items={expenses} />}
+								{incomes.length > 0 && <List title="Incomes" items={incomes} />}
+								{expenses.length > 0 && <List title="Expenses" items={expenses} />}
 							</CalendarModalListContainer>
 						</div>
 					</CalendarModalItem>
@@ -262,16 +281,7 @@ class CelandarModal extends Component {
 								</Label>
 							</Form>
 
-							{tasks.length > 0 && (
-								<CalendarModalList>
-									{tasks.map((task, i) => (
-										<li key={`${task.title}-${i}`}>
-											<TaskTitle>{task.title}</TaskTitle>
-											{task.description}
-										</li>
-									))}
-								</CalendarModalList>
-							)}
+							{tasks.length > 0 && <List items={tasks} title="Tasks" />}
 						</div>
 					</CalendarModalItem>
 				</StyledModalContent>
@@ -288,7 +298,7 @@ const mapDispatchToProps = (dispatch) => ({
 const mapStateToProps = (state) => {
 	const { modalIsOpen, selectedDay } = state.modal;
 
-	const [ tasks, incomes, expenses ] = [state.items.tasks, state.items.incomes, state.items.expenses].map((e) =>
+	const [ tasks, incomes, expenses ] = [ state.items.tasks, state.items.incomes, state.items.expenses ].map((e) =>
 		filterData(e, selectedDay)
 	);
 

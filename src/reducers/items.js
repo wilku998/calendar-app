@@ -20,11 +20,6 @@ export default (state = { ...initialState }, action) => {
 				...state,
 				[kind]: removeItem(state[kind], id)
 			};
-		case 'REMOVE_ALL_ITEMS':
-			return {
-				...state,
-				[kind]: []
-			};
 		case 'SET_ITEMS':
 			return {
 				...state,

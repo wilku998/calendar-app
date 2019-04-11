@@ -62,11 +62,6 @@ export const CalendarModalTitle = styled('h1')`
 	margin: ${(props) => (props.withoutMargin ? '0' : '0 0 1rem 0')};
 `;
 
-export const TaskTitle = styled('h3')`
-	line-height: 1;
-	margin-bottom: .5rem;
-`;
-
 export const CalendarModalList = styled('ul')`
 	list-style: none;
 	flex: 1;
@@ -74,20 +69,6 @@ export const CalendarModalList = styled('ul')`
 	&:not(:last-child){
 		margin-right: 2rem;
 	};
-	
-	& > li {
-		padding: .5rem 0;
-		${(props) =>
-		props.calendarList
-			? `
-			display: flex;
-			justify-content: space-between;
-			`
-			: ''}
-		&:not(:last-child){
-			border-bottom: ${(props) => props.theme.lightBorder}
-		}
-	}
 `;
 
 export const CalendarModalListContainer = styled('div')`
@@ -129,6 +110,5 @@ export const SpanLabelDescription = styled('span')`
 `;
 export const Form = styled('form')`
 	display: flex;
-	margin-bottom: 1rem;
 	flex-wrap: wrap;
 `;
