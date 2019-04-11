@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { setWeather } from '../actions/weather'
-const googleKey = 'AIzaSyAmHxTZ3RTeWx6AI1wokrAp5GYs9gX0QgQ';
-const weathermapkey = '820e189cf767b78f910c851dc1ef01a4';
+import { Input } from 'antd';
+
+import { setWeather } from '../actions/weather';
+
+const InputSearch = Input.Search;
 
 class GeoForm extends Component {
 	state = {
@@ -19,14 +21,18 @@ class GeoForm extends Component {
 
 	onSubmit = (e) => {
 		e.preventDefault();
+	};
 
-		axios(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.inputVal}&key=${googleKey}`)
+	search = () => {
+		axios(
+			`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.inputVal}&key=${process.env
+				.GOOGLE_API_KEY}`
+		)
 			.then((res) => {
 				const geoLocation = res.data.results[0].geometry.location;
-				console.log(geoLocation);
 				return axios(
 					`https://api.openweathermap.org/data/2.5/forecast?lat=${geoLocation.lat}&lon=${geoLocation.lng}&units=metric
-					&appid=${weathermapkey}`
+				&appid=${process.env.WEATHER_API_KEY}`
 				);
 			})
 			.then((res) => {
@@ -39,12 +45,18 @@ class GeoForm extends Component {
 
 	render() {
 		return (
-			<div>
-				<form onSubmit={this.onSubmit}>
-					<input type="text" placeholder="country, city" onChange={this.onInputChange} />
-					<button>get geolocation</button>
-				</form>
-			</div>
+			<form onSubmit={this.onSubmit}>
+				<InputSearch
+					enterButton="Get weather"
+					type="text"
+					placeholder="country, city"
+					onChange={this.onInputChange}
+					onSearch={this.search}
+					style={{
+						width: '40rem'
+					}}
+				/>
+			</form>
 		);
 	}
 }

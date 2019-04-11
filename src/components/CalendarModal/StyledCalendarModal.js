@@ -88,6 +88,9 @@ export const StyledModalContent = styled('div')`
 	max-height: 90vh;
 	width: 70rem;
 	position: relative;
+	::-webkit-scrollbar { 
+    	display: none; 
+	}
 `;
 
 export const Label = styled('label')`

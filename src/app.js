@@ -8,9 +8,9 @@ import styled, { ThemeProvider } from "styled-components";
 
 import theme from "./styledComponentsTheme/styledComponentsTheme";
 import configureStore from "./store/configureStore";
-import GeoForm from "./components/GeoForm";
 import Calendar from "./components/Calendar/Calendar";
-import Navigation from "./components/Navigation";
+import SubNavigation from "./components/SubNavigation";
+import Navigation from "./components/Navigation/Navigation";
 import { setItems } from "./actions/items";
 import CalendarModal from "./components/CalendarModal/CalendarModal";
 
@@ -21,8 +21,8 @@ const App = () => (
     <Fragment>
       <CalendarModal />
       <Navigation />
+      <SubNavigation />
       <Main>
-        <GeoForm />
         <Calendar />
       </Main>
     </Fragment>
