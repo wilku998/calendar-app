@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
 import { Icon, Button } from 'antd';
 
+import { ToggleButtonContainer, styleNavigation } from './StyledNavigation';
 import WeatherForm from "../WeatherForm";
 
 class Navigation extends Component {
@@ -25,22 +25,6 @@ class Navigation extends Component {
 	}
 }
 
-const StyledNavigation = styled(Navigation)`
-    width: 100%;
-    height: 5rem;
-    background-color: red;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-`;
-
-const ToggleButtonContainer=styled('div')`
-    width: 80px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-`;
-
 const mapStateToProps = ({ subNavigation }) => ({
 	collapsed: subNavigation.collapsed
 });
@@ -49,4 +33,4 @@ const mapDispatchToProps = (dispatch) => ({
 	toggleCollapsed: () => dispatch({ type: 'TOGGLE_SUB_NAV' })
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(StyledNavigation);
+export default connect(mapStateToProps, mapDispatchToProps)(styleNavigation(Navigation));
