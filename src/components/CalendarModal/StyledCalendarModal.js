@@ -11,22 +11,6 @@ export const overlayStyles = {
 	}
 };
 
-export const inputStyles = {
-	width: '15rem',
-	display: 'inline-block',
-	marginLeft: '1rem'
-};
-
-export const inputValueStyles = {
-	...inputStyles,
-	width: '7.5rem'
-};
-
-export const selectStyles = {
-	display: 'inline-block',
-	marginLeft: '1rem'
-};
-
 export const CloseButton = styled('button')`
 	border: none;
 	background: none;
@@ -62,20 +46,6 @@ export const CalendarModalTitle = styled('h1')`
 	margin: ${(props) => (props.withoutMargin ? '0' : '0 0 1rem 0')};
 `;
 
-export const CalendarModalList = styled('ul')`
-	list-style: none;
-	flex: 1;
-	margin-bottom: 0;
-	&:not(:last-child){
-		margin-right: 2rem;
-	};
-`;
-
-export const CalendarModalListContainer = styled('div')`
-	display: flex;
-	width: 100%;
-`;
-
 export const StyledModal = styled(Modal)`
     background: ${(props) =>
 		`linear-gradient(to right bottom, ${props.theme.colorGreyLight1}, ${props.theme.colorGreyLight2})`};
@@ -93,25 +63,9 @@ export const StyledModalContent = styled('div')`
 	}
 `;
 
-export const Label = styled('label')`
-    margin-right: 1.5rem;
-    display: flex;
-	align-items: center;
-	
-	${(props) =>
-		props.breakLine
-			? `
-			width: 100%;
-			flex-direction: column;
-			align-items: flex-start;
-		`
-			: ''}
+export const CalendarModalListContainer = styled('div')`
+	display: flex;
+	width: 100%;
 `;
 
-export const SpanLabelDescription = styled('span')`
-	margin: 1rem 0;
-`;
-export const Form = styled('form')`
-	display: flex;
-	flex-wrap: wrap;
-`;
+

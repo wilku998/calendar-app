@@ -1,5 +1,17 @@
 import styled from 'styled-components';
 
+export const styleListContainer = (ListContainer) => styled(ListContainer)`
+    flex: 1;
+	margin-top: 2rem;
+	&:not(:last-child){
+		margin-right: 2rem;
+    };
+    
+    & > h3{
+        margin-bottom: 0;
+    }
+`;
+
 export const TitleContainer = styled('div')`
     display: flex;
     align-items: center;
@@ -36,10 +48,17 @@ export const TaskDescription = styled('p')`
 export const List = styled('ul')`
     list-style: none;
     margin-bottom: 0;
+    flex: 1;
+    ${(props) =>
+		props.withMargin &&
+		`&:not(:last-child){
+            margin-right: 2rem;
+        }
+    `}
 `;
 
 export const ListItem = styled('li')`
-        padding: ${props => props.padding==='big' ? '1rem 0' : '.5rem 0'};
+        padding: ${(props) => (props.padding === 'big' ? '1rem 0' : '.5rem 0')};
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -47,4 +66,4 @@ export const ListItem = styled('li')`
         &:not(:last-child){
             border-bottom: ${(props) => props.theme.lightBorder}
         }
-`
+`;
