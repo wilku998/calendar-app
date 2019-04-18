@@ -118,7 +118,7 @@ class CelandarModal extends Component {
 				ariaHideApp={false}
 			>
 				<StyledModalContent>
-					<CloseButton>
+					<CloseButton onClick={closeModal}>
 						<Icon type="close-circle" />
 					</CloseButton>
 					<CalendarModalItem>

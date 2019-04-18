@@ -3,14 +3,8 @@ import PropTypes from 'prop-types';
 import { Input, Button } from 'antd';
 
 import { styleForm, Label, SpanLabelDescription, inputStyles } from './styledForm';
-import theme from '../../../styledComponentsTheme/styledComponentsTheme';
-
-
+import setInputColor from '../../../functions/setInputColor';
 const { TextArea } = Input;
-
-export const setInputColor = (value, valid, validator) => {
-	return value !== validator ? (valid ? theme.colorGreenLight : theme.colorRedLight) : 'white';
-};
 
 const TaskForm = ({ setFormPropetyVal, addTask, taskDescription, taskTitle, className }) => {
 	const titleInputColor = setInputColor(taskTitle.value, taskTitle.valid, '');

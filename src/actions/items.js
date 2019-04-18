@@ -1,4 +1,6 @@
 import database from '../database/firebase';
+import uuid from 'uuid';
+import { message } from 'antd';
 
 const setItemsInRedux = (items, kind) => ({
 	type: 'SET_ITEMS',
@@ -35,15 +37,23 @@ const addItemInRedux = (item, kind) => ({
 export const addItem = (kind, item) => {
 	return async (dispatch, getState) => {
 		const uid = getState().auth.uid;
-		const res = await database.ref(`users/${uid}/${kind}`).push(item);
-		dispatch(addItemInRedux({ ...item, id: res.key }, kind));
+		let id;
+		if (uid) {
+			id = await database.ref(`users/${uid}/${kind}`).push(item);
+		} else {
+			id = uuid();
+			message.warning(`You are an unauthorized user, your changes will not be saved`);
+		}
+		dispatch(addItemInRedux({ ...item, id }, kind));
 	};
 };
 
 export const removeItems = (kind) => {
 	return async (dispatch, getState) => {
 		const uid = getState().auth.uid;
-		await database.ref(`users/${uid}/${kind}`).remove();
+		if (uid) {
+			await database.ref(`users/${uid}/${kind}`).remove();
+		}
 		dispatch(setItemsInRedux([], kind));
 	};
 };
@@ -56,9 +66,10 @@ const removeItemInRedux = (id, kind) => ({
 
 export const removeItem = (id, kind) => {
 	return async (dispatch, getState) => {
-		console.log({id, kind})
 		const uid = getState().auth.uid;
-		await database.ref(`users/${uid}/${kind}/${id}`).remove();
+		if (uid) {
+			await database.ref(`users/${uid}/${kind}/${id}`).remove();
+		}
 		dispatch(removeItemInRedux(id, kind));
 	};
 };

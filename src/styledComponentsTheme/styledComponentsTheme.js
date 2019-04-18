@@ -5,7 +5,7 @@ export default {
   colorRed: "rgb(163, 82, 82)",
   colorRedLight: "rgb(255, 180, 180)",
   colorGreen: "rgb(98, 160, 74)",
-  colorGreenLight: "rgb(205, 255, 190)",
+  colorGreenLight: "rgb(232, 240, 254)",
   colorBlue: '#1890ff',
 
   colorGreyLight1: "#faf9f9",

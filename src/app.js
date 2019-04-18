@@ -1,55 +1,36 @@
-import React, { Component, Fragment } from "react";
-import ReactDOM from "react-dom";
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import { Provider } from "react-redux";
-import "normalize.css/normalize.css";
-import "./styles/style.scss";
-import styled, { ThemeProvider } from "styled-components";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import 'normalize.css/normalize.css';
+import './styles/style.scss';
 
-import theme from "./styledComponentsTheme/styledComponentsTheme";
-import configureStore from "./store/configureStore";
-import Calendar from "./components/Calendar/Calendar";
-import SubNavigation from "./components/SubNavigation";
-import Navigation from "./components/Navigation/Navigation";
-import { setItems } from "./actions/items";
-import CalendarModal from "./components/CalendarModal/CalendarModal";
-
+import AppRouter, { history } from './routers/appRouter';
+import configureStore from './store/configureStore';
+import { setItems } from './actions/items';
+import { firebase } from './database/firebase';
 const store = configureStore();
 
 const App = () => (
-  <ThemeProvider theme={theme}>
-    <Fragment>
-      <CalendarModal />
-      <Navigation />
-      <SubNavigation />
-      <Main>
-        <Calendar />
-      </Main>
-    </Fragment>
-  </ThemeProvider>
+	<Provider store={store}>
+		<AppRouter />
+	</Provider>
 );
 
-const Main = styled.main`
-  margin-left: 25rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: ${props => props.theme.colorGreyDark2};
-`;
-
-const AppRouter = () => (
-  <Provider store={store}>
-    <Router>
-      <Route path="/" component={App} />
-    </Router>
-  </Provider>
-);
-
+let appRendered = false;
 const renderApp = () => {
-  ReactDOM.render(<AppRouter />, document.getElementById("root"));
+	if (!appRendered) {
+		ReactDOM.render(<App />, document.getElementById('root'));
+	}
 };
-// renderApp()
-store.dispatch(setItems(["tasks", "incomes", "expenses"])).then(() => {
-  renderApp();
+
+firebase.auth().onAuthStateChanged(async (user) => {
+	if (user) {
+    store.dispatch({type: 'LOGIN', uid: user.uid})
+		await store.dispatch(setItems([ 'tasks', 'incomes', 'expenses' ]));
+		renderApp();
+		history.push('/')
+	} else {
+    store.dispatch({type: 'LOGOUT'})
+		renderApp();
+	}
 });

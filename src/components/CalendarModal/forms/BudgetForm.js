@@ -2,8 +2,8 @@ import React from 'react';
 import { Input, Button, Select, InputNumber } from 'antd';
 import PropTypes from 'prop-types';
 
-import { setInputColor } from './TaskForm';
 import { Label, inputStyles, inputValueStyles, styleForm, selectStyles } from './styledForm';
+import setInputColor from '../../../functions/setInputColor';
 
 const { Option } = Select;
 

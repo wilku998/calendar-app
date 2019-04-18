@@ -1,32 +1,33 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Icon, Button } from 'antd';
 
+import { firebase } from '../../database/firebase';
+import { history } from '../../routers/appRouter';
 import { ToggleButtonContainer, styleNavigation } from './StyledNavigation';
-import WeatherForm from "../WeatherForm";
+import WeatherForm from '../WeatherForm';
 
-class Navigation extends Component {
-	state = {};
+const Navigation = ({ className, collapsed, toggleCollapsed, isAuth }) => {
+	const onLoginButtonClick = () => {
+		isAuth ? firebase.auth().signOut() : history.push('/login');
+	};
+	return (
+		<div className={className}>
+			<ToggleButtonContainer>
+				<Button type="primary" onClick={toggleCollapsed}>
+					<Icon type={collapsed ? 'menu-unfold' : 'menu-fold'} />
+				</Button>
+			</ToggleButtonContainer>
 
-	render() {
-		const { className, collapsed, toggleCollapsed } = this.props;
-		return (
-			<div className={className}>
-                <ToggleButtonContainer>
-                    <Button type="primary" onClick={toggleCollapsed}>
-                        <Icon type={collapsed ? 'menu-unfold' : 'menu-fold'} />
-                    </Button>
-                </ToggleButtonContainer>
+			<WeatherForm />
+			<Button onClick={onLoginButtonClick}>{isAuth ? 'logout' : 'login'}</Button>
+		</div>
+	);
+};
 
-                <WeatherForm />
-                <button>logout</button>
-			</div>
-		);
-	}
-}
-
-const mapStateToProps = ({ subNavigation }) => ({
-	collapsed: subNavigation.collapsed
+const mapStateToProps = ({ subNavigation, auth }) => ({
+	collapsed: subNavigation.collapsed,
+	isAuth: !!auth.uid
 });
 
 const mapDispatchToProps = (dispatch) => ({

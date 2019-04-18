@@ -18,6 +18,18 @@ body{
 }
 
 :root{
-    color: rgb(255, 180, 180);
-    colorg: rgb(205, 255, 190);
+
+}
+
+.input-password-green{
+
+}
+
+.input-password-red{
+    
+}
+
+.avatar-uploader > .ant-upload {
+    width: 128px;
+    height: 128px;
 }
