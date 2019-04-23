@@ -1,5 +1,8 @@
 html {
     font-size: 62.5%; //1rem = 10px
+    @media only screen and (max-width: 46.875rem){
+        font-size: 50%;
+    }
 }
 
 *,
@@ -15,20 +18,10 @@ body{
     line-height: 1.6;
     min-height: 100vh;
     font-family: 'Open Sans', sans-serif;
+    background-image: linear-gradient(to right bottom, #faf9f9, #f4f2f2 );
+    font-size: 1.4rem !important;
 }
-
-:root{
-
-}
-
-.input-password-green{
-
-}
-
-.input-password-red{
-    
-}
-
+ 
 .avatar-uploader > .ant-upload {
     width: 128px;
     height: 128px;

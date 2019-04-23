@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { List, ListItem } from '../ModalList/styledModalList';
+import { List, ListItem } from './styledModalList';
 
 const Weather = ({ weather }) => {
 	return (

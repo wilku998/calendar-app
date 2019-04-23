@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Icon } from 'antd';
 import PropTypes from 'prop-types';
 
 import { changeMonth } from '../../actions/calendar';
@@ -12,52 +11,47 @@ import contactDaysToWeather from '../../functions/contactDaysToWeather';
 import getSumOfBudgetItems from '../../functions/getSumOfBudgetItems';
 import filterData from '../../functions/filterData';
 
-class Calendar extends Component {
-	state = {};
+const Calendar = ({days, budget, tasksQuantity, className, selectedMonth, openModal, changeMonth}) => {
+	const { year, monthNum } = selectedMonth;
 
-	dayClick = (day) => {
+	const dayClick = (day) => {
 		const clikedMonthNum = parseInt(day.monthNum);
-		const selectedMonthNum = parseInt(this.props.selectedMonth.monthNum);
+		const selectedMonthNum = parseInt(selectedMonth.monthNum);
 
 		if (clikedMonthNum > selectedMonthNum) {
-			this.props.changeMonth(1);
+			changeMonth(1);
 		} else if (clikedMonthNum < selectedMonthNum) {
-			this.props.changeMonth(-1);
+			changeMonth(-1);
 		} else {
-			this.props.openModal(day);
+			openModal(day);
 		}
 	};
 
-	onMonthChange = (value) => {
-		this.props.changeMonth(value);
+	const onMonthChange = (value) => {
+		changeMonth(value);
 	};
 
-    render() {
-		const { days, budget, tasksQuantity, className } = this.props;
-		const { month, year, monthNum } = this.props.selectedMonth;
-
-		return (
-			<div className={className}>
-				<CalendarSummary
-					monthInt={parseInt(monthNum)}
-					yearInt={parseInt(year)}
-					onMonthChange={this.onMonthChange}
-					budget={budget}
-					tasksQuantity={tasksQuantity}
-				/>
-				{days.map((day, i) => (
-                    <CalendarDay day={day} dayClick={this.dayClick} disabled={monthNum!==day.monthNum} key={i} />
-				))}
-			</div>
-		);
-	}
-}
+	return (
+		<section className={className}>
+			<CalendarSummary
+				monthInt={parseInt(monthNum)}
+				yearInt={parseInt(year)}
+				onMonthChange={onMonthChange}
+				budget={budget}
+				tasksQuantity={tasksQuantity}
+			/>
+			{days.map((day, i) => (
+				<CalendarDay day={day} dayClick={dayClick} disabled={monthNum !== day.monthNum} key={i} />
+			))}
+		</section>
+	);
+};
 
 Calendar.propTypes = {
 	days: PropTypes.array.isRequired,
-    selectedMonth: PropTypes.object.isRequired,
-    tasksQuantity: PropTypes.number.isRequired,
-    budget: PropTypes.number.isRequired,
+	selectedMonth: PropTypes.object.isRequired,
+	tasksQuantity: PropTypes.number.isRequired,
+	budget: PropTypes.number.isRequired
 };
 
 const mapStateToProps = (state) => {

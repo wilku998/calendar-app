@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { Input, Radio, Button, Icon, message } from 'antd';
 import { Link } from 'react-router-dom';
 import validator from 'validator';
-
+import { connect } from 'react-redux';
 import { firebase } from '../../database/firebase';
 import setInputColor from '../../functions/setInputColor';
-import { InputPassword, styleLogin, Label, Form } from './styledLogin';
+import { InputPassword, styleLogin, Label, Form, LoginContent } from './styledLogin';
 
 const RadioGroup = Radio.Group;
 
@@ -81,53 +81,62 @@ class Login extends Component {
 	};
 
 	render() {
-		const { className } = this.props;
+		const { className, mobileView, antdSize } = this.props;
 		const { type, email, password, confirmPassword, errorMessage } = this.state;
 
 		return (
 			<div className={className}>
-				<Link to="/">
-					<Button type="primary">
-						<Icon type="left" />Go back
-					</Button>
-				</Link>
-				<Form>
-					<Label>
-						E-mail<Input
-							style={{ backgroundColor: email.color }}
-							value={email.value}
-							onChange={(e) => this.setFormPropertyValue('email', e.target.value)}
-						/>
-					</Label>
-					<Label>
-						Password<InputPassword
-							backgroundcolor={password.color}
-							value={password.value}
-							onChange={(e) => this.setFormPropertyValue('password', e.target.value)}
-						/>
-					</Label>
-					{type === 'register' && (
+				<LoginContent mobileView={mobileView}>
+					<Link to="/">
+						<Button size={antdSize} type="primary">
+							<Icon type="left" />Go back
+						</Button>
+					</Link>
+					<Form>
 						<Label>
-							Confirm password<InputPassword
-								backgroundcolor={confirmPassword.color}
-								value={confirmPassword.value}
-								onChange={(e) => this.setFormPropertyValue('confirmPassword', e.target.value)}
+							E-mail<Input
+								style={{ backgroundColor: email.color }}
+								value={email.value}
+								onChange={(e) => this.setFormPropertyValue('email', e.target.value)}
 							/>
 						</Label>
-					)}
-
-					<RadioGroup style={{ marginTop: '1rem' }} onChange={this.onRadioChange} value={type}>
-						<Radio value="login">Login</Radio>
-						<Radio value="register">Create an account</Radio>
-					</RadioGroup>
-					{errorMessage !== '' && <span>{errorMessage}</span>}
-					<Button onClick={this.onSubmit} type="primary">
-						submit
-					</Button>
-				</Form>
+						<Label>
+							Password<InputPassword
+								backgroundcolor={password.color}
+								value={password.value}
+								onChange={(e) => this.setFormPropertyValue('password', e.target.value)}
+							/>
+						</Label>
+						{type === 'register' && (
+							<Label>
+								Confirm password<InputPassword
+									backgroundcolor={confirmPassword.color}
+									value={confirmPassword.value}
+									onChange={(e) => this.setFormPropertyValue('confirmPassword', e.target.value)}
+								/>
+							</Label>
+						)}
+						<RadioGroup style={{ marginTop: '1rem' }} onChange={this.onRadioChange} value={type}>
+							<Radio value="login">Login</Radio>
+							<Radio value="register">Create an account</Radio>
+						</RadioGroup>
+						{errorMessage !== '' && <span>{errorMessage}</span>}
+						<Button size={antdSize} onClick={this.onSubmit} type="primary">
+							submit
+						</Button>
+					</Form>
+				</LoginContent>
 			</div>
 		);
 	}
 }
 
-export default styleLogin(Login);
+const mapStateToProps = ({ styles }) => {
+	const { windowWidth } = styles;
+	return {
+		antdSize: windowWidth > 750 ? 'default' : 'small',
+		mobileView: windowWidth <= 450
+	};
+};
+
+export default connect(mapStateToProps)(styleLogin(Login));

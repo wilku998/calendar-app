@@ -6,7 +6,7 @@ import weatherReducer from '../reducers/weather';
 import itemsReducer from '../reducers/items';
 import authReducer from '../reducers/auth';
 import modalReducer from '../reducers/modal';
-import subNavigationReducer from '../reducers/subNavigation';
+import stylesReducer from '../reducers/styles';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -18,7 +18,7 @@ export default () => {
 			items: itemsReducer,
 			auth: authReducer,
 			modal: modalReducer,
-			subNavigation: subNavigationReducer
+			styles: stylesReducer
 		}),
 		composeEnhancers(applyMiddleware(thunk))
 	);

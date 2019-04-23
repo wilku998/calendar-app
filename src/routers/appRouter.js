@@ -5,7 +5,7 @@ import { createBrowserHistory } from 'history';
 
 import App from '../components/App';
 import Login from '../components/Login/Login';
-import theme from '../styledComponentsTheme/styledComponentsTheme';
+import theme from '../styledComponents/theme';
 
 export const history = createBrowserHistory();
 

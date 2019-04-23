@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { Icon } from 'antd';
 
 import { styleCalendarDay, CalendarDayInfo, DayNum, DayWeather } from './StyledCalendarDay';
-import theme from '../../../styledComponentsTheme/styledComponentsTheme';
+import theme from '../../../styledComponents/theme';
 
 const CalendarDay = ({ day, dayClick, disabled, className }) => {
 	const getWeather = (weatherArr) => {
-		const half = Math.ceil(weatherArr.length / 2);
+		const half = Math.floor(weatherArr.length / 2);
 		const weather = weatherArr[half];
 		const timeInt = parseInt(weather.dt_txt.split(' ')[1]);
 		const pm = timeInt >= 12;
@@ -47,7 +47,7 @@ const CalendarDay = ({ day, dayClick, disabled, className }) => {
 				)}
 			</CalendarDayInfo>
 
-			{day.weather && getWeather(day.weather)}
+			{day.weather ? getWeather(day.weather): ''}
 		</div>
 	);
 };

@@ -10,10 +10,11 @@ export const ToggleButtonContainer = styled('div')`
 export const styleNavigation = (Navigation) => {
 	return styled(Navigation)`
         width: 100%;
-        height: 5rem;
-        background-color: red;
+        padding: 1rem 2rem 1rem 0;
+        background-color: ${(props) => props.theme.colorGreyDark3};
         display: flex;
         justify-content: space-between;
         align-items: center;
-    `
+    `;
 };
+

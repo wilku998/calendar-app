@@ -1,4 +1,13 @@
 import styled from 'styled-components';
+import media from '../../../styledComponents/breakPoints';
+
+export const fontSize = { fontSize: '1.4rem' };
+
+const labelBreakLineStyles = `
+	width: 100%;
+	flex-direction: column;
+	align-items: flex-start;
+`;
 
 export const styleForm = (Form) => styled(Form)`
 	display: flex;
@@ -6,18 +15,11 @@ export const styleForm = (Form) => styled(Form)`
 `;
 
 export const Label = styled('label')`
-    margin-right: 1.5rem;
+    margin: 1rem 1.5rem 0 0;
     display: flex;
 	align-items: center;
 	
-	${(props) =>
-		props.breakLine
-			? `
-			width: 100%;
-			flex-direction: column;
-			align-items: flex-start;
-		`
-			: ''}
+	${(props) => (props.breakLine ? labelBreakLineStyles : '')}
 `;
 
 export const SpanLabelDescription = styled('span')`

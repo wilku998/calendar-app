@@ -30,7 +30,6 @@ export default (state = { ...setInitialState() }, action) => {
 			});
 
 			return {
-				...state,
 				selectedMonth,
 				lastMonth,
 				nextMonth,

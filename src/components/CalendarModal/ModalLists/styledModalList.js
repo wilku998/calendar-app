@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import media from '../../../styledComponents/breakPoints';
 
 export const styleListContainer = (ListContainer) => styled(ListContainer)`
     flex: 1;
@@ -10,12 +11,21 @@ export const styleListContainer = (ListContainer) => styled(ListContainer)`
     & > h3{
         margin-bottom: 0;
     }
+
+    ${media.small`
+        flex: 1 1 100%;
+
+		&:not(:last-child){
+            margin-right: 0;
+        }
+    `}
 `;
 
 export const TitleContainer = styled('div')`
     display: flex;
     align-items: center;
     line-height: 1;
+    margin-bottom: .5rem;
 `;
 
 export const ItemTitle = styled('h3')`
@@ -49,11 +59,24 @@ export const List = styled('ul')`
     list-style: none;
     margin-bottom: 0;
     flex: 1;
+    
     ${(props) =>
 		props.withMargin &&
 		`&:not(:last-child){
             margin-right: 2rem;
         }
+    `}
+
+    ${media.small`
+        flex: 1 1 100%;
+
+        ${(props) =>
+			props.withMargin &&
+			`&:not(:last-child){
+            margin-right: 0;
+            border-bottom: ${props.theme.lightBorder};
+        }
+    `}
     `}
 `;
 

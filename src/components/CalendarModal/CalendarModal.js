@@ -10,8 +10,8 @@ import getMonthName from '../../functions/getMonthName';
 import TaskForm from './forms/TaskForm';
 import BudgetForm from './forms/BudgetForm';
 import initialState from './initialState';
-import List from './ModalList/ModalList';
-import Weather from './Weather/Weather'
+import ItemsList from './ModalLists/ItemsList';
+import WeatherList from './ModalLists/WeatherList';
 import {
 	StyledModal,
 	StyledModalContent,
@@ -71,8 +71,7 @@ class CelandarModal extends Component {
 		}));
 	};
 
-	addBudget = (e) => {
-		e.preventDefault();
+	addBudget = () => {
 		const { title, type, value } = this.state.budgetForm;
 		if (title.valid && value.valid) {
 			this.addItem(`${type.value}s`, {
@@ -82,8 +81,7 @@ class CelandarModal extends Component {
 		}
 	};
 
-	addTask = (e) => {
-		e.preventDefault();
+	addTask = () => {
 		const { title, description } = this.state.taskForm;
 		if (title.valid && description.valid) {
 			this.addItem('tasks', {
@@ -128,7 +126,7 @@ class CelandarModal extends Component {
 							</CalendarModalTitle>
 							{weather && (
 								<CalendarModalListContainer>
-									{this.sliceArr(weather).map((e, i) => <Weather key={i} weather={e} />)}
+									{this.sliceArr(weather).map((e, i) => <WeatherList key={i} weather={e} />)}
 								</CalendarModalListContainer>
 							)}
 						</div>
@@ -145,8 +143,8 @@ class CelandarModal extends Component {
 								budgetType={budgetType}
 							/>
 							<CalendarModalListContainer>
-								{incomes.length > 0 && <List title="Incomes" items={incomes} />}
-								{expenses.length > 0 && <List title="Expenses" items={expenses} />}
+								{incomes.length > 0 && <ItemsList title="Incomes" items={incomes} />}
+								{expenses.length > 0 && <ItemsList title="Expenses" items={expenses} />}
 							</CalendarModalListContainer>
 						</div>
 					</CalendarModalItem>
@@ -160,7 +158,7 @@ class CelandarModal extends Component {
 								taskTitle={taskTitle}
 								taskDescription={taskDescription}
 							/>
-							{tasks.length > 0 && <List items={tasks} title="Tasks" />}
+							{tasks.length > 0 && <ItemsList items={tasks} title="Tasks" />}
 						</div>
 					</CalendarModalItem>
 				</StyledModalContent>

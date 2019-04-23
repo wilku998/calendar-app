@@ -6,19 +6,22 @@ export const InputPassword = styled(Input.Password)`
         background-color: ${(props) => props.backgroundcolor} !important;
     }
 `;
-
-export const styleLogin = (Login) => styled(Login)`
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
+export const LoginContent = styled('section')`
     background-color: ${(props) => props.theme.colorGreyLight3};
     padding: 2rem;
-    width: 40rem;
+    width: ${(props) => (props.mobileView ? '100%' : '40rem')};
     display: flex;
     flex-direction: column;
     border-radius: .3rem;
+`;
+
+export const styleLogin = (Login) => styled(Login)`
+    width: 100%;
+    height: 100vh;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `;
 
 export const Label = styled('label')`

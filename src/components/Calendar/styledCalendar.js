@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const styleCalendar = (Calendar) => {
   return styled(Calendar)`
-    width: 70.1rem;
+    margin: auto;
     display: flex;
     flex-wrap: wrap;
     border-bottom: ${props => props.theme.darkBorder};
@@ -10,4 +10,5 @@ export const styleCalendar = (Calendar) => {
     border-top: ${props => props.theme.darkBorder};
   `
 };
+
 

@@ -2,33 +2,34 @@ import React from 'react';
 import { Input, Button, Select, InputNumber } from 'antd';
 import PropTypes from 'prop-types';
 
-import { Label, inputStyles, inputValueStyles, styleForm, selectStyles } from './styledForm';
+import { Label, inputStyles, inputValueStyles, styleForm, selectStyles, fontSize } from './styledForm';
 import setInputColor from '../../../functions/setInputColor';
 
 const { Option } = Select;
 
-const BudgetForm = ({setFormPropetyVal, addBudget, budgetTitle, budgetValue, budgetType, className}) => {
-    const titleInputColor = setInputColor(budgetTitle.value, budgetTitle.valid, '');
-    const valueInputColor = setInputColor(budgetValue.value, budgetValue.valid, null);
-    
-    const setTitle = (e) => {
+const BudgetForm = ({ setFormPropetyVal, addBudget, budgetTitle, budgetValue, budgetType, className }) => {
+	const titleInputColor = setInputColor(budgetTitle.value, budgetTitle.valid, '');
+	const valueInputColor = setInputColor(budgetValue.value, budgetValue.valid, null);
+
+	const setTitle = (e) => {
 		setFormPropetyVal('budgetForm', 'title', e.target.value);
 	};
 
-    const setType = (value) => {
+	const setType = (value) => {
 		setFormPropetyVal('budgetForm', 'type', value);
-    };
-    
+	};
+
 	const setValue = (value) => {
 		setFormPropetyVal('budgetForm', 'value', value);
-    };
-    
+	};
+
 	return (
 		<form className={className}>
 			<Label>
 				Title
 				<Input
 					style={{
+						...fontSize,
 						...inputStyles,
 						backgroundColor: titleInputColor
 					}}
@@ -43,7 +44,7 @@ const BudgetForm = ({setFormPropetyVal, addBudget, budgetTitle, budgetValue, bud
 					onChange={setType}
 					value={budgetType.value}
 					size="small"
-					style={selectStyles}
+					style={{ ...fontSize, ...selectStyles }}
 				>
 					<Option value="income">income</Option>
 					<Option value="expense">expense</Option>
@@ -53,6 +54,7 @@ const BudgetForm = ({setFormPropetyVal, addBudget, budgetTitle, budgetValue, bud
 				Value
 				<InputNumber
 					style={{
+						...fontSize,
 						...inputValueStyles,
 						backgroundColor: valueInputColor
 					}}
@@ -61,7 +63,7 @@ const BudgetForm = ({setFormPropetyVal, addBudget, budgetTitle, budgetValue, bud
 					size="small"
 				/>
 			</Label>
-			<Button onClick={addBudget} type="primary" size="small">
+			<Button style={{ ...fontSize, marginTop: '1rem' }} onClick={addBudget} type="primary" size="small">
 				Add
 			</Button>
 		</form>
@@ -74,8 +76,7 @@ BudgetForm.propTypes = {
 	addBudget: PropTypes.func.isRequired,
 	budgetTitle: PropTypes.object.isRequired,
 	budgetType: PropTypes.object.isRequired,
-	budgetValue: PropTypes.object.isRequired,
-}
+	budgetValue: PropTypes.object.isRequired
+};
 
-export default styleForm(BudgetForm)
-
+export default styleForm(BudgetForm);

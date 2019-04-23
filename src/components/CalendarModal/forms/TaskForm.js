@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Input, Button } from 'antd';
 
-import { styleForm, Label, SpanLabelDescription, inputStyles } from './styledForm';
+import { styleForm, Label, SpanLabelDescription, inputStyles, fontSize } from './styledForm';
 import setInputColor from '../../../functions/setInputColor';
+
 const { TextArea } = Input;
 
 const TaskForm = ({ setFormPropetyVal, addTask, taskDescription, taskTitle, className }) => {
@@ -23,6 +24,7 @@ const TaskForm = ({ setFormPropetyVal, addTask, taskDescription, taskTitle, clas
 				Title
 				<Input
 					style={{
+						...fontSize,
 						...inputStyles,
 						backgroundColor: titleInputColor
 					}}
@@ -31,7 +33,7 @@ const TaskForm = ({ setFormPropetyVal, addTask, taskDescription, taskTitle, clas
 					size="small"
 				/>
 			</Label>
-			<Button type="primary" size="small" onClick={addTask}>
+			<Button style={{ ...fontSize, marginTop: '1rem' }} type="primary" size="small" onClick={addTask}>
 				Add
 			</Button>
 			<Label breakLine={true}>
@@ -41,6 +43,7 @@ const TaskForm = ({ setFormPropetyVal, addTask, taskDescription, taskTitle, clas
 					onChange={setDescription}
 					value={taskDescription.value}
 					style={{
+						...fontSize,
 						resize: 'none',
 						backgroundColor: descriptionInputColor
 					}}
@@ -55,7 +58,7 @@ TaskForm.propTypes = {
 	addTask: PropTypes.func.isRequired,
 	taskDescription: PropTypes.object.isRequired,
 	taskTitle: PropTypes.object.isRequired,
-	className: PropTypes.string.isRequired,
-}
+	className: PropTypes.string.isRequired
+};
 
-export default styleForm(TaskForm)
+export default styleForm(TaskForm);

@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { Input } from 'antd';
+import { Input, Icon, message } from 'antd';
 
-import { setWeather } from '../actions/weather';
+import { setWeather } from '../../actions/weather';
+import styleForm from './styledWeatherForm';
 
 const InputSearch = Input.Search;
 
-class GeoForm extends Component {
+class WeatherForm extends Component {
 	state = {
 		inputVal: ''
 	};
@@ -39,22 +40,29 @@ class GeoForm extends Component {
 				this.props.setWeather(res.data);
 			})
 			.catch((err) => {
-				console.log(err);
+				message.warning(`The location hasn't found`);
 			});
 	};
 
 	render() {
+		const { antdSize, className, mobileView } = this.props;
 		return (
-			<form onSubmit={this.onSubmit}>
+			<form className={className} onSubmit={this.onSubmit}>
 				<InputSearch
-					enterButton="Get weather"
+					enterButton={
+						mobileView ? (
+							<span>
+								<Icon type="search" />
+							</span>
+						) : (
+							'Get weather'
+						)
+					}
 					type="text"
-					placeholder="country, city"
+					placeholder={mobileView ? 'Search weather' : 'Country, city'}
 					onChange={this.onInputChange}
 					onSearch={this.search}
-					style={{
-						width: '40rem'
-					}}
+					size={antdSize}
 				/>
 			</form>
 		);
@@ -64,4 +72,5 @@ class GeoForm extends Component {
 const mapDispatchToProps = (dispatch) => ({
 	setWeather: (obj) => dispatch(setWeather(obj))
 });
-export default connect(undefined, mapDispatchToProps)(GeoForm);
+
+export default connect(undefined, mapDispatchToProps)(styleForm(WeatherForm));
