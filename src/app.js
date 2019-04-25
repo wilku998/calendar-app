@@ -6,6 +6,7 @@ import './styles/style.scss';
 
 import AppRouter, { history } from './routers/appRouter';
 import configureStore from './store/configureStore';
+import { searchWeather } from './actions/weather';
 import { setItems } from './actions/items';
 import { firebase } from './database/firebase';
 import { setWindowWidth } from './actions/styles';
@@ -16,6 +17,13 @@ store.dispatch(setWindowWidth(window.innerWidth));
 window.addEventListener('resize', () => {
 	store.dispatch(setWindowWidth(window.innerWidth));
 });
+
+if (navigator.geolocation) {
+	navigator.geolocation.getCurrentPosition((pos) => {
+		const { latitude, longitude } = pos.coords;
+		//store.dispatch(searchWeather(latitude, longitude));
+	});
+}
 
 const App = () => (
 	<Provider store={store}>

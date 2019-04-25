@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { Input, Icon, message } from 'antd';
 
-import { setWeather } from '../../actions/weather';
+import { searchWeather } from '../../actions/weather';
 import styleForm from './styledWeatherForm';
 
 const InputSearch = Input.Search;
@@ -24,24 +24,17 @@ class WeatherForm extends Component {
 		e.preventDefault();
 	};
 
-	search = () => {
-		axios(
-			`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.inputVal}&key=${process.env
-				.GOOGLE_API_KEY}`
-		)
-			.then((res) => {
-				const geoLocation = res.data.results[0].geometry.location;
-				return axios(
-					`https://api.openweathermap.org/data/2.5/forecast?lat=${geoLocation.lat}&lon=${geoLocation.lng}&units=metric
-				&appid=${process.env.WEATHER_API_KEY}`
-				);
-			})
-			.then((res) => {
-				this.props.setWeather(res.data);
-			})
-			.catch((err) => {
-				message.warning(`The location hasn't found`);
-			});
+	search = async () => {
+		try {
+			const res = await axios(
+				`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.inputVal}&key=${process.env
+					.GOOGLE_API_KEY}`
+			)
+			const {lat, lng} = res.data.results[0].geometry.location;
+			await this.props.searchWeather(lat, lng)
+		}catch(error){
+			message.warning(`The location hasn't found`);
+		}
 	};
 
 	render() {
@@ -70,7 +63,7 @@ class WeatherForm extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-	setWeather: (obj) => dispatch(setWeather(obj))
+	searchWeather: (lat, lng) => dispatch(searchWeather(lat, lng))
 });
 
 export default connect(undefined, mapDispatchToProps)(styleForm(WeatherForm));

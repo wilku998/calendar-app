@@ -1,21 +1,54 @@
 import styled from 'styled-components';
+import media from '../../../styledComponents/breakPoints';
 
-export const styleCalendarDay = (CalendarDay) => {
-	return styled(CalendarDay)`
-        width: 10rem;
-        height: 10rem;
-        border-top: ${(props) => props.theme.darkBorder};
-        border-left: ${(props) => props.theme.darkBorder};
-        background: ${(props) => (props.disabled ? props.theme.colorGreyLight3 : props.theme.colorGreyLight1)};
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        font-size: 1.2rem;
-        padding: 0.7rem;
-        line-height: 1;
-        position: relative;
-    `;
-};
+export const StyledDayContainer = styled('div')`
+	${(props) => `
+		border-top: ${props.theme.darkBorder};
+		border-left: ${props.theme.darkBorder};
+		background: ${props.disabled ? props.theme.colorGreyLight3 : props.theme.colorGreyLight1};
+	`}
+	flex: 1 14.2857%;
+	cursor: pointer;
+	position: relative;
+
+	&::after{
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 100%;
+		background-color: rgba(0,0,0,.025);
+		opacity: 0;
+		transition: all .2s;
+	}
+
+	&:hover:after{
+		opacity: 1;
+	}
+`;
+
+export const StyledDayContent = styled('div')`
+	padding-top: 100%;
+	position: relative;
+`;
+
+export const StyledDay = styled('div')`
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 1.6rem;
+    padding: 0.7rem;
+    line-height: 1;
+	${media.big`
+		font-size: 1.2rem;
+	`}
+`;
 
 export const CalendarDayInfo = styled.span`
 	position: absolute;
@@ -42,4 +75,3 @@ export const DayWeather = styled.div`
 		}
 	}
 `;
-

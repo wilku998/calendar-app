@@ -13,9 +13,9 @@ export default () => (
 		<Main>
 			<SubNavigation />
 			<CalendarContainer>
-				<CalendarContent>
+				<CalendarPaddingContainer>
 					<Calendar />
-				</CalendarContent>
+				</CalendarPaddingContainer>
 			</CalendarContainer>
 		</Main>
 	</Root>
@@ -33,15 +33,11 @@ const Root = styled('div')`
 	flex-direction: column;
 `;
 const CalendarContainer = styled('div')`
-	padding: 2rem;
   	flex: 1;
-	overflow: auto;
+		overflow: auto;
 `;
 
-const CalendarContent = styled('div')`
-	width: 70.1rem;
-	height: 100%;
-	display: flex;
-	align-items: center;
-	margin: auto;
+const CalendarPaddingContainer = styled('div')`
+    min-width: 700px;
+  	padding: 2rem;
 `;

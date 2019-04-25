@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const styleSummary = (Summary) => {
 	return styled(Summary)`
-        width: 70.1rem;
+        width: 100%;
         font-size: 1.6rem;
         padding: 1rem 2rem;
         display: flex;

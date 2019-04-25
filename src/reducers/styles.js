@@ -1,4 +1,4 @@
-export default (state = {windowWidth: 0, subNavCollapsed: true}, action) => {
+export default (state = {windowWidth: 0, subNavCollapsed: false}, action) => {
     const { type, windowWidth } = action;
     switch(type){
         case 'SET_WINDOW_WIDTH':

@@ -7,6 +7,10 @@ export const ToggleButtonContainer = styled('div')`
     align-items: center;
 `;
 
+export const LoginButtonContainer = styled('div')`
+    padding-left: 2rem;
+`;
+
 export const styleNavigation = (Navigation) => {
 	return styled(Navigation)`
         width: 100%;
@@ -17,4 +21,3 @@ export const styleNavigation = (Navigation) => {
         align-items: center;
     `;
 };
-

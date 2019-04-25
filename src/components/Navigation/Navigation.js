@@ -4,7 +4,7 @@ import { Icon, Button } from 'antd';
 
 import { firebase } from '../../database/firebase';
 import { history } from '../../routers/appRouter';
-import { ToggleButtonContainer, styleNavigation } from './StyledNavigation';
+import { ToggleButtonContainer, styleNavigation, LoginButtonContainer } from './StyledNavigation';
 import WeatherForm from '../WeatherForm/WeatherForm';
 import MobileLogoutModal from '../mobileLogoutModal/mobileLogoutModal';
 
@@ -12,9 +12,9 @@ const Navigation = ({ className, collapsed, toggleCollapsed, isAuth, antdSize, m
 	const [ logoutModalIsOpen, toggleLogoutModal ] = useState(false);
 
 	const onLoginButtonClick = () => {
-		if(mobileView && isAuth){
-			toggleLogoutModal(true)
-		}else{
+		if (mobileView && isAuth) {
+			toggleLogoutModal(true);
+		} else {
 			isAuth ? firebase.auth().signOut() : history.push('/login');
 		}
 	};
@@ -27,11 +27,12 @@ const Navigation = ({ className, collapsed, toggleCollapsed, isAuth, antdSize, m
 					<Icon type={collapsed ? 'menu-unfold' : 'menu-fold'} />
 				</Button>
 			</ToggleButtonContainer>
-
 			<WeatherForm mobileView={mobileView} antdSize={antdSize} />
-			<Button size={antdSize} type="primary" onClick={onLoginButtonClick}>
-				{mobileView ? <Icon type="user" /> : isAuth ? 'logout' : 'login'}
-			</Button>
+			<LoginButtonContainer>
+				<Button size={antdSize} type="primary" onClick={onLoginButtonClick}>
+					{mobileView ? <Icon type="user" /> : isAuth ? 'logout' : 'login'}
+				</Button>
+			</LoginButtonContainer>
 		</nav>
 	);
 };
@@ -42,7 +43,7 @@ const mapStateToProps = ({ auth, styles }) => {
 		collapsed: styles.subNavCollapsed,
 		isAuth: !!auth.uid,
 		antdSize: windowWidth > 750 ? 'default' : 'small',
-		mobileView: windowWidth <= 550
+		mobileView: windowWidth <= 450
 	};
 };
 

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -11,8 +11,9 @@ import contactDaysToWeather from '../../functions/contactDaysToWeather';
 import getSumOfBudgetItems from '../../functions/getSumOfBudgetItems';
 import filterData from '../../functions/filterData';
 
-const Calendar = ({days, budget, tasksQuantity, className, selectedMonth, openModal, changeMonth}) => {
+const Calendar = ({ days, budget, tasksQuantity, className, selectedMonth, openModal, changeMonth }) => {
 	const { year, monthNum } = selectedMonth;
+	const componentRef = React.createRef();
 
 	const dayClick = (day) => {
 		const clikedMonthNum = parseInt(day.monthNum);
@@ -32,7 +33,7 @@ const Calendar = ({days, budget, tasksQuantity, className, selectedMonth, openMo
 	};
 
 	return (
-		<section className={className}>
+		<section ref={componentRef} className={className}>
 			<CalendarSummary
 				monthInt={parseInt(monthNum)}
 				yearInt={parseInt(year)}
@@ -41,7 +42,12 @@ const Calendar = ({days, budget, tasksQuantity, className, selectedMonth, openMo
 				tasksQuantity={tasksQuantity}
 			/>
 			{days.map((day, i) => (
-				<CalendarDay day={day} dayClick={dayClick} disabled={monthNum !== day.monthNum} key={i} />
+				<CalendarDay
+					day={day}
+					dayClick={dayClick}
+					disabled={monthNum !== day.monthNum}
+					key={i}
+				/>
 			))}
 		</section>
 	);
