@@ -60,18 +60,15 @@ export const List = styled('ul')`
     margin-bottom: 0;
     flex: 1;
     
-    ${(props) =>
-		props.withMargin &&
-		`&:not(:last-child){
-            margin-right: 2rem;
-        }
-    `}
+
+	&:not(:last-child){
+        margin-right: 2rem;
+    }
 
     ${media.small`
         flex: 1 1 100%;
 
         ${(props) =>
-			props.withMargin &&
 			`&:not(:last-child){
             margin-right: 0;
             border-bottom: ${props.theme.lightBorder};

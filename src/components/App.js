@@ -32,6 +32,7 @@ const Root = styled('div')`
 	display: flex;
 	flex-direction: column;
 `;
+
 const CalendarContainer = styled('div')`
   	flex: 1;
 		overflow: auto;
@@ -39,5 +40,7 @@ const CalendarContainer = styled('div')`
 
 const CalendarPaddingContainer = styled('div')`
     min-width: 700px;
+    max-width: 1000px;
   	padding: 2rem;
+		margin: auto;
 `;

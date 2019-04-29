@@ -5,7 +5,7 @@ export const StyledDayContainer = styled('div')`
 	${(props) => `
 		border-top: ${props.theme.darkBorder};
 		border-left: ${props.theme.darkBorder};
-		background: ${props.disabled ? props.theme.colorGreyLight3 : props.theme.colorGreyLight1};
+		background: ${props.disabled ? props.theme.colorGreyLight5 : props.theme.colorGreyLight3};
 	`}
 	flex: 1 14.2857%;
 	cursor: pointer;

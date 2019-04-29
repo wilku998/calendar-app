@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Select } from "antd";
+import numeral from 'numeral';
 
 import { monthsData } from "../../../fakedata/months";
-import { styleSummary, CalendarSummaryItem } from './styledCalendarSummary';
+import { styleSummary, CalendarSummaryItem, CalendarSummarySelect } from './styledCalendarSummary';
 
 const { Option } = Select;
 
@@ -25,24 +26,23 @@ const CalendarSummary = ({ className, onMonthChange, yearInt, monthInt, budget, 
 		<div className={className}>
 			<form>
 				{[ { years, key: 'year' }, { months, key: 'month' } ].map((e) => (
-					<CalendarSummaryItem
+					<CalendarSummarySelect
 						as={Select}
 						key={e.key}
 						value={0}
 						onChange={onMonthChange}
-						style={{ width: '15rem' }}
 					>
 						{e[`${e.key}s`].map((subElement) => (
 							<Option key={subElement[e.key]} value={subElement.value}>
 								{subElement[e.key]}
 							</Option>
 						))}
-					</CalendarSummaryItem>
+					</CalendarSummarySelect>
 				))}
 			</form>
 			<div>
-				<CalendarSummaryItem>Budget: {budget}$</CalendarSummaryItem>
-				<CalendarSummaryItem>Tasks: {tasksQuantity}</CalendarSummaryItem>
+				<CalendarSummaryItem budget={budget>=0 ? 'gain' : 'loss'}>Budget: <span>{numeral(budget).format('$0,0.00')}</span></CalendarSummaryItem>
+				<CalendarSummaryItem>Tasks: <span>{tasksQuantity}</span></CalendarSummaryItem>
 			</div>
 		</div>
 	);
@@ -57,4 +57,4 @@ CalendarSummary.propTypes = {
 	tasksQuantity: PropTypes.number.isRequired
 };
 
-export default styleSummary(CalendarSummary);
+export default React.memo(styleSummary(CalendarSummary));

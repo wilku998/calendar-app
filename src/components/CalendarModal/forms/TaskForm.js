@@ -1,23 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Input, Button } from 'antd';
 
 import { styleForm, Label, SpanLabelDescription, inputStyles, fontSize } from './styledForm';
 import setInputColor from '../../../functions/setInputColor';
-
+import formValidation from './validation';
+import useTitle from './titleHook'
 const { TextArea } = Input;
 
-const TaskForm = ({ setFormPropetyVal, addTask, taskDescription, taskTitle, className }) => {
-	const titleInputColor = setInputColor(taskTitle.value, taskTitle.valid, '');
-	const descriptionInputColor = setInputColor(taskDescription.value, taskDescription.valid, '');
+const TaskForm = ({ createItem, className }) => {
+	console.log('tasks form rerender');
 
-	const setTitle = (e) => {
-		setFormPropetyVal('taskForm', 'title', e.target.value);
+	const [ description, setDescription ] = useState({value: '', valid: '', inputColor: 'inherit'});
+	const [ title, setTitle, resetTitle ] = useTitle();
+
+	const onDescriptionChange = (e) => {
+		const value = e.target.value;
+		const valid = formValidation(value, 'description');
+		setDescription({value, valid, inputColor: setInputColor(value, valid) })
 	};
 
-	const setDescription = (e) => {
-		setFormPropetyVal('taskForm', 'description', e.target.value);
+	const addTask = async () => {
+		if (title.valid && description.valid) {
+			await createItem('tasks', {
+				title: title.value,
+				description: description.value
+			});
+			onDescriptionChange('');
+			resetTitle();
+		}
 	};
+
 	return (
 		<form className={className}>
 			<Label>
@@ -26,10 +39,10 @@ const TaskForm = ({ setFormPropetyVal, addTask, taskDescription, taskTitle, clas
 					style={{
 						...fontSize,
 						...inputStyles,
-						backgroundColor: titleInputColor
+						backgroundColor: title.inputColor
 					}}
 					onChange={setTitle}
-					value={taskTitle.value}
+					value={title.value}
 					size="small"
 				/>
 			</Label>
@@ -40,12 +53,12 @@ const TaskForm = ({ setFormPropetyVal, addTask, taskDescription, taskTitle, clas
 				<SpanLabelDescription>Description</SpanLabelDescription>
 				<TextArea
 					rows={3}
-					onChange={setDescription}
-					value={taskDescription.value}
+					onChange={onDescriptionChange}
+					value={description.value}
 					style={{
 						...fontSize,
 						resize: 'none',
-						backgroundColor: descriptionInputColor
+						backgroundColor: description.inputColor
 					}}
 				/>
 			</Label>
@@ -54,10 +67,7 @@ const TaskForm = ({ setFormPropetyVal, addTask, taskDescription, taskTitle, clas
 };
 
 TaskForm.propTypes = {
-	setFormPropetyVal: PropTypes.func.isRequired,
-	addTask: PropTypes.func.isRequired,
-	taskDescription: PropTypes.object.isRequired,
-	taskTitle: PropTypes.object.isRequired,
+	createItem: PropTypes.func.isRequired,
 	className: PropTypes.string.isRequired
 };
 

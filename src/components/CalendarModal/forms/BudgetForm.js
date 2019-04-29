@@ -1,26 +1,41 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Input, Button, Select, InputNumber } from 'antd';
 import PropTypes from 'prop-types';
 
 import { Label, inputStyles, inputValueStyles, styleForm, selectStyles, fontSize } from './styledForm';
 import setInputColor from '../../../functions/setInputColor';
+import useTitle from './titleHook'
+import formValidation from './validation';
 
 const { Option } = Select;
 
-const BudgetForm = ({ setFormPropetyVal, addBudget, budgetTitle, budgetValue, budgetType, className }) => {
-	const titleInputColor = setInputColor(budgetTitle.value, budgetTitle.valid, '');
-	const valueInputColor = setInputColor(budgetValue.value, budgetValue.valid, null);
+const BudgetForm = ({ createItem, className }) => {
+	console.log('budget form rerender')
 
-	const setTitle = (e) => {
-		setFormPropetyVal('budgetForm', 'title', e.target.value);
+	const [ type, setType] = useState('income');
+	const [value, setValue] = useState({value: 1, valid: false, inputColor: 'inherit'})
+	const [ title, setTitle, resetTitle ] = useTitle();
+
+	const onValueChange = (value) => {
+		const valid = formValidation(value, 'value');
+		setValue({
+			value,
+			valid,
+			inputColor: setInputColor(value, valid, null)
+		})
 	};
 
-	const setType = (value) => {
-		setFormPropetyVal('budgetForm', 'type', value);
-	};
+	const onTypeChange = (type) => setType(type);
 
-	const setValue = (value) => {
-		setFormPropetyVal('budgetForm', 'value', value);
+	const addBudget = async () => {
+		if (title.valid && value.valid) {
+			await createItem(`${type}s`, {
+				title: title.value,
+				value: Math.round(value.value * 100) / 100
+			});
+			onValueChange(1);
+			resetTitle();
+		}
 	};
 
 	return (
@@ -31,18 +46,18 @@ const BudgetForm = ({ setFormPropetyVal, addBudget, budgetTitle, budgetValue, bu
 					style={{
 						...fontSize,
 						...inputStyles,
-						backgroundColor: titleInputColor
+						backgroundColor: title.inputColor
 					}}
 					onChange={setTitle}
-					value={budgetTitle.value}
+					value={title.value}
 					size="small"
 				/>
 			</Label>
 			<Label>
 				Type
 				<Select
-					onChange={setType}
-					value={budgetType.value}
+					onChange={onTypeChange}
+					value={type}
 					size="small"
 					style={{ ...fontSize, ...selectStyles }}
 				>
@@ -56,10 +71,10 @@ const BudgetForm = ({ setFormPropetyVal, addBudget, budgetTitle, budgetValue, bu
 					style={{
 						...fontSize,
 						...inputValueStyles,
-						backgroundColor: valueInputColor
+						backgroundColor: value.inputColor
 					}}
-					onChange={setValue}
-					value={budgetValue.value}
+					onChange={onValueChange}
+					value={value.value}
 					size="small"
 				/>
 			</Label>
@@ -71,12 +86,8 @@ const BudgetForm = ({ setFormPropetyVal, addBudget, budgetTitle, budgetValue, bu
 };
 
 BudgetForm.propTypes = {
-	setFormPropetyVal: PropTypes.func.isRequired,
 	className: PropTypes.string.isRequired,
-	addBudget: PropTypes.func.isRequired,
-	budgetTitle: PropTypes.object.isRequired,
-	budgetType: PropTypes.object.isRequired,
-	budgetValue: PropTypes.object.isRequired
+	createItem: PropTypes.func.isRequired,
 };
 
 export default styleForm(BudgetForm);

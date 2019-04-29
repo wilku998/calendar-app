@@ -16,6 +16,7 @@ import {
 import { removeItem } from '../../../actions/items';
 
 const ListContainer = ({ items, title, className, removeItem }) => {
+	console.log(' items render')
 	return (
 		<div className={className}>
 			{title !== 'Tasks' && <h3>{title}</h3>}

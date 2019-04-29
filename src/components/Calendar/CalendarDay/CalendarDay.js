@@ -44,12 +44,12 @@ const CalendarDay = ({ day, dayClick, disabled }) => {
 						)}
 						{day.containIncomes && (
 							<span>
-								<Icon style={{ color: theme.colorRed }} color="green" type="rise" />
+								<Icon style={{ color: theme.colorGreen }} type="rise" />
 							</span>
 						)}
 						{day.containExpenses && (
 							<span>
-								<Icon style={{ color: theme.colorGreen }} type="fall" />
+								<Icon style={{ color: theme.colorRed }} type="fall" />
 							</span>
 						)}
 					</CalendarDayInfo>
@@ -65,4 +65,4 @@ CalendarDay.propTypes = {
 	dayClick: PropTypes.func.isRequired,
 	disabled: PropTypes.bool.isRequired,
 };
-export default CalendarDay;
+export default React.memo(CalendarDay);

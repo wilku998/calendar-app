@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Icon } from 'antd';
@@ -9,9 +9,9 @@ import { toggleModal } from '../../actions/modal';
 import getMonthName from '../../functions/getMonthName';
 import TaskForm from './forms/TaskForm';
 import BudgetForm from './forms/BudgetForm';
-import initialState from './initialState';
 import ItemsList from './ModalLists/ItemsList';
 import WeatherList from './ModalLists/WeatherList';
+
 import {
 	StyledModal,
 	StyledModalContent,
@@ -22,150 +22,55 @@ import {
 	CloseButton
 } from './styledCalendarModal';
 
-class CelandarModal extends Component {
-	state = {
-		...initialState
-	};
+const CelandarModal = ({ modalIsOpen, closeModal, selectedDay, tasks, incomes, expenses, addItem }) => {
+	const { weather, dayNum, monthNum, year } = selectedDay;
 
-	formValidation = (value, property) => {
-		switch (property) {
-			case 'title':
-				return value.length >= 3 && value.length <= 30;
-			case 'description':
-				let wordsValid = true;
-				value.split(' ').forEach((e) => {
-					if (e.length > 20) {
-						wordsValid = false;
-					}
-				});
-				return value.length <= 400 && wordsValid;
-			case 'value':
-				return !isNaN(value) && value > 0 && value < 1000000;
-			default:
-				return true;
-		}
-	};
-
-	setFormPropetyVal = (form, property, value) => {
-		this.setState((state) => ({
-			[form]: {
-				...state[form],
-				[property]: {
-					value,
-					valid: this.formValidation(value, property)
-				}
-			}
-		}));
-	};
-
-	addItem = async (type, item) => {
-		await this.props.addItem(type, {
+	const createItem = async (type, item) => {
+		await addItem(type, {
 			...item,
 			createdAt: {
-				...this.props.selectedDay
+				...selectedDay
 			}
 		});
-
-		this.setState(() => ({
-			...initialState
-		}));
 	};
 
-	addBudget = () => {
-		const { title, type, value } = this.state.budgetForm;
-		if (title.valid && value.valid) {
-			this.addItem(`${type.value}s`, {
-				title: title.value,
-				value: Math.round(value.value * 100) / 100
-			});
-		}
-	};
+	return (
+		<StyledModal style={overlayStyles} isOpen={modalIsOpen} onRequestClose={closeModal} ariaHideApp={false}>
+			<StyledModalContent>
+				<CloseButton onClick={closeModal}>
+					<Icon type="close-circle" />
+				</CloseButton>
+				<CalendarModalItem>
+					<div>
+						<CalendarModalTitle withoutMargin={!weather}>
+							{dayNum} {getMonthName(monthNum)} {year}
+						</CalendarModalTitle>
+						{weather && <WeatherList weather={weather} />}
+					</div>
+				</CalendarModalItem>
 
-	addTask = () => {
-		const { title, description } = this.state.taskForm;
-		if (title.valid && description.valid) {
-			this.addItem('tasks', {
-				title: title.value,
-				description: description.value
-			});
-		}
-	};
+				<CalendarModalItem>
+					<div>
+						<CalendarModalTitle>Budget</CalendarModalTitle>
+						<BudgetForm createItem={createItem} />
+						<CalendarModalListContainer>
+							{incomes.length > 0 && <ItemsList title="Incomes" items={incomes} />}
+							{expenses.length > 0 && <ItemsList title="Expenses" items={expenses} />}
+						</CalendarModalListContainer>
+					</div>
+				</CalendarModalItem>
 
-	sliceArr = (arr) => {
-		const half = Math.floor(arr.length / 2);
-		return [ arr.slice(0, half), arr.slice(half) ];
-	};
-	onAfterOpen = () => {
-		this.setState(() => ({
-			...initialState
-		}));
-	};
-
-	render() {
-		const { modalIsOpen, closeModal, selectedDay, tasks, incomes, expenses } = this.props;
-		const { description: taskDescription, title: taskTitle } = this.state.taskForm;
-		const { value: budgetValue, title: budgetTitle, type: budgetType } = this.state.budgetForm;
-		const { weather, dayNum, monthNum, year } = selectedDay;
-
-		return (
-			<StyledModal
-				onAfterOpen={this.onAfterOpen}
-				style={overlayStyles}
-				isOpen={modalIsOpen}
-				onRequestClose={closeModal}
-				ariaHideApp={false}
-			>
-				<StyledModalContent>
-					<CloseButton onClick={closeModal}>
-						<Icon type="close-circle" />
-					</CloseButton>
-					<CalendarModalItem>
-						<div>
-							<CalendarModalTitle withoutMargin={!weather}>
-								{dayNum} {getMonthName(monthNum)} {year}
-							</CalendarModalTitle>
-							{weather && (
-								<CalendarModalListContainer>
-									{this.sliceArr(weather).map((e, i) => <WeatherList key={i} weather={e} />)}
-								</CalendarModalListContainer>
-							)}
-						</div>
-					</CalendarModalItem>
-
-					<CalendarModalItem>
-						<div>
-							<CalendarModalTitle>Budget</CalendarModalTitle>
-							<BudgetForm
-								setFormPropetyVal={this.setFormPropetyVal}
-								addBudget={this.addBudget}
-								budgetTitle={budgetTitle}
-								budgetValue={budgetValue}
-								budgetType={budgetType}
-							/>
-							<CalendarModalListContainer>
-								{incomes.length > 0 && <ItemsList title="Incomes" items={incomes} />}
-								{expenses.length > 0 && <ItemsList title="Expenses" items={expenses} />}
-							</CalendarModalListContainer>
-						</div>
-					</CalendarModalItem>
-
-					<CalendarModalItem>
-						<div>
-							<CalendarModalTitle>Tasks</CalendarModalTitle>
-							<TaskForm
-								setFormPropetyVal={this.setFormPropetyVal}
-								addTask={this.addTask}
-								taskTitle={taskTitle}
-								taskDescription={taskDescription}
-							/>
-							{tasks.length > 0 && <ItemsList items={tasks} title="Tasks" />}
-						</div>
-					</CalendarModalItem>
-				</StyledModalContent>
-			</StyledModal>
-		);
-	}
-}
+				<CalendarModalItem>
+					<div>
+						<CalendarModalTitle>Tasks</CalendarModalTitle>
+						<TaskForm createItem={createItem} />
+						{tasks.length > 0 && <ItemsList items={tasks} title="Tasks" />}
+					</div>
+				</CalendarModalItem>
+			</StyledModalContent>
+		</StyledModal>
+	);
+};
 
 const mapDispatchToProps = (dispatch) => ({
 	addItem: (type, item) => dispatch(addItem(type, item)),

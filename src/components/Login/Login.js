@@ -1,135 +1,128 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { Input, Radio, Button, Icon, message } from 'antd';
 import { Link } from 'react-router-dom';
-import validator from 'validator';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import validator from 'validator';
+
 import { firebase } from '../../database/firebase';
 import setInputColor from '../../functions/setInputColor';
 import { InputPassword, styleLogin, Label, Form, LoginContent } from './styledLogin';
 
 const RadioGroup = Radio.Group;
 
-class Login extends Component {
-	state = {
-		type: 'login',
-		errorMessage: '',
-		email: {
-			value: '',
-			valid: false
-		},
-		password: {
-			value: '',
-			valid: false
-		},
-		confirmPassword: {
-			value: '',
-			valid: false
-		}
-	};
+const Login = ({ className, mobileView, antdSize }) => {
+	const [ type, setType ] = useState('login');
+	const [ errorMessage, setErrorMessage ] = useState('');
+	const [ email, setEmail ] = useState({ value: '', valid: false });
+	const [ password, setPassword ] = useState({ value: '', valid: false });
+	const [ confirmPassword, setConfirmPassword ] = useState({ value: '', valid: false });
 
-	onRadioChange = (e) => {
-		this.setState(() => ({
-			type: e.target.value
-		}));
-	};
-
-	login = async (email, password, type) => {
-		try {
-			if (type === 'register') {
-				await firebase.auth().createUserWithEmailAndPassword(email, password);
-			} else {
-				await firebase.auth().signInWithEmailAndPassword(email, password);
-			}
-		} catch (error) {
-			this.setState(() => ({
-				errorMessage: error.message
-			}));
-		}
-	};
-
-	onSubmit = () => {
-		const { type, email, password, confirmPassword } = this.state;
-		if (email.valid && password.valid) {
-			if (type === 'register' && confirmPassword.valid) {
-				this.login(email.value, password.value, type);
-			} else if (type === 'login') {
-				this.login(email.value, password.value, type);
-			}
-		}
-	};
-
-	isValid = (property, value) => {
+	const formValidation = (value, property) => {
 		switch (property) {
 			case 'email':
 				return validator.isEmail(value);
 			case 'password':
 				return value.length >= 6;
 			case 'confirmPassword':
-				return value.length >= 6 && value === this.state.password.value;
+				return value.length >= 6 && value === password.value;
 		}
 	};
 
-	setFormPropertyValue = (property, value) => {
-		const valid = this.isValid(property, value);
-		this.setState(() => ({
-			[property]: {
-				value,
-				valid,
-				color: setInputColor(value, valid, '')
-			}
-		}));
+	const createFormPropertyObject = (e, property) => {
+		const value = e.target.value;
+		const valid = formValidation(value, property);
+		const inputColor = setInputColor(value, valid, '');
+		return { value, valid, inputColor };
 	};
 
-	render() {
-		const { className, mobileView, antdSize } = this.props;
-		const { type, email, password, confirmPassword, errorMessage } = this.state;
+	const onTypeChange = (e) => {
+		setType(e.target.value);
+	};
 
-		return (
-			<div className={className}>
-				<LoginContent mobileView={mobileView}>
-					<Link to="/">
-						<Button size={antdSize} type="primary">
-							<Icon type="left" />Go back
-						</Button>
-					</Link>
-					<Form>
+	const onEmailChange = (e) => {
+		setEmail({
+			...createFormPropertyObject(e, 'email')
+		});
+	};
+
+	const onPasswordChange = (e) => {
+		setPassword({
+			...createFormPropertyObject(e, 'password')
+		});
+	};
+
+	const onConfirmPasswordChange = (e) => {
+		setConfirmPassword({
+			...createFormPropertyObject(e, 'confirmPassword')
+		});
+	};
+
+	const onSubmit = async () => {
+		if (email.valid && password.valid) {
+			try {
+				if (confirmPassword.valid && type === 'register') {
+					await firebase.auth().createUserWithEmailAndPassword(email.value, password.value);
+				} else if (type === 'login') {
+					await firebase.auth().signInWithEmailAndPassword(email.value, password.value);
+				}
+			} catch (error) {
+				setErrorMessage(error.message);
+			}
+		}
+	};
+
+	return (
+		<div className={className}>
+			<LoginContent mobileView={mobileView}>
+				<Link to="/">
+					<Button size={antdSize} type="primary">
+						<Icon type="left" />Go back
+					</Button>
+				</Link>
+				<Form>
+					<Label>
+						E-mail<Input
+							style={{ backgroundColor: email.inputColor }}
+							value={email.value}
+							onChange={onEmailChange}
+						/>
+					</Label>
+					<Label>
+						Password<InputPassword
+							backgroundcolor={password.inputColor}
+							value={password.value}
+							onChange={onPasswordChange}
+						/>
+					</Label>
+					{type === 'register' && (
 						<Label>
-							E-mail<Input
-								style={{ backgroundColor: email.color }}
-								value={email.value}
-								onChange={(e) => this.setFormPropertyValue('email', e.target.value)}
+							Confirm password<InputPassword
+								backgroundcolor={confirmPassword.inputColor}
+								value={confirmPassword.value}
+								onChange={onConfirmPasswordChange}
 							/>
 						</Label>
-						<Label>
-							Password<InputPassword
-								backgroundcolor={password.color}
-								value={password.value}
-								onChange={(e) => this.setFormPropertyValue('password', e.target.value)}
-							/>
-						</Label>
-						{type === 'register' && (
-							<Label>
-								Confirm password<InputPassword
-									backgroundcolor={confirmPassword.color}
-									value={confirmPassword.value}
-									onChange={(e) => this.setFormPropertyValue('confirmPassword', e.target.value)}
-								/>
-							</Label>
-						)}
-						<RadioGroup style={{ marginTop: '1rem' }} onChange={this.onRadioChange} value={type}>
-							<Radio value="login">Login</Radio>
-							<Radio value="register">Create an account</Radio>
-						</RadioGroup>
-						{errorMessage !== '' && <span>{errorMessage}</span>}
-						<Button size={antdSize} onClick={this.onSubmit} type="primary">
-							submit
-						</Button>
-					</Form>
-				</LoginContent>
-			</div>
-		);
-	}
-}
+					)}
+					<RadioGroup style={{ marginTop: '1rem' }} onChange={onTypeChange} value={type}>
+						<Radio value="login">Login</Radio>
+						<Radio value="register">Create an account</Radio>
+					</RadioGroup>
+					{errorMessage !== '' && <span>{errorMessage}</span>}
+					<Button size={antdSize} onClick={onSubmit} type="primary">
+						submit
+					</Button>
+				</Form>
+			</LoginContent>
+		</div>
+	);
+};
+
+Login.propTypes = {
+	className: PropTypes.string,
+	mobileView: PropTypes.bool,
+	antdSize: PropTypes.string
+};
 
 const mapStateToProps = ({ styles }) => {
 	const { windowWidth } = styles;
