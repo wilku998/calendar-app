@@ -1,6 +1,15 @@
 import styled from 'styled-components';
 import { Input } from 'antd';
 
+export default (Login) => styled(Login)`
+    width: 100%;
+    height: 100vh;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
+
 export const InputPassword = styled(Input.Password)`
     & > input{
         background-color: ${(props) => props.backgroundcolor} !important;
@@ -13,15 +22,6 @@ export const LoginContent = styled('section')`
     display: flex;
     flex-direction: column;
     border-radius: .3rem;
-`;
-
-export const styleLogin = (Login) => styled(Login)`
-    width: 100%;
-    height: 100vh;
-    padding: 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 `;
 
 export const Label = styled('label')`

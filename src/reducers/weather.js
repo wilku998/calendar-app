@@ -1,7 +1,6 @@
-import { fakeWeatherObject } from '../fakedata/data';
 import splitWeatherDays from '../functions/splitWeatherDays';
 
-export default (state = [...fakeWeatherObject], action) => {
+export default (state = [], action) => {
 	const { type } = action;
 	switch (type) {
 		case 'SET_WEATHER':

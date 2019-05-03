@@ -1,8 +1,9 @@
 import React from 'react';
 import Modal from 'react-modal';
 import { Button } from 'antd';
-import { firebase } from '../../database/firebase';
+import PropTypes from 'prop-types';
 
+import { firebase } from '../../database/firebase';
 import { overlayStyles } from '../CalendarModal/styledCalendarModal';
 
 const contentStyles = {
@@ -19,7 +20,7 @@ const contentStyles = {
 	}
 };
 
-export default ({ logoutModalIsOpen, toggleLogoutModal }) => {
+const MobileLogoutModal = ({ logoutModalIsOpen, toggleLogoutModal }) => {
 	const closeModal = () => {
 		toggleLogoutModal(false);
 	};
@@ -43,3 +44,10 @@ export default ({ logoutModalIsOpen, toggleLogoutModal }) => {
 		</Modal>
 	);
 };
+
+MobileLogoutModal.propTypes = {
+	logoutModalIsOpen: PropTypes.bool.isRequired,
+	toggleLogoutModal: PropTypes.func.isRequired
+};
+
+export default MobileLogoutModal;

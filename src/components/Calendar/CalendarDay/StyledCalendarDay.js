@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import media from '../../../styledComponents/breakPoints';
 
-export const StyledDayContainer = styled('div')`
+export default (CalendarDay) => styled(CalendarDay)`
 	${(props) => `
 		border-top: ${props.theme.darkBorder};
 		border-left: ${props.theme.darkBorder};
@@ -28,12 +28,12 @@ export const StyledDayContainer = styled('div')`
 	}
 `;
 
-export const StyledDayContent = styled('div')`
+export const StyledDayPadding = styled('div')`
 	padding-top: 100%;
 	position: relative;
 `;
 
-export const StyledDay = styled('div')`
+export const StyledDayContent = styled('div')`
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -43,10 +43,17 @@ export const StyledDay = styled('div')`
     flex-direction: column;
     justify-content: space-between;
     font-size: 1.6rem;
-    padding: 0.7rem;
+    padding: 1rem;
     line-height: 1;
+	color: ${props => props.colorGreyDark3};
+
 	${media.big`
+    	padding: 0.7rem;
 		font-size: 1.2rem;
+	`}
+
+	${media.mid`
+		font-size: 1.4rem;
 	`}
 `;
 

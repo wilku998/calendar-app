@@ -2,17 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Icon } from 'antd';
 
-import {
+import StyleDay, {
 	CalendarDayInfo,
 	DayNum,
 	DayWeather,
-	StyledDay,
 	StyledDayContent,
-	StyledDayContainer
+	StyledDayPadding,
+	
 } from './StyledCalendarDay';
 import theme from '../../../styledComponents/theme';
 
-const CalendarDay = ({ day, dayClick, disabled }) => {
+const CalendarDay = ({ day, dayClick, disabled, className }) => {
 	const getWeather = (weatherArr) => {
 		const half = Math.floor(weatherArr.length / 2);
 		const weather = weatherArr[half];
@@ -29,10 +29,15 @@ const CalendarDay = ({ day, dayClick, disabled }) => {
 			</DayWeather>
 		);
 	};
+
+	const onDayClick = () => {
+		dayClick(day);
+	};
+	
 	return (
-		<StyledDayContainer disabled={disabled} onClick={() => dayClick(day)}>
-			<StyledDayContent>
-				<StyledDay>
+		<div className={className} disabled={disabled} onClick={onDayClick}>
+			<StyledDayPadding>
+				<StyledDayContent>
 					<DayNum>
 						{day.dayNum} {day.day}
 					</DayNum>
@@ -54,15 +59,15 @@ const CalendarDay = ({ day, dayClick, disabled }) => {
 						)}
 					</CalendarDayInfo>
 					{day.weather ? getWeather(day.weather) : ''}
-				</StyledDay>
-			</StyledDayContent>
-		</StyledDayContainer>
+				</StyledDayContent>
+			</StyledDayPadding>
+		</div>
 	);
 };
 
 CalendarDay.propTypes = {
 	day: PropTypes.object.isRequired,
 	dayClick: PropTypes.func.isRequired,
-	disabled: PropTypes.bool.isRequired,
+	disabled: PropTypes.bool.isRequired
 };
-export default React.memo(CalendarDay);
+export default React.memo(StyleDay(CalendarDay));

@@ -2,22 +2,22 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Input, Button } from 'antd';
 
-import { styleForm, Label, SpanLabelDescription, inputStyles, fontSize } from './styledForm';
+import styleForm, { Label, SpanLabelDescription, inputStyles, fontSize } from './styledForm';
 import setInputColor from '../../../functions/setInputColor';
 import formValidation from './validation';
-import useTitle from './titleHook'
+import useTitle from './titleHook';
 const { TextArea } = Input;
 
 const TaskForm = ({ createItem, className }) => {
 	console.log('tasks form rerender');
-
-	const [ description, setDescription ] = useState({value: '', valid: '', inputColor: 'inherit'});
+	const initialDescription = { value: '', valid: '', inputColor: 'white' };
+	const [ description, setDescription ] = useState({ ...initialDescription });
 	const [ title, setTitle, resetTitle ] = useTitle();
 
 	const onDescriptionChange = (e) => {
 		const value = e.target.value;
 		const valid = formValidation(value, 'description');
-		setDescription({value, valid, inputColor: setInputColor(value, valid) })
+		setDescription({ value, valid, inputColor: setInputColor(value, valid) });
 	};
 
 	const addTask = async () => {
@@ -26,7 +26,7 @@ const TaskForm = ({ createItem, className }) => {
 				title: title.value,
 				description: description.value
 			});
-			onDescriptionChange('');
+			setDescription({ ...initialDescription });
 			resetTitle();
 		}
 	};

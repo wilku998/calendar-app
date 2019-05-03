@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { List, ListItem } from './styledModalList';
-import { CalendarModalListContainer } from '../styledCalendarModal';
+import { List, ListItem, ListContainer } from './styledList';
 
 const Weather = ({ weather }) => {
 	console.log('weather render');
@@ -10,9 +9,9 @@ const Weather = ({ weather }) => {
 	const weatherArrs = [ weather.slice(0, half), weather.slice(half) ];
 
 	return (
-		<CalendarModalListContainer>
+		<ListContainer>
 			{weatherArrs.map((weather, i) => (
-				<List key={i}>
+				<List marginTop={false} key={i}>
 					{weather.map((e, i) => (
 						<ListItem padding="small" key={i}>
 							<span>{e.main.temp}℃</span> <span>{e.dt_txt.split(' ')[1]}</span>
@@ -20,7 +19,7 @@ const Weather = ({ weather }) => {
 					))}
 				</List>
 			))}
-		</CalendarModalListContainer>
+		</ListContainer>
 	);
 };
 

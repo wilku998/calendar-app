@@ -3,7 +3,7 @@ import formValidation from './validation';
 import setInputColor from '../../../functions/setInputColor';
 
 export default () => {
-	const initialState = { value: '', valid: '', inputColor: 'inherit' };
+	const initialState = { value: '', valid: '', inputColor: 'white' };
 	const [ title, setTitle ] = useState({ ...initialState });
 
 	const onTitleChange = (e) => {

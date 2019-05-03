@@ -1,19 +1,19 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { Input, Button, Select, InputNumber } from 'antd';
 import PropTypes from 'prop-types';
 
-import { Label, inputStyles, inputValueStyles, styleForm, selectStyles, fontSize } from './styledForm';
+import styleForm, { Label, inputStyles, inputValueStyles, selectStyles, fontSize } from './styledForm';
 import setInputColor from '../../../functions/setInputColor';
-import useTitle from './titleHook'
+import useTitle from './titleHook';
 import formValidation from './validation';
 
 const { Option } = Select;
 
 const BudgetForm = ({ createItem, className }) => {
-	console.log('budget form rerender')
+	console.log('budget form rerender');
 
-	const [ type, setType] = useState('income');
-	const [value, setValue] = useState({value: 1, valid: false, inputColor: 'inherit'})
+	const [ type, setType ] = useState('income');
+	const [ value, setValue ] = useState({ value: null, valid: true, inputColor: 'white' });
 	const [ title, setTitle, resetTitle ] = useTitle();
 
 	const onValueChange = (value) => {
@@ -22,7 +22,7 @@ const BudgetForm = ({ createItem, className }) => {
 			value,
 			valid,
 			inputColor: setInputColor(value, valid, null)
-		})
+		});
 	};
 
 	const onTypeChange = (type) => setType(type);
@@ -33,7 +33,7 @@ const BudgetForm = ({ createItem, className }) => {
 				title: title.value,
 				value: Math.round(value.value * 100) / 100
 			});
-			onValueChange(1);
+			onValueChange(null);
 			resetTitle();
 		}
 	};
@@ -55,12 +55,7 @@ const BudgetForm = ({ createItem, className }) => {
 			</Label>
 			<Label>
 				Type
-				<Select
-					onChange={onTypeChange}
-					value={type}
-					size="small"
-					style={{ ...fontSize, ...selectStyles }}
-				>
+				<Select onChange={onTypeChange} value={type} size="small" style={{ ...fontSize, ...selectStyles }}>
 					<Option value="income">income</Option>
 					<Option value="expense">expense</Option>
 				</Select>
@@ -87,7 +82,7 @@ const BudgetForm = ({ createItem, className }) => {
 
 BudgetForm.propTypes = {
 	className: PropTypes.string.isRequired,
-	createItem: PropTypes.func.isRequired,
+	createItem: PropTypes.func.isRequired
 };
 
 export default styleForm(BudgetForm);

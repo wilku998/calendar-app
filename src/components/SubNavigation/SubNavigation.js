@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Menu, Icon } from 'antd';
+import PropTypes from 'prop-types';
 
 import styleSubNav from './styledSubNavigation';
 import { toggleModal } from '../../actions/modal';
@@ -37,6 +38,18 @@ const SubNavigation = ({ items, openModal, removeItems, collapsed, className }) 
 	</nav>
 );
 
+SubNavigation.propTypes = {
+	items: PropTypes.array.isRequired,
+	openModal: PropTypes.func.isRequired,
+	removeItems: PropTypes.func.isRequired,
+	collapsed: PropTypes.bool.isRequired,
+	className: PropTypes.string.isRequired
+};
+
+const mapDispatchToProps = (dispatch) => ({
+	openModal: (selectedDay) => dispatch(toggleModal(true, selectedDay)),
+	removeItems: (kind) => dispatch(removeItems(kind))
+});
 
 const getIcon = (key) => {
 	switch (key) {
@@ -48,11 +61,6 @@ const getIcon = (key) => {
 			return 'fall';
 	}
 };
-
-const mapDispatchToProps = (dispatch) => ({
-	openModal: (selectedDay) => dispatch(toggleModal(true, selectedDay)),
-	removeItems: (kind) => dispatch(removeItems(kind))
-});
 
 const mapStateToProps = ({ items, styles }) => {
 	return {

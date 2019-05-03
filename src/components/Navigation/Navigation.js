@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Icon, Button } from 'antd';
+import PropTypes from 'prop-types';
 
 import { firebase } from '../../database/firebase';
 import { history } from '../../routers/appRouter';
-import { ToggleButtonContainer, styleNavigation, LoginButtonContainer } from './StyledNavigation';
+import styleNavigation, { ToggleButtonContainer, LoginButtonContainer } from './StyledNavigation';
 import WeatherForm from '../WeatherForm/WeatherForm';
 import MobileLogoutModal from '../mobileLogoutModal/mobileLogoutModal';
 
@@ -35,6 +36,15 @@ const Navigation = ({ className, collapsed, toggleCollapsed, isAuth, antdSize, m
 			</LoginButtonContainer>
 		</nav>
 	);
+};
+
+Navigation.propTypes = {
+	className: PropTypes.string.isRequired,
+	collapsed: PropTypes.bool.isRequired,
+	toggleCollapsed: PropTypes.func.isRequired,
+	isAuth: PropTypes.bool.isRequired,
+	antdSize: PropTypes.string.isRequired,
+	mobileView: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = ({ auth, styles }) => {

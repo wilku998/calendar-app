@@ -9,7 +9,6 @@ export default (state={...initialState}, action) => {
     switch(type){
         case 'TOGGLE_MODAL':
             const { modalIsOpen, selectedDay } = action;
-            console.log(modalIsOpen)
             return {
                 modalIsOpen,
                 selectedDay

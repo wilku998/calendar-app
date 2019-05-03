@@ -10,6 +10,7 @@ import { searchWeather } from './actions/weather';
 import { setItems } from './actions/items';
 import { firebase } from './database/firebase';
 import { setWindowWidth } from './actions/styles';
+import Loading from './components/Loading/Loading';
 
 const store = configureStore();
 
@@ -25,20 +26,19 @@ if (navigator.geolocation) {
 	});
 }
 
+
 const App = () => (
 	<Provider store={store}>
 		<AppRouter />
 	</Provider>
 );
 
-let appRendered = false;
 const renderApp = () => {
-	if (!appRendered) {
-		ReactDOM.render(<App />, document.getElementById('root'));
-	}
+	ReactDOM.render(<App />, document.getElementById('root'));
 };
 
 firebase.auth().onAuthStateChanged(async (user) => {
+	ReactDOM.render(<Loading />, document.getElementById('root'));
 	if (user) {
 		store.dispatch({ type: 'LOGIN', uid: user.uid });
 		await store.dispatch(setItems([ 'tasks', 'incomes', 'expenses' ]));

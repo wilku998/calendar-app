@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { changeMonth } from '../../actions/calendar';
 import { toggleModal } from '../../actions/modal';
-import { styleCalendar } from './styledCalendar';
+import styleCalendar from './styledCalendar';
 import CalendarSummary from './CalendarSummary/CalendarSummary';
 import CalendarDay from './CalendarDay/CalendarDay';
 import contactDaysToWeather from '../../functions/contactDaysToWeather';
@@ -42,12 +42,7 @@ const Calendar = ({ days, budget, tasksQuantity, className, selectedMonth, openM
 				tasksQuantity={tasksQuantity}
 			/>
 			{days.map((day, i) => (
-				<CalendarDay
-					day={day}
-					dayClick={dayClick}
-					disabled={monthNum !== day.monthNum}
-					key={i}
-				/>
+				<CalendarDay day={day} dayClick={dayClick} disabled={monthNum !== day.monthNum} key={i} />
 			))}
 		</section>
 	);

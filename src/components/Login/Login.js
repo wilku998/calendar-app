@@ -7,7 +7,7 @@ import validator from 'validator';
 
 import { firebase } from '../../database/firebase';
 import setInputColor from '../../functions/setInputColor';
-import { InputPassword, styleLogin, Label, Form, LoginContent } from './styledLogin';
+import styleLogin, { InputPassword, Label, Form, LoginContent } from './styledLogin';
 
 const RadioGroup = Radio.Group;
 

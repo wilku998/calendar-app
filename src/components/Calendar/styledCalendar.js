@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
-export const styleCalendar = (Calendar) => {
-	return styled(Calendar)`
+export default (Calendar) => styled(Calendar)`
     display: flex;
     flex-wrap: wrap;
     border-bottom: ${(props) => props.theme.darkBorder};
@@ -10,4 +9,3 @@ export const styleCalendar = (Calendar) => {
     border-radius: 0.3rem;
     overflow: hidden;
   `;
-};
