@@ -9,7 +9,6 @@ import useTitle from './titleHook';
 const { TextArea } = Input;
 
 const TaskForm = ({ createItem, className }) => {
-	console.log('tasks form rerender');
 	const initialDescription = { value: '', valid: '', inputColor: 'white' };
 	const [ description, setDescription ] = useState({ ...initialDescription });
 	const [ title, setTitle, resetTitle ] = useTitle();
@@ -17,7 +16,7 @@ const TaskForm = ({ createItem, className }) => {
 	const onDescriptionChange = (e) => {
 		const value = e.target.value;
 		const valid = formValidation(value, 'description');
-		setDescription({ value, valid, inputColor: setInputColor(value, valid) });
+		setDescription({ value, valid, inputColor: setInputColor(value, valid, '') });
 	};
 
 	const addTask = async () => {

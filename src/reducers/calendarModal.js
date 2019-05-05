@@ -7,7 +7,7 @@ export default (state={...initialState}, action) => {
     const { type } = action;
     
     switch(type){
-        case 'TOGGLE_MODAL':
+        case 'TOGGLE_CALENDAR_MODAL':
             const { modalIsOpen, selectedDay } = action;
             return {
                 modalIsOpen,

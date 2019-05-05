@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { changeMonth } from '../../actions/calendar';
-import { toggleModal } from '../../actions/modal';
+import { toggleCalendarModal } from '../../actions/calendarModal';
 import styleCalendar from './styledCalendar';
 import CalendarSummary from './CalendarSummary/CalendarSummary';
 import CalendarDay from './CalendarDay/CalendarDay';
@@ -11,7 +11,7 @@ import contactDaysToWeather from '../../functions/contactDaysToWeather';
 import getSumOfBudgetItems from '../../functions/getSumOfBudgetItems';
 import filterData from '../../functions/filterData';
 
-const Calendar = ({ days, budget, tasksQuantity, className, selectedMonth, openModal, changeMonth }) => {
+const Calendar = ({ days, budget, tasksQuantity, className, selectedMonth, openCalendarModal, changeMonth }) => {
 	const { year, monthNum } = selectedMonth;
 	const componentRef = React.createRef();
 
@@ -24,7 +24,7 @@ const Calendar = ({ days, budget, tasksQuantity, className, selectedMonth, openM
 		} else if (clikedMonthNum < selectedMonthNum) {
 			changeMonth(-1);
 		} else {
-			openModal(day);
+			openCalendarModal(day);
 		}
 	};
 
@@ -80,6 +80,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
 	changeMonth: (diff) => dispatch(changeMonth(diff)),
-	openModal: (selectedDay) => dispatch(toggleModal(true, selectedDay))
+	openCalendarModal: (selectedDay) => dispatch(toggleCalendarModal(true, selectedDay))
 });
 export default connect(mapStateToProps, mapDispatchToProps)(styleCalendar(Calendar));

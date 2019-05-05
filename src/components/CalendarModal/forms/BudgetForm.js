@@ -10,8 +10,6 @@ import formValidation from './validation';
 const { Option } = Select;
 
 const BudgetForm = ({ createItem, className }) => {
-	console.log('budget form rerender');
-
 	const [ type, setType ] = useState('income');
 	const [ value, setValue ] = useState({ value: null, valid: true, inputColor: 'white' });
 	const [ title, setTitle, resetTitle ] = useTitle();

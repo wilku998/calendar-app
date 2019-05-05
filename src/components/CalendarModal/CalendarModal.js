@@ -6,7 +6,7 @@ import Modal from 'react-modal';
 
 import { addItem } from '../../actions/items';
 import filterData from '../../functions/filterData';
-import { toggleModal } from '../../actions/modal';
+import { toggleCalendarModal } from '../../actions/calendarModal';
 import getMonthName from '../../functions/getMonthName';
 import TaskForm from './forms/TaskForm';
 import BudgetForm from './forms/BudgetForm';
@@ -73,11 +73,11 @@ const CelandarModal = ({ modalIsOpen, closeModal, selectedDay, tasks, incomes, e
 
 const mapDispatchToProps = (dispatch) => ({
 	addItem: (type, item) => dispatch(addItem(type, item)),
-	closeModal: () => dispatch(toggleModal(false))
+	closeModal: () => dispatch(toggleCalendarModal(false))
 });
 
 const mapStateToProps = (state) => {
-	const { modalIsOpen, selectedDay } = state.modal;
+	const { modalIsOpen, selectedDay } = state.calendarModal;
 
 	const [ tasks, incomes, expenses ] = [ state.items.tasks, state.items.incomes, state.items.expenses ].map((e) =>
 		filterData(e, selectedDay)

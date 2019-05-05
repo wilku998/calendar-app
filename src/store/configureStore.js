@@ -1,11 +1,11 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
 import thunk from 'redux-thunk';
 
 import calendarReducer from '../reducers/calendar';
 import weatherReducer from '../reducers/weather';
 import itemsReducer from '../reducers/items';
 import authReducer from '../reducers/auth';
-import modalReducer from '../reducers/modal';
+import calendarModalReducer from '../reducers/calendarModal';
 import stylesReducer from '../reducers/styles';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -17,7 +17,7 @@ export default () => {
 			weather: weatherReducer,
 			items: itemsReducer,
 			auth: authReducer,
-			modal: modalReducer,
+			calendarModal: calendarModalReducer,
 			styles: stylesReducer
 		}),
 		composeEnhancers(applyMiddleware(thunk))

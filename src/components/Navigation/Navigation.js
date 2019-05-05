@@ -7,7 +7,7 @@ import { firebase } from '../../database/firebase';
 import { history } from '../../routers/appRouter';
 import styleNavigation, { ToggleButtonContainer, LoginButtonContainer } from './StyledNavigation';
 import WeatherForm from '../WeatherForm/WeatherForm';
-import MobileLogoutModal from '../mobileLogoutModal/mobileLogoutModal';
+import MobileLogoutModal from '../simpleModals/MobileLogoutModal';
 
 const Navigation = ({ className, collapsed, toggleCollapsed, isAuth, antdSize, mobileView }) => {
 	const [ logoutModalIsOpen, toggleLogoutModal ] = useState(false);

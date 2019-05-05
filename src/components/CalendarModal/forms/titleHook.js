@@ -9,7 +9,7 @@ export default () => {
 	const onTitleChange = (e) => {
 		const value = e.target.value;
 		const valid = formValidation(value, 'title');
-		setTitle({ value, valid, inputColor: setInputColor(value, valid) });
+		setTitle({ value, valid, inputColor: setInputColor(value, valid, '') });
 	};
 
 	const resetTitle = () => {

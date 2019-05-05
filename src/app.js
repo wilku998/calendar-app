@@ -26,7 +26,6 @@ if (navigator.geolocation) {
 	});
 }
 
-
 const App = () => (
 	<Provider store={store}>
 		<AppRouter />

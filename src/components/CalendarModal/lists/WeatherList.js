@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { List, ListItem, ListContainer } from './styledList';
 
 const Weather = ({ weather }) => {
-	console.log('weather render');
 	const half = Math.floor(weather.length / 2);
 	const weatherArrs = [ weather.slice(0, half), weather.slice(half) ];
 

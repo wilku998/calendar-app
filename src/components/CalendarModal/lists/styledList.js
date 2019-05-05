@@ -16,8 +16,7 @@ export const List = styled.ul`
 	${media.small`
         flex: 1 100%;
         &:not(:last-child) {
-		margin-right: 0;
-        border-bottom: ${(props) => props.theme.lightBorder};
+			margin-right: 0;
 	    }
     `};
 `;

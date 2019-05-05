@@ -10,7 +10,7 @@ const sizes = {
 let media = {};
 
 Object.keys(sizes).forEach((key) => {
-	media[key] = (...args) => css`@media only screen and (max-width: ${sizes[key]}em){
+	media[key] = (args) => css`@media only screen and (max-width: ${sizes[key]}em){
         ${css(...args)}
     }`
 });

@@ -1,54 +1,65 @@
-import React, { Component, Fragment } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Menu, Icon } from 'antd';
 import PropTypes from 'prop-types';
 
+import RemoveAllModal from '../simpleModals/RemoveAllModal';
 import styleSubNav from './styledSubNavigation';
-import { toggleModal } from '../../actions/modal';
-import { removeItems } from '../../actions/items';
+import { toggleCalendarModal } from '../../actions/calendarModal';
 import theme from '../../styledComponents/theme';
 const { SubMenu, Item } = Menu;
 
-const SubNavigation = ({ items, openModal, removeItems, collapsed, className }) => (
-	<nav className={className}>
-		<Menu mode="inline" theme="dark" inlineCollapsed={collapsed} style={{ minHeight: '100%' }}>
-			{items.map((item, iSub) => (
-				<SubMenu
-					key={`sub-${iSub}`}
-					title={
-						<span>
-							<Icon type={item.icon} />
-							<span>{item.key}</span>
-						</span>
-					}
-				>
-					{item[item.key].length > 0 && (
-						<Item style={{ backgroundColor: theme.colorGreyDark3 }} onClick={() => removeItems(item.key)}>
-							Remove all
-						</Item>
-					)}
-					{item[item.key].map((e, i) => (
-						<Item key={`sub-${iSub}-item-${i}`} onClick={() => openModal(e.createdAt)}>
-							{e.title}
-						</Item>
-					))}
-				</SubMenu>
-			))}
-		</Menu>
-	</nav>
-);
+const SubNavigation = ({ items, openCalendarModal, removeItems, collapsed, className }) => {
+	const [ removeAllModalProps, toggleRemoveAllModal ] = useState({ modalIsOpen: false, type: undefined });
+
+	const openRemoveAllModal = (type) => {
+		toggleRemoveAllModal({ modalIsOpen: true, type });
+	};
+
+	return (
+		<nav className={className}>
+			<RemoveAllModal removeAllModalProps={removeAllModalProps} toggleRemoveAllModal={toggleRemoveAllModal} />
+
+			<Menu mode="inline" theme="dark" inlineCollapsed={collapsed} style={{ minHeight: '100%' }}>
+				{items.map((item, iSub) => (
+					<SubMenu
+						key={`sub-${iSub}`}
+						title={
+							<span>
+								<Icon type={item.icon} />
+								<span>{item.key}</span>
+							</span>
+						}
+					>
+						{item[item.key].length > 0 && (
+							<Item
+								style={{ backgroundColor: theme.colorGreyDark3 }}
+								onClick={() => openRemoveAllModal(item.key)}
+							>
+								Remove all
+							</Item>
+						)}
+						{item[item.key].map((e, i) => (
+							<Item key={`sub-${iSub}-item-${i}`} onClick={() => openCalendarModal(e.createdAt)}>
+								{e.title}
+							</Item>
+						))}
+					</SubMenu>
+				))}
+			</Menu>
+		</nav>
+	);
+};
 
 SubNavigation.propTypes = {
 	items: PropTypes.array.isRequired,
-	openModal: PropTypes.func.isRequired,
-	removeItems: PropTypes.func.isRequired,
+	openCalendarModal: PropTypes.func.isRequired,
 	collapsed: PropTypes.bool.isRequired,
 	className: PropTypes.string.isRequired
 };
 
 const mapDispatchToProps = (dispatch) => ({
-	openModal: (selectedDay) => dispatch(toggleModal(true, selectedDay)),
-	removeItems: (kind) => dispatch(removeItems(kind))
+	openCalendarModal: (selectedDay) => dispatch(toggleCalendarModal(true, selectedDay))
 });
 
 const getIcon = (key) => {

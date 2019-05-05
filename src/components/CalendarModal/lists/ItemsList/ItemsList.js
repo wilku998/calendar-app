@@ -5,7 +5,6 @@ import ItemsListItem from './ItemsListItem';
 import { List } from '../styledList';
 
 const ItemsList = ({ items, title }) => {
-	console.log(' items render');
 	return (
 		<List marginTop={true}>
 			{title !== 'Tasks' && <h3>{title}</h3>}
