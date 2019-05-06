@@ -18,7 +18,7 @@ export const List = styled.ul`
         &:not(:last-child) {
 			margin-right: 0;
 	    }
-    `};
+    `}
 `;
 
 export const ListItem = styled.li`

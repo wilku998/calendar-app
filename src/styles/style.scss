@@ -18,12 +18,19 @@ body{
     line-height: 1.6;
     font-family: 'Open Sans', sans-serif;
     font-size: 1.4rem !important;
+    overflow: hidden;
 }
  
 .avatar-uploader > .ant-upload {
     width: 128px;
     height: 128px;
 }
+
+.ant-menu-submenu-popup{
+    overflow: auto;
+    max-height: 100vh;
+
+};
 
 #root{
   background: linear-gradient(to right bottom, #d1d1d1, #a7a7a7 );

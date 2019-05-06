@@ -1,14 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Select } from 'antd';
 import numeral from 'numeral';
 
+import BudgetChartModal from '../../BudgetChartModal/BudgetChartModal';
 import { monthsData } from '../../../staticData/months';
-import { styleSummary, CalendarSummaryItem, CalendarSummarySelect } from './styledCalendarSummary';
+import styleSummary, { CalendarSummaryItem, CalendarSummarySelect } from './styledCalendarSummary';
 
 const { Option } = Select;
 
 const CalendarSummary = ({ className, onMonthChange, yearInt, monthInt, budget, tasksQuantity }) => {
+	const [ budgetChartModalIsOpen, toggleBudgetChartModal ] = useState(true);
+
+	const openBudgetChartModal = () => {
+		toggleBudgetChartModal(true);
+	};
+
+	const closeBudgetChartModal = () => {
+		toggleBudgetChartModal(false);
+	};
+
 	const years = [];
 	for (let i = 0; i <= 10; i++) {
 		years.push({
@@ -24,6 +35,7 @@ const CalendarSummary = ({ className, onMonthChange, yearInt, monthInt, budget, 
 
 	return (
 		<div className={className}>
+			<BudgetChartModal closeModal={closeBudgetChartModal} modalIsOpen={budgetChartModalIsOpen} />
 			<form>
 				{[ { years, key: 'year' }, { months, key: 'month' } ].map((e) => (
 					<CalendarSummarySelect as={Select} key={e.key} value={0} onChange={onMonthChange}>
@@ -36,7 +48,7 @@ const CalendarSummary = ({ className, onMonthChange, yearInt, monthInt, budget, 
 				))}
 			</form>
 			<div>
-				<CalendarSummaryItem budget={budget >= 0 ? 'gain' : 'loss'}>
+				<CalendarSummaryItem budget={budget >= 0 ? 'gain' : 'loss'} onClick={openBudgetChartModal}>
 					Budget: <span>{numeral(budget).format('$0,0.00')}</span>
 				</CalendarSummaryItem>
 				<CalendarSummaryItem>

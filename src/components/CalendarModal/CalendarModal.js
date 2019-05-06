@@ -27,10 +27,13 @@ const CelandarModal = ({ modalIsOpen, closeModal, selectedDay, tasks, incomes, e
 	const fullDate = `${dayNum} ${getMonthName(monthNum)} ${year}`;
 
 	const createItem = async (type, item) => {
+		const { dayNum, monthNum, year } = selectedDay;
 		await addItem(type, {
 			...item,
 			createdAt: {
-				...selectedDay
+				dayNum,
+				monthNum,
+				year
 			}
 		});
 	};

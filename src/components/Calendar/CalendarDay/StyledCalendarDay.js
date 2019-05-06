@@ -50,11 +50,11 @@ export const StyledDayContent = styled('div')`
 	${media.big`
     	padding: 0.7rem;
 		font-size: 1.2rem;
-	`}
+	`};
 
 	${media.mid`
 		font-size: 1.4rem;
-	`}
+	`};
 `;
 
 export const CalendarDayInfo = styled.span`

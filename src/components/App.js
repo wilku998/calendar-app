@@ -25,10 +25,11 @@ const Main = styled('main')`
 	flex: 1;
 	display: flex;
 	color: ${(props) => props.theme.colorGreyDark2};
+	overflow: hidden;
 `;
 
 const Root = styled('div')`
-	min-height: 100vh;
+	height: 100vh;
 	display: flex;
 	flex-direction: column;
 `;

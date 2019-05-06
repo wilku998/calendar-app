@@ -13,7 +13,6 @@ import filterData from '../../functions/filterData';
 
 const Calendar = ({ days, budget, tasksQuantity, className, selectedMonth, openCalendarModal, changeMonth }) => {
 	const { year, monthNum } = selectedMonth;
-	const componentRef = React.createRef();
 
 	const dayClick = (day) => {
 		const clikedMonthNum = parseInt(day.monthNum);
@@ -33,7 +32,7 @@ const Calendar = ({ days, budget, tasksQuantity, className, selectedMonth, openC
 	};
 
 	return (
-		<section ref={componentRef} className={className}>
+		<section className={className}>
 			<CalendarSummary
 				monthInt={parseInt(monthNum)}
 				yearInt={parseInt(year)}

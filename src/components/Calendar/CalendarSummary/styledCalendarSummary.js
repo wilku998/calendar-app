@@ -1,18 +1,22 @@
 import styled from 'styled-components';
 
-export const styleSummary = (Summary) => {
-	return styled(Summary)`
-        width: 100%;
-        font-size: 1.8rem;
-        padding: 1rem 2rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-left: ${(props) => props.theme.darkBorder};
-        background: ${(props) =>
-			`linear-gradient(to right bottom, ${props.theme.colorGreyLight4}, ${props.theme.colorGreyLight5})`};
-    `;
-};
+import media from '../../../styledComponents/breakPoints';
+
+export default (Summary) => styled(Summary)`
+    width: 100%;
+    font-size: 1.8rem;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-left: ${(props) => props.theme.darkBorder};
+    background: ${(props) =>
+		`linear-gradient(to right bottom, ${props.theme.colorGreyLight4}, ${props.theme.colorGreyLight5})`};
+
+	${media.mid`
+		font-size: 2rem;
+	`}
+`;
 
 export const CalendarSummaryItem = styled.span`
 	&:not(:last-child) {
