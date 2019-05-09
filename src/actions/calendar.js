@@ -1,4 +1,5 @@
-export const changeMonth = (diff) => ({
-	type: 'CHANGE_MONTH',
-	diff
+export const changeCalendarDate = (monthDiff, yearDiff) => ({
+	type: 'CHANGE_CALENDAR_DATE',
+	monthDiff,
+	yearDiff
 });

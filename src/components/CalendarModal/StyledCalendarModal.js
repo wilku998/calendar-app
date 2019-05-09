@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Button } from 'antd';
 
 import media from '../../styledComponents/breakPoints';
 
@@ -7,7 +8,7 @@ export default (Modal) => styled(Modal)`
 		`linear-gradient(to right bottom, ${props.theme.colorGreyLight1}, ${props.theme.colorGreyLight2})`};
 	border-radius: .3rem;
 	box-shadow: 0 2rem 4rem rgba(0, 0, 0, .15);
-	width: 80rem;
+	width: 65rem;
 	position: relative;
 	padding: 0 2rem;
 	max-height: 100%;
@@ -23,25 +24,16 @@ export const overlayStyles = {
 		alignItems: 'center',
 		justifyContent: 'center',
 		background: 'rgba(0, 0, 0, .5)',
-		padding: '2rem'
+		padding: '2rem',
+		zIndex: 10
 	}
 };
 
-export const CloseButton = styled('button')`
-	border: none;
-	background: none;
-	position: absolute;
+export const CloseButton = styled(Button)`
+	position: absolute !important;
 	top: 2rem;
 	right: 0;
-	font-size: 1.8rem;
-	cursor: pointer;
-	transition: color .2s;
-	&:hover{
-		color: ${(props) => props.theme.colorBlue}
-	}
-	&:focus{
-		outline: none;
-	}
+
 `;
 
 export const CalendarModalItem = styled('div')`
@@ -54,8 +46,10 @@ export const CalendarModalItem = styled('div')`
 `;
 
 export const CalendarModalTitle = styled('h1')`
+	line-height: 1;
 	font-weight: 400;
 	margin: ${(props) => (props.withoutMargin ? '0' : '0 0 1rem 0')};
+	font-size: ${(props) => (props.mainTitle ? '3rem' : '2.4rem')};
 `;
 
 export const ModalContent = styled('div')`

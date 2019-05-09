@@ -33,6 +33,7 @@ const BudgetForm = ({ createItem, className }) => {
 			});
 			onValueChange(null);
 			resetTitle();
+			setType('income')
 		}
 	};
 

@@ -4,7 +4,7 @@ export const monthsData = [
 		value: 1
 	},
 	{
-		month: 'Februar',
+		month: 'February',
 		value: 2
 	},
 	{

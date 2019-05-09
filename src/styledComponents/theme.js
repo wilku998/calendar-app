@@ -1,13 +1,16 @@
 export default {
-  darkBorder: "1px solid #999",
+  darkBorder: "1px solid #666",
   lightBorder: "1px solid #ccc",
 
   colorRed: "rgb(163, 82, 82)",
   colorRedLight: "rgb(255, 180, 180)",
   colorGreen: "rgb(98, 160, 74)",
   colorGreenLight: "rgb(232, 240, 254)",
-  colorBlue: '#1890ff',
-  colorDarkBlue: '#002242',
+  colorBlue1: 'rgb(107, 164, 218)',
+  colorBlue2: 'rgb(90, 139, 185)',
+  colorBlue3: '#1890ff',//standard
+  colorBlue4: '#084074',
+  colorBlue5: '#06325a',
   colorGreyLight1: "#faf9f9",
   colorGreyLight2: "#f4f2f2",
   colorGreyLight3: "#f0eeee",

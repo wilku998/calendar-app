@@ -1,7 +1,7 @@
 export default (value, property) => {
 	switch (property) {
 		case 'title':
-			return value.length >= 3 && value.length <= 30;
+			return value.length >= 3 && value.length <= 20;
 		case 'description':
 			let wordsValid = true;
 			value.split(' ').forEach((e) => {

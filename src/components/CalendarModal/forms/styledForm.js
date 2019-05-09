@@ -14,6 +14,7 @@ export const Label = styled('label')`
 	align-items: center;
 	
 	${(props) => (props.breakLine ? `
+    	margin: 1rem 0 0 0;
 		width: 100%;
 		flex-direction: column;
 		align-items: flex-start;

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Icon } from 'antd';
 import Modal from 'react-modal';
 
 import { addItem } from '../../actions/items';
@@ -47,11 +46,14 @@ const CelandarModal = ({ modalIsOpen, closeModal, selectedDay, tasks, incomes, e
 			ariaHideApp={false}
 		>
 			<ModalContent>
-				<CloseButton onClick={closeModal}>
-					<Icon type="close-circle" />
+				<CloseButton size="small" type="primary" onClick={closeModal}>
+					Close
 				</CloseButton>
+
 				<CalendarModalItem>
-					<CalendarModalTitle withoutMargin={!weather}>{fullDate}</CalendarModalTitle>
+					<CalendarModalTitle mainTitle={true} withoutMargin={!weather}>
+						{fullDate}
+					</CalendarModalTitle>
 					{weather && <WeatherList weather={weather} />}
 				</CalendarModalItem>
 

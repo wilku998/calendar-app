@@ -9,7 +9,7 @@ import styleForm from './styledWeatherForm';
 
 const InputSearch = Input.Search;
 
-const WeatherForm = ({ antdSize, className, mobileView, searchWeather }) => {
+const WeatherForm = ({ antdInputsSize, className, mobileView, searchWeather }) => {
 	const [ inputValue, setInputValue ] = useState('');
 
 	const onInputChange = (e) => {
@@ -29,9 +29,10 @@ const WeatherForm = ({ antdSize, className, mobileView, searchWeather }) => {
 		}
 	};
 	
-	const onSubmit = (e) => {
+	const onSubmit = async (e) => {
 		e.preventDefault();
-		search();
+		await search();
+		setInputValue('')
 	};
 
 	return (
@@ -51,14 +52,14 @@ const WeatherForm = ({ antdSize, className, mobileView, searchWeather }) => {
 				placeholder={mobileView ? 'Search weather' : 'Country, city'}
 				onChange={onInputChange}
 				onSearch={search}
-				size={antdSize}
+				size={antdInputsSize}
 			/>
 		</form>
 	);
 };
 
 WeatherForm.propTypes = {
-	antdSize: PropTypes.string.isRequired,
+	antdInputsSize: PropTypes.string.isRequired,
 	className: PropTypes.string.isRequired,
 	mobileView: PropTypes.bool.isRequired,
 	searchWeather: PropTypes.func.isRequired

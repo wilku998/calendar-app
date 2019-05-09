@@ -5,20 +5,21 @@ export default (CalendarDay) => styled(CalendarDay)`
 	${(props) => `
 		border-top: ${props.theme.darkBorder};
 		border-left: ${props.theme.darkBorder};
-		background: ${props.disabled ? props.theme.colorGreyLight5 : props.theme.colorGreyLight3};
+		background: ${props.disabled ? props.theme.colorGreyLight6 : props.theme.colorGreyLight3};
 	`}
 	flex: 1 14.2857%;
 	cursor: pointer;
 	position: relative;
-
+	z-index: 1;
 	&::after{
 		content: "";
 		position: absolute;
+		z-index: -1;
 		top: 0;
 		left: 0;
 		height: 100%;
 		width: 100%;
-		background-color: rgba(0,0,0,.025);
+		background-color: rgba(107, 164, 218, .25);
 		opacity: 0;
 		transition: all .2s;
 	}
@@ -40,13 +41,14 @@ export const StyledDayContent = styled('div')`
 	width: 100%;
 	height: 100%;
 	display: flex;
-    flex-direction: column;
     justify-content: space-between;
-    font-size: 1.6rem;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	font-size: 1.4rem;
     padding: 1rem;
     line-height: 1;
-	color: ${props => props.colorGreyDark3};
-
+	color: ${(props) => props.colorGreyDark3};
+	
 	${media.big`
     	padding: 0.7rem;
 		font-size: 1.2rem;
@@ -58,22 +60,24 @@ export const StyledDayContent = styled('div')`
 `;
 
 export const CalendarDayInfo = styled.span`
-	position: absolute;
-	top: 0.7rem;
-	left: 0.7rem;
-
-	& > * {
-		display: block;
+	display: flex;
+	flex-direction: column;
+	& > i {
 		&:not(:last-child) {
 			margin-bottom: 0.5rem;
 		}
 	}
 `;
 
-export const DayNum = styled.span`align-self: flex-end;`;
+export const DayNum = styled.span`
+	font-size: 2rem;
+	line-height: 1;
+	margin-top: -.3rem;
+`;
 
 export const DayWeather = styled.div`
-	align-self: flex-start;
+	flex: 1 100%;
+	align-self: flex-end;
 	display: flex;
 	flex-direction: column;
 	& > span {

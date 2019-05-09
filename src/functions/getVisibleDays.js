@@ -1,4 +1,6 @@
-export default (month, lastMonth, nextMonth) => {
+import createMonthObject from './createMonthObject';
+
+export default (month) => {
 	const firstDayPos = month.days[0].calendarRowPos;
 	const lastDayPos = month.days[month.days.length - 1].calendarRowPos;
 
@@ -10,6 +12,7 @@ export default (month, lastMonth, nextMonth) => {
 
 	if (firstDayPos > 1) {
 		const daysToGet = Math.abs(1 - firstDayPos);
+		const lastMonth = createMonthObject(month.momentFunction.clone().subtract(1, 'months'))
 		visibleDays = [
 			...lastMonth.days
 				.slice(lastMonth.days.length - daysToGet)
@@ -19,6 +22,7 @@ export default (month, lastMonth, nextMonth) => {
 	}
 	if (lastDayPos < 7) {
 		const daysToGet = 7 - lastDayPos;
+		const nextMonth = createMonthObject(month.momentFunction.clone().add(1, 'months'))
 		visibleDays = [
 			...visibleDays,
 			...nextMonth.days

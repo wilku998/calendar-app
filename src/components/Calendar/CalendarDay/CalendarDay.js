@@ -2,14 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Icon } from 'antd';
 
-import StyleDay, {
-	CalendarDayInfo,
-	DayNum,
-	DayWeather,
-	StyledDayContent,
-	StyledDayPadding,
-	
-} from './StyledCalendarDay';
+import StyleDay, { CalendarDayInfo, DayNum, DayWeather, StyledDayContent, StyledDayPadding } from './StyledCalendarDay';
 import theme from '../../../styledComponents/theme';
 
 const CalendarDay = ({ day, dayClick, disabled, className }) => {
@@ -33,31 +26,17 @@ const CalendarDay = ({ day, dayClick, disabled, className }) => {
 	const onDayClick = () => {
 		dayClick(day);
 	};
-	
+
 	return (
 		<div className={className} disabled={disabled} onClick={onDayClick}>
 			<StyledDayPadding>
 				<StyledDayContent>
-					<DayNum>
-						{day.dayNum} {day.day}
-					</DayNum>
 					<CalendarDayInfo>
-						{day.containTasks && (
-							<span>
-								<Icon type="book" />
-							</span>
-						)}
-						{day.containIncomes && (
-							<span>
-								<Icon style={{ color: theme.colorGreen }} type="rise" />
-							</span>
-						)}
-						{day.containExpenses && (
-							<span>
-								<Icon style={{ color: theme.colorRed }} type="fall" />
-							</span>
-						)}
+						{day.containTasks && <Icon type="book" />}
+						{day.containIncomes && <Icon style={{ color: theme.colorGreen }} type="rise" />}
+						{day.containExpenses && <Icon style={{ color: theme.colorRed }} type="fall" />}
 					</CalendarDayInfo>
+					<DayNum>{day.dayNum}</DayNum>
 					{day.weather ? getWeather(day.weather) : ''}
 				</StyledDayContent>
 			</StyledDayPadding>

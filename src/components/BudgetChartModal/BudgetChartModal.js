@@ -1,17 +1,47 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import { connect } from 'react-redux';
 
-import BudgetChart from './BudgetChart';
+import now from '../../staticData/now';
+import momentOperation from '../../functions/momentOperation';
+import filterData from '../../functions/filterData';
 import createChartPoints from '../../functions/createChartPoints';
-import overlayStyles from '../CalendarModal/styledCalendarModal';
+import TimePeroidForm from '../TimePeroidForm/TimePeroidForm';
+import BudgetChart from './BudgetChart';
+import { overlayStyles } from '../CalendarModal/styledCalendarModal';
+import { contentStyles } from './StyledBudgetChartModal';
 
-const BudgetChartModal = ({ closeModal, modalIsOpen, points }) => {
-	console.log(points);
+const BudgetChartModal = ({ closeModal, modalIsOpen, incomes, expenses, selectedMonth }) => {
+	const [ timePeroid, setTimePeroid ] = useState(selectedMonth);
+	
+	const createTimePeroidObject = (momentFunction) => {
+		return {
+			month: momentFunction.format('MMMM'),
+			monthNum: momentFunction.format('MM'),
+			year: momentFunction.format('YYYY')
+		};
+	};
+
+	const onDateChange = (monthValue, yearValue) => {
+		setTimePeroid(createTimePeroidObject(momentOperation(now.momentFunc, monthValue, yearValue)));
+	};
+
+	const onAfterOpen = () => {
+		setTimePeroid(selectedMonth)
+	};
 
 	return (
-		<Modal ariaHideApp={false} isOpen={modalIsOpen} onRequestClose={closeModal} style={{ ...overlayStyles }}>
-			<BudgetChart />
+		<Modal
+			ariaHideApp={false}
+			isOpen={modalIsOpen}
+			onRequestClose={closeModal}
+			style={{ ...overlayStyles, ...contentStyles }}
+			onAfterOpen={onAfterOpen}
+		>
+			<TimePeroidForm timePeroid={timePeroid} onDateChange={onDateChange} optionAll={true} />
+			<BudgetChart
+				points={createChartPoints(filterData(incomes, timePeroid), filterData(expenses, timePeroid))}
+			/>
 		</Modal>
 	);
 };
@@ -19,7 +49,10 @@ const BudgetChartModal = ({ closeModal, modalIsOpen, points }) => {
 const mapStateToProps = (state) => {
 	const { incomes, expenses } = state.items;
 	return {
-		points: createChartPoints(incomes, expenses)
+		incomes,
+		expenses,
+		selectedMonth: state.calendar.selectedMonth
 	};
 };
+
 export default connect(mapStateToProps)(BudgetChartModal);

@@ -42,6 +42,6 @@ const CalendarContainer = styled('div')`
 const CalendarPaddingContainer = styled('div')`
     min-width: 700px;
     max-width: 1000px;
-  	padding: 2rem;
+  	padding: 4rem;
 		margin: auto;
 `;

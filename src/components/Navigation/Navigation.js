@@ -9,7 +9,7 @@ import styleNavigation, { ToggleButtonContainer, LoginButtonContainer } from './
 import WeatherForm from '../WeatherForm/WeatherForm';
 import MobileLogoutModal from '../simpleModals/MobileLogoutModal';
 
-const Navigation = ({ className, collapsed, toggleCollapsed, isAuth, antdSize, mobileView }) => {
+const Navigation = ({ className, collapsed, toggleCollapsed, isAuth, antdInputsSize, mobileView }) => {
 	const [ logoutModalIsOpen, toggleLogoutModal ] = useState(false);
 
 	const onLoginButtonClick = () => {
@@ -24,13 +24,13 @@ const Navigation = ({ className, collapsed, toggleCollapsed, isAuth, antdSize, m
 		<nav className={className}>
 			<MobileLogoutModal logoutModalIsOpen={logoutModalIsOpen} toggleLogoutModal={toggleLogoutModal} />
 			<ToggleButtonContainer>
-				<Button size={antdSize} type="primary" onClick={toggleCollapsed}>
+				<Button size={antdInputsSize} type="primary" onClick={toggleCollapsed}>
 					<Icon type={collapsed ? 'menu-unfold' : 'menu-fold'} />
 				</Button>
 			</ToggleButtonContainer>
-			<WeatherForm mobileView={mobileView} antdSize={antdSize} />
+			<WeatherForm mobileView={mobileView} antdInputsSize={antdInputsSize} />
 			<LoginButtonContainer>
-				<Button size={antdSize} type="primary" onClick={onLoginButtonClick}>
+				<Button size={antdInputsSize} type="primary" onClick={onLoginButtonClick}>
 					{mobileView ? <Icon type="user" /> : isAuth ? 'logout' : 'login'}
 				</Button>
 			</LoginButtonContainer>
@@ -43,16 +43,16 @@ Navigation.propTypes = {
 	collapsed: PropTypes.bool.isRequired,
 	toggleCollapsed: PropTypes.func.isRequired,
 	isAuth: PropTypes.bool.isRequired,
-	antdSize: PropTypes.string.isRequired,
+	antdInputsSize: PropTypes.string.isRequired,
 	mobileView: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = ({ auth, styles }) => {
-	const { windowWidth } = styles;
+	const { windowWidth, antdInputsSize } = styles;
 	return {
 		collapsed: styles.subNavCollapsed,
 		isAuth: !!auth.uid,
-		antdSize: windowWidth > 750 ? 'default' : 'small',
+		antdInputsSize,
 		mobileView: windowWidth <= 450
 	};
 };
