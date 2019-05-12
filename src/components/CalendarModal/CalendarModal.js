@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Modal from 'react-modal';
+import { Icon } from 'antd';
 
 import { addItem } from '../../actions/items';
 import filterData from '../../functions/filterData';
@@ -13,13 +14,9 @@ import ItemsList from './lists/ItemsList/ItemsList';
 import WeatherList from './lists/WeatherList';
 import { ListContainer } from './lists/styledList';
 
-import StyleModal, {
-	ModalContent,
-	overlayStyles,
-	CalendarModalItem,
-	CalendarModalTitle,
-	CloseButton
-} from './styledCalendarModal';
+import theme from '../../styledComponents/theme';
+import CloseButton from '../abstracts/CloseButton';
+import StyleModal, { ModalContent, CalendarModalItem, CalendarModalTitle } from './styledCalendarModal';
 
 const CelandarModal = ({ modalIsOpen, closeModal, selectedDay, tasks, incomes, expenses, addItem, className }) => {
 	const { weather, dayNum, monthNum, year } = selectedDay;
@@ -40,15 +37,13 @@ const CelandarModal = ({ modalIsOpen, closeModal, selectedDay, tasks, incomes, e
 	return (
 		<Modal
 			className={className}
-			style={overlayStyles}
+			style={theme.modalOverlayStyles}
 			isOpen={modalIsOpen}
 			onRequestClose={closeModal}
 			ariaHideApp={false}
 		>
 			<ModalContent>
-				<CloseButton size="small" type="primary" onClick={closeModal}>
-					Close
-				</CloseButton>
+				<CloseButton marginright="0" onClick={closeModal} />
 
 				<CalendarModalItem>
 					<CalendarModalTitle mainTitle={true} withoutMargin={!weather}>

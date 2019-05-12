@@ -1,37 +1,26 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Select } from 'antd';
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 import setDateValues from './setDateValues';
-
-const { Option } = Select;
-
-export const StyledSelect = styled(Select)`
-	width: 12rem;
-	&:not(:last-child) {
-		margin-right: 1.5rem;
-	}
-	font-size: 1.6rem !important;
-`;
+import styleTimePeroidForm, { StyledSelect } from './styledTimePeroidForm';
+const { Option } = StyledSelect;
 
 ///////////////////////////////////////////
 
-const TimePeroidForm = ({ optionAll, antdInputsSize, timePeroid, onDateChange }) => {
+const TimePeroidForm = ({ optionAll, antdInputsSize, timePeroid, onDateChange, className }) => {
 	const [ monthsData, yearsData ] = setDateValues(timePeroid);
 	const { months, monthValue } = monthsData;
 	const { years, yearValue } = yearsData;
-	
 	const onYearChange = (value) => {
-		onDateChange(monthValue, value);	
-	}
+		onDateChange(monthValue, value);
+	};
 	const onMonthChange = (value) => {
-		onDateChange(value, yearValue);			
-	}
+		onDateChange(value, yearValue);
+	};
 
 	return (
-		<form>
+		<form className={className}>
 			<StyledSelect size={antdInputsSize} value={yearValue} onChange={onYearChange}>
 				{optionAll && <Option value="all-years">All</Option>}
 				{years.map((e) => (
@@ -56,11 +45,12 @@ TimePeroidForm.propTypes = {
 	onDateChange: PropTypes.func.isRequired,
 	optionAll: PropTypes.bool.isRequired,
 	antdInputsSize: PropTypes.string.isRequired,
-	timePeroid: PropTypes.object.isRequired
+	timePeroid: PropTypes.object.isRequired,
+	className: PropTypes.string.isRequired
 };
 
 const mapStateToProps = (state) => ({
-	antdInputsSize: state.styles.antdInputsSize,
+	antdInputsSize: state.styles.antdInputsSize
 });
 
-export default connect(mapStateToProps)(TimePeroidForm);
+export default connect(mapStateToProps)(styleTimePeroidForm(TimePeroidForm));

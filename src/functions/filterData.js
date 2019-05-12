@@ -4,8 +4,8 @@ export default (items, time) => {
 		const { dayNum, monthNum, year } = e.createdAt;
 		return (
 			(!selectedDayNum || selectedDayNum === dayNum) &&
-			(!selectedMonthNum || selectedMonthNum === monthNum) &&
-			selectedYear === year
+			(selectedMonthNum==='all-months' || selectedMonthNum === monthNum) &&
+			(selectedYear==='all-years' || selectedYear === year)
 		);
 	});
 };

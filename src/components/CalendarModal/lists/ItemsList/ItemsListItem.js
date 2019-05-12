@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import numeral from 'numeral';
 import { Icon } from 'antd';
 import PropTypes from 'prop-types';
 
+import formatBudget from '../../../../functions/formatBudget'
 import { ListItem, ListItemTitle, RemoveButton, TaskDescription } from '../styledList';
 import { removeItem } from '../../../../actions/items';
 
@@ -24,7 +24,7 @@ const ItemsListItem = ({ item, type }) => {
 			{isTask ? (
 				<TaskDescription>{item.description}</TaskDescription>
 			) : (
-				<span>{numeral(item.value).format('$0,0.00')}</span>
+				<span>{formatBudget(item.value)}</span>
 			)}
 		</ListItem>
 	);

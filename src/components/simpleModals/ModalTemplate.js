@@ -3,32 +3,27 @@ import Modal from 'react-modal';
 import { Button } from 'antd';
 import PropTypes from 'prop-types';
 
-import { overlayStyles } from '../CalendarModal/styledCalendarModal';
+import styled from 'styled-components';
+import theme from '../../styledComponents/theme';
 
-const contentStyles = {
-	content: {
-		position: 'relative',
-		top: 0,
-		left: 0,
-		bottom: 0,
-		right: 0,
-		display: 'flex',
-		flexDirection: 'column',
-		padding: '2rem',
-		borderRadius: '0.3rem',
-		fontSize: '1.6rem',
-		maxWidth: '30rem',
-		textAlign: 'center'
-	}
-};
+const styleModal = (Modal) => styled(Modal)`
+	${({ theme }) => theme.modalStyles}
+	display: flex;
+	flex-direction: column;
+	padding: 2rem;
+	font-size: 1.6rem;
+	max-width: 30rem;
+	text-align: center;
+`;
 
-const ModalTemplate = ({ modalIsOpen, closeModal, confirmFunction, confirmInfo }) => {
+const ModalTemplate = ({ modalIsOpen, closeModal, confirmFunction, confirmInfo, className }) => {
 	return (
 		<Modal
 			ariaHideApp={false}
 			isOpen={modalIsOpen}
 			onRequestClose={closeModal}
-			style={{ ...overlayStyles, ...contentStyles }}
+			style={theme.modalOverlayStyles}
+			className={className}
 		>
 			<span style={{ marginBottom: '2rem' }}>{confirmInfo}</span>
 			<Button size="small" onClick={confirmFunction} type="primary">
@@ -45,7 +40,8 @@ ModalTemplate.propTypes = {
 	modalIsOpen: PropTypes.bool.isRequired,
 	closeModal: PropTypes.func.isRequired,
 	confirmFunction: PropTypes.func.isRequired,
-	confirmInfo: PropTypes.string.isRequired
+	confirmInfo: PropTypes.string.isRequired,
+	className: PropTypes.string.isRequired
 };
 
-export default ModalTemplate;
+export default styleModal(ModalTemplate);
