@@ -5,11 +5,11 @@ import PropTypes from 'prop-types';
 
 import { firebase } from '../../database/firebase';
 import { history } from '../../routers/appRouter';
-import styleNavigation, { ToggleButtonContainer, LoginButtonContainer } from './StyledNavigation';
+import styleNavigation, { ToggleButtonContainer, LoginButtonContainer, Logo } from './StyledNavigation';
 import WeatherForm from '../WeatherForm/WeatherForm';
 import MobileLogoutModal from '../simpleModals/MobileLogoutModal';
 
-const Navigation = ({ className, collapsed, toggleCollapsed, isAuth, antdInputsSize, mobileView }) => {
+const Navigation = ({ className, collapsed, toggleCollapsed, isAuth, antdInputsSize, mobileView, toggleSubNavVisible }) => {
 	const [ logoutModalIsOpen, toggleLogoutModal ] = useState(false);
 
 	const onLoginButtonClick = () => {
@@ -23,11 +23,14 @@ const Navigation = ({ className, collapsed, toggleCollapsed, isAuth, antdInputsS
 	return (
 		<nav className={className}>
 			<MobileLogoutModal logoutModalIsOpen={logoutModalIsOpen} toggleLogoutModal={toggleLogoutModal} />
-			<ToggleButtonContainer>
-				<Button size={antdInputsSize} type="primary" onClick={toggleCollapsed}>
-					<Icon type={collapsed ? 'menu-unfold' : 'menu-fold'} />
-				</Button>
-			</ToggleButtonContainer>
+			{toggleSubNavVisible ? (
+				<ToggleButtonContainer>
+					<Button size={antdInputsSize} type="primary" onClick={toggleCollapsed}>
+						<Icon type={collapsed ? 'menu-unfold' : 'menu-fold'} />
+					</Button>
+				</ToggleButtonContainer>
+			) : <Logo>Calendar.App</Logo>}
+
 			<WeatherForm mobileView={mobileView} antdInputsSize={antdInputsSize} />
 			<LoginButtonContainer>
 				<Button size={antdInputsSize} type="primary" onClick={onLoginButtonClick}>
@@ -44,7 +47,8 @@ Navigation.propTypes = {
 	toggleCollapsed: PropTypes.func.isRequired,
 	isAuth: PropTypes.bool.isRequired,
 	antdInputsSize: PropTypes.string.isRequired,
-	mobileView: PropTypes.bool.isRequired
+	mobileView: PropTypes.bool.isRequired,
+	toggleSubNavVisible: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = ({ auth, styles }) => {
@@ -53,7 +57,8 @@ const mapStateToProps = ({ auth, styles }) => {
 		collapsed: styles.subNavCollapsed,
 		isAuth: !!auth.uid,
 		antdInputsSize,
-		mobileView: windowWidth <= 450
+		mobileView: windowWidth <= 450,
+		toggleSubNavVisible: windowWidth <= 1140
 	};
 };
 

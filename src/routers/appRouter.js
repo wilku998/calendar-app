@@ -3,7 +3,7 @@ import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { createBrowserHistory } from 'history';
 
-import App from '../components/App';
+import App from '../components/App/App';
 import Login from '../components/Login/Login';
 import theme from '../styledComponents/theme';
 

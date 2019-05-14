@@ -1,18 +1,27 @@
-export default (state = {windowWidth: 0, subNavCollapsed: false}, action) => {
-    const { type, windowWidth } = action;
-    switch(type){
-        case 'SET_WINDOW_WIDTH':
-            return {
-                ...state,
-                windowWidth: windowWidth,
-                antdInputsSize: windowWidth > 750 ? 'default' : 'small' 
-            }
-        case 'TOGGLE_SUB_NAV':
+export default (
+	state = { windowWidth: 0, subNavCollapsed: false, calendarMarginBottom: 0, antdInputsSize: 'default' },
+	action
+) => {
+	const { type } = action;
+	switch (type) {
+		case 'SET_WINDOW_WIDTH':
+			const { windowWidth } = action;
 			return {
-                ...state,
+				...state,
+				windowWidth: windowWidth,
+				antdInputsSize: windowWidth > 750 ? 'default' : 'small'
+			};
+		case 'TOGGLE_SUB_NAV':
+			return {
+				...state,
 				subNavCollapsed: !state.subNavCollapsed
 			};
-        default:
-            return state
-    }
-}
+		case 'SET_SCROLLBAR_WIDTH':
+			return {
+				...state,
+				scrollbarWidth: action.scrollbarWidth
+			};
+		default:
+			return state;
+	}
+};

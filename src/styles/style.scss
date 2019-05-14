@@ -18,9 +18,7 @@ body{
     line-height: 1.6;
     font-family: 'Open Sans', sans-serif;
     font-size: 1.4rem !important;
-    overflow: hidden;
-    border: rgb(107, 164, 218);    
-    border: rgb(90, 139, 185);    
+    overflow: hidden;  
 }
  
 .avatar-uploader > .ant-upload {
@@ -35,6 +33,5 @@ body{
 };
 
 #root{
-  background: linear-gradient(to right bottom, #d1d1d1, #a7a7a7 );
   min-height: 100vh;
 }

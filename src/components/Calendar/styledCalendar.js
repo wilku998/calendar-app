@@ -13,8 +13,24 @@ export default (Calendar) => styled(Calendar)`
 
 export const DayName = styled.div`
 	flex: 1 14.2857%;
-  border-left: ${(props) => props.theme.darkBorder};
-  border-top: ${(props) => props.theme.darkBorder};
-  padding: .15rem 1rem;
-  text-align: end;
-`
+	border-left: ${(props) => props.theme.darkBorder};
+	border-top: ${(props) => props.theme.darkBorder};
+	padding: .15rem 1rem;
+	text-align: end;
+`;
+
+export const CalendarPaddingContainer = styled('div')`
+    box-sizing: content-box;
+    min-width: 700px;
+    max-width: 1000px;
+		margin: auto;
+    padding: 4rem 4rem 8rem 4rem;
+`;
+
+export const CalendarContainer = styled('div')`
+  width: 100%;
+  overflow-x: auto;
+  ${(props) => `
+    background: ${props.theme.background};
+  `}
+`;

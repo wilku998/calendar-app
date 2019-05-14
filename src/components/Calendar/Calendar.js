@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import daysNames from '../../staticData/daysNames';
 import { changeCalendarDate } from '../../actions/calendar';
 import { toggleCalendarModal } from '../../actions/calendarModal';
-import styleCalendar, { DayName } from './styledCalendar';
+import styleCalendar, { DayName, CalendarContainer, CalendarPaddingContainer } from './styledCalendar';
 import CalendarSummary from './CalendarSummary/CalendarSummary';
 import CalendarDay from './CalendarDay/CalendarDay';
 import contactDaysToWeather from '../../functions/contactDaysToWeather';
@@ -21,9 +21,10 @@ const Calendar = ({
 	openCalendarModal,
 	changeCalendarDate,
 	monthDiff,
-	yearDiff
+	yearDiff,
 }) => {
 	const { monthNum } = selectedMonth;
+	const containerRef = useRef();
 
 	const dayClick = (day) => {
 		const clikedMonthNumInt = parseInt(day.monthNum);
@@ -38,18 +39,22 @@ const Calendar = ({
 	};
 
 	return (
-		<section className={className}>
-			<CalendarSummary
-				selectedMonth={selectedMonth}
-				onDateChange={changeCalendarDate}
-				budget={budget}
-				tasksQuantity={tasksQuantity}
-			/>
-			{daysNames.map((e, i) => <DayName key={i}>{e}</DayName>)}
-			{days.map((day, i) => (
-				<CalendarDay day={day} dayClick={dayClick} disabled={monthNum !== day.monthNum} key={i} />
-			))}
-		</section>
+		<CalendarContainer ref={containerRef}>
+			<CalendarPaddingContainer>
+				<section className={className}>
+					<CalendarSummary
+						selectedMonth={selectedMonth}
+						onDateChange={changeCalendarDate}
+						budget={budget}
+						tasksQuantity={tasksQuantity}
+					/>
+					{daysNames.map((e, i) => <DayName key={i}>{e}</DayName>)}
+					{days.map((day, i) => (
+						<CalendarDay day={day} dayClick={dayClick} disabled={monthNum !== day.monthNum} key={i} />
+					))}
+				</section>
+			</CalendarPaddingContainer>
+		</CalendarContainer>
 	);
 };
 
@@ -62,7 +67,7 @@ Calendar.propTypes = {
 	changeCalendarDate: PropTypes.func.isRequired,
 	className: PropTypes.string.isRequired,
 	monthDiff: PropTypes.number.isRequired,
-	yearDiff: PropTypes.number.isRequired
+	yearDiff: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => {
@@ -92,6 +97,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
 	changeCalendarDate: (monthDiff, yearDiff) => dispatch(changeCalendarDate(monthDiff, yearDiff)),
-	openCalendarModal: (selectedDay) => dispatch(toggleCalendarModal(true, selectedDay))
+	openCalendarModal: (selectedDay) => dispatch(toggleCalendarModal(true, selectedDay)),
 });
+
 export default connect(mapStateToProps, mapDispatchToProps)(styleCalendar(Calendar));

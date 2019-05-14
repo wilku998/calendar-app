@@ -35,16 +35,16 @@ const App = () => (
 const renderApp = () => {
 	ReactDOM.render(<App />, document.getElementById('root'));
 };
-
-firebase.auth().onAuthStateChanged(async (user) => {
-	ReactDOM.render(<Loading />, document.getElementById('root'));
-	if (user) {
-		store.dispatch({ type: 'LOGIN', uid: user.uid });
-		await store.dispatch(setItems([ 'tasks', 'incomes', 'expenses' ]));
-		renderApp();
-		history.push('/');
-	} else {
-		store.dispatch({ type: 'LOGOUT' });
-		renderApp();
-	}
-});
+renderApp()
+// firebase.auth().onAuthStateChanged(async (user) => {
+// 	ReactDOM.render(<Loading />, document.getElementById('root'));
+// 	if (user) {
+// 		store.dispatch({ type: 'LOGIN', uid: user.uid });
+// 		await store.dispatch(setItems([ 'tasks', 'incomes', 'expenses' ]));
+// 		renderApp();
+// 		history.push('/');
+// 	} else {
+// 		store.dispatch({ type: 'LOGOUT' });
+// 		renderApp();
+// 	}
+// });

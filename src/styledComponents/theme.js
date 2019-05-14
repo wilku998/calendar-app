@@ -18,7 +18,8 @@ export default {
 			zIndex: 10
 		}
 	},
-
+	
+	background: 'linear-gradient(to right bottom, #d1d1d1, #a7a7a7 )',
 	colorRed: 'rgb(163, 82, 82)',
 	colorRedLight: 'rgb(255, 180, 180)',
 	colorGreen: 'rgb(98, 160, 74)',
@@ -28,6 +29,7 @@ export default {
 	colorBlue3: '#1890ff', //standard
 	colorBlue4: '#084074',
 	colorBlue5: '#06325a',
+	colorBlue6: '#001529',
 	colorGreyLight1: '#faf9f9',
 	colorGreyLight2: '#f4f2f2',
 	colorGreyLight3: '#f0eeee',

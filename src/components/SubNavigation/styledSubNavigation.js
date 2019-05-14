@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import media from '../../styledComponents/breakPoints';
 
 export default (SubNavigation) => styled(SubNavigation)`
     overflow-y: auto;
@@ -6,4 +7,9 @@ export default (SubNavigation) => styled(SubNavigation)`
     ::-webkit-scrollbar {
         display: none;
     }
+
+    ${media.big`
+        max-width: 25rem;
+        width: initial;
+    `}
 `;
