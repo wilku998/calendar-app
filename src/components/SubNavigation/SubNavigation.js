@@ -9,7 +9,7 @@ import { toggleCalendarModal } from '../../actions/calendarModal';
 import theme from '../../styledComponents/theme';
 const { SubMenu, Item } = Menu;
 
-const SubNavigation = ({ items, openCalendarModal, removeItems, collapsed, className }) => {
+const SubNavigation = ({ items, openCalendarModal, collapsed, className, mobileView }) => {
 	const [ removeAllModalProps, toggleRemoveAllModal ] = useState({ modalIsOpen: false, type: undefined });
 
 	const openRemoveAllModal = (type) => {
@@ -25,10 +25,15 @@ const SubNavigation = ({ items, openCalendarModal, removeItems, collapsed, class
 					<SubMenu
 						key={`sub-${iSub}`}
 						title={
-							<span>
+							mobileView ? collapsed ? (
 								<Icon type={item.icon} />
+							) : (
 								<span>{item.key}</span>
-							</span>
+							) : (
+								<span>
+									<Icon type={item.icon} /> <span>{item.key}</span>
+								</span>
+							)
 						}
 					>
 						{item[item.key].length > 0 && (
@@ -55,7 +60,8 @@ SubNavigation.propTypes = {
 	items: PropTypes.array.isRequired,
 	openCalendarModal: PropTypes.func.isRequired,
 	collapsed: PropTypes.bool.isRequired,
-	className: PropTypes.string.isRequired
+	className: PropTypes.string.isRequired,
+	mobileView: PropTypes.bool.isRequired
 };
 
 const mapDispatchToProps = (dispatch) => ({
@@ -80,7 +86,8 @@ const mapStateToProps = ({ items, styles }) => {
 			[key]: items[key],
 			icon: getIcon(key)
 		})),
-		collapsed: styles.subNavCollapsed
+		collapsed: styles.subNavCollapsed,
+		mobileView: styles.windowWidth <= 450
 	};
 };
 

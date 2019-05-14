@@ -11,16 +11,14 @@ const Footer = ({ className, scrollbarWidth, fake }) => {
 					<ListTitle textAlign="start">Weather search</ListTitle>
 					<span>
 						Enter your country and city in the top navigation to search weather. On the calendar, you will
-						see forecast only for a specific hour, click on day window to show weather for a whole day.
+						see forecast only for a specific hour, click on day window to check weather for a whole day.
 					</span>
 				</li>
 				<li>
 					<ListTitle textAlign="start">Tasks and budget managing</ListTitle>
 					<span>
-						Rember to at first login when you want to have saved your items. Open day window exactly as is
-						described above to add tasks, incomes, and expenses. On the right side in sub-navigation, you
-						can see all of your items and you can remove all from a specific category. Click on a budget in
-						calendar summary to open proceeds chart.
+						Open day window exactly as is described above to add tasks, incomes, and expenses. Click on a
+						budget in calendar summary to open proceeds chart.
 					</span>
 				</li>
 			</List>

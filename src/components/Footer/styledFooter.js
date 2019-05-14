@@ -8,9 +8,7 @@ export default styled.footer`
 
 	${media.mid`
 		flex-direction: column;
-	`}
-
-	${(props) => `
+	`} ${(props) => `
         background: linear-gradient(to right bottom, ${props.theme.colorGreyDark4}, ${props.theme.colorGreyDark1});
 		color: ${props.theme.colorGreyLight1};
 		padding: 4rem calc(2rem + ${props.scrollbarwidth}px) 4rem 2rem;	
@@ -19,6 +17,10 @@ export default styled.footer`
 			: `position: fixed;
 			bottom: 0;`}
     `};
+
+	${media.small`
+		padding: 2rem;
+	`};
 `;
 
 export const List = styled.ul`
@@ -36,10 +38,12 @@ export const List = styled.ul`
 		${media.mid`
 			margin-right: 0;
 			margin-bottom: 4rem;
-		`}
+		`} 
+		
+		${media.small`
+			margin-bottom: 2rem;
+		`};
 	}
-
-
 
 	& > li {
 		&:not(:first-child) {
