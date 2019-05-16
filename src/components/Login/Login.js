@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Input, Radio, Button, Icon, message } from 'antd';
+import { Input, Radio, Button, Icon } from 'antd';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';

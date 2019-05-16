@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 require('dotenv').config({ path: '.env.all' });
 
 module.exports = (env) => {
@@ -25,6 +26,7 @@ module.exports = (env) => {
 			]
 		},
 		plugins: [
+			new CaseSensitivePathsPlugin(),
 			new MiniCssExtractPlugin({
 				filename: 'style.css'
 			}),

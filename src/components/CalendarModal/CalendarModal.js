@@ -17,7 +17,7 @@ import { ListContainer } from './lists/styledList';
 import theme from '../../styledComponents/theme';
 import CloseButton from '../abstracts/CloseButton';
 import StyleModal, { ModalContent, CalendarModalItem, CalendarModalTitle } from './styledCalendarModal';
-
+//styledCalendarModal
 const CelandarModal = ({ modalIsOpen, closeModal, selectedDay, tasks, incomes, expenses, addItem, className }) => {
 	const { weather, dayNum, monthNum, year } = selectedDay;
 	const fullDate = `${dayNum} ${getMonthName(monthNum)} ${year}`;

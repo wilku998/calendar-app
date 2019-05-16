@@ -4,6 +4,9 @@
       "@babel/preset-react",
     ],
     "plugins": [
+      ["babel-plugin-styled-components", {
+        "minify": true
+      }],
       "syntax-object-rest-spread",
       "@babel/plugin-proposal-class-properties",
       ["import", { "libraryName": "antd", "libraryDirectory": "es", "style": "css" }]

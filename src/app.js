@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import 'normalize.css/normalize.css';
 import './styles/style.scss';
 
 import AppRouter, { history } from './routers/appRouter';
@@ -22,7 +21,7 @@ window.addEventListener('resize', () => {
 if (navigator.geolocation) {
 	navigator.geolocation.getCurrentPosition((pos) => {
 		const { latitude, longitude } = pos.coords;
-		//store.dispatch(searchWeather(latitude, longitude));
+		store.dispatch(searchWeather(latitude, longitude));
 	});
 }
 

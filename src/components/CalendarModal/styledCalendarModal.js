@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 
-import media from '../../styledComponents/breakPoints';
-
 export default (Modal) => styled(Modal)`
 	${({ theme }) => theme.modalStyles}
 	width: 65rem;
@@ -12,11 +10,9 @@ export default (Modal) => styled(Modal)`
 
 export const CalendarModalItem = styled('div')`
 	padding: 2rem 0;
-
 	&:not(:last-child){
 			border-bottom: ${(props) => props.theme.lightBorder2}
 	}
-
 `;
 
 export const CalendarModalTitle = styled('h1')`
@@ -28,7 +24,6 @@ export const CalendarModalTitle = styled('h1')`
 
 export const ModalContent = styled('div')`
 	position: relative;
-
 	::-webkit-scrollbar { 
     	display: none; 
 	}
