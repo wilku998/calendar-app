@@ -6,7 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev-server": "webpack-dev-server",
-    "build": "webpack"
+    "build": "webpack",
+    "build:prod": "webpack -p --env production",
+    "start": "node server/server",
+    "heroku-postbuild": "npm run build:prod"
   },
   "author": "Wilk Bartosz",
   "license": "ISC",
@@ -47,10 +50,10 @@
     "uuid": "^3.3.2",
     "validator": "^10.11.0",
     "webpack": "^4.29.6",
-    "webpack-cli": "^3.2.3"
+    "webpack-cli": "^3.2.3",
+    "babel-plugin-styled-components": "^1.10.0"
   },
   "devDependencies": {
-    "babel-plugin-styled-components": "^1.10.0",
     "prop-types": "^15.7.2",
     "webpack-dev-server": "^3.2.1"
   }

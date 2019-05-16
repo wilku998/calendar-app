@@ -24,5 +24,9 @@ Project is created with:
 	
 ## Setup
 To run this project, install it locally using npm:
-$ npm install
-$ npm run dev-server
+* npm install
+* npm run dev-server
+To build:
+* npm build
+or
+* npm build:prod

@@ -39,7 +39,7 @@ module.exports = (env) => {
 				'process.env.WEATHER_API_KEY': JSON.stringify(process.env.WEATHER_API_KEY),
 			})
 		],
-		devtool: 'inline-source-map',
+        devtool: isProduction ? 'source-map' : 'inline-source-map',
 		devServer: {
 			contentBase: path.join(__dirname, 'public'),
 			publicPath: '/dist/',
