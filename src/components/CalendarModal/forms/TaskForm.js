@@ -9,7 +9,7 @@ import useTitle from './titleHook';
 const { TextArea } = Input;
 
 const TaskForm = ({ createItem, className }) => {
-	const initialDescription = { value: '', valid: '', inputColor: 'white' };
+	const initialDescription = { value: '', valid: true, inputColor: 'white' };
 	const [ description, setDescription ] = useState({ ...initialDescription });
 	const [ title, setTitle, resetTitle ] = useTitle();
 

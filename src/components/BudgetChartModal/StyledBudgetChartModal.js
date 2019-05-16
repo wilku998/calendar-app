@@ -9,9 +9,11 @@ export default (Modal) => styled(Modal)`
 `;
 
 export const ChartContainer = styled.div`
-	margin-top: 2rem;
+	margin-top: 3rem;
 	display: flex;
 	flex-direction: column;
 	width: 50rem;
+	max-width: 100%;
 	height: 50rem;
+	max-height: 100%;
 `;

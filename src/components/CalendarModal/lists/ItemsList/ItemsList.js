@@ -6,7 +6,7 @@ import { List } from '../styledList';
 
 const ItemsList = ({ items, title }) => {
 	return (
-		<List marginTop={true}>
+		<List isWeather={false}>
 			{title !== 'Tasks' && <h3>{title}</h3>}
 			{items.map((item, i) => (
 				<ItemsListItem key={`${item.title}-${i}`} item={item} type={title.toLowerCase()} />

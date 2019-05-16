@@ -39,7 +39,8 @@ export const addItem = (kind, item) => {
 		const uid = getState().auth.uid;
 		let id;
 		if (uid) {
-			id = await database.ref(`users/${uid}/${kind}`).push(item);
+			const res = await database.ref(`users/${uid}/${kind}`).push(item);
+			id = res.key;
 		} else {
 			id = uuid();
 			message.warning(`You are an unauthorized user, your changes will not be saved`);

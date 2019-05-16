@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import now from '../../staticData/now';
 import momentOperation from '../../functions/momentOperation';
 import filterData from '../../functions/filterData';
-import createChartPoints from '../../functions/createChartPoints';
+import createChartPoints from './createChartPoints';
 import TimePeroidForm from '../TimePeroidForm/TimePeroidForm';
 import BudgetChart from './BudgetChart/BudgetChart';
 import theme from '../../styledComponents/theme';
@@ -43,6 +43,7 @@ const BudgetChartModal = ({ closeModal, modalIsOpen, incomes, expenses, selected
 		setTimePeroid(selectedMonth);
 	};
 
+	const points = createChartPoints(filterData(incomes, timePeroid), filterData(expenses, timePeroid), timePeroid);
 	return (
 		<Modal
 			ariaHideApp={false}
@@ -52,16 +53,9 @@ const BudgetChartModal = ({ closeModal, modalIsOpen, incomes, expenses, selected
 			className={className}
 			style={theme.modalOverlayStyles}
 		>
-			<CloseButton onClick={closeModal} marginright='2rem' />
+			<CloseButton onClick={closeModal} marginright="2rem" />
 			<TimePeroidForm timePeroid={timePeroid} onDateChange={onDateChange} optionAll={true} />
-			<BudgetChart
-				timePeroid={timePeroid}
-				points={createChartPoints(
-					filterData(incomes, timePeroid),
-					filterData(expenses, timePeroid),
-					timePeroid
-				)}
-			/>
+			<BudgetChart timePeroid={timePeroid} points={points} />
 		</Modal>
 	);
 };

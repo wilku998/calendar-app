@@ -1,6 +1,7 @@
 export default {
 	darkBorder: '1px solid #666',
 	lightBorder: '1px solid #ccc',
+	lightBorder2: '1px solid ##999',
 	modalStyles: `
 		background: linear-gradient(to right bottom, #faf9f9, #f4f2f2);
 		box-shadow: 0 2rem 4rem rgba(0, 0, 0, .15);
@@ -18,8 +19,8 @@ export default {
 			zIndex: 10
 		}
 	},
-	
-	background: 'linear-gradient(to right bottom, #d1d1d1, #a7a7a7 )',
+
+	background: '#d1d1d1',
 	colorRed: 'rgb(163, 82, 82)',
 	colorRedLight: 'rgb(255, 180, 180)',
 	colorGreen: 'rgb(98, 160, 74)',

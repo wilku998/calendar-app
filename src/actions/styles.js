@@ -3,11 +3,6 @@ export const setWindowWidth = (windowWidth) => ({
 	windowWidth
 });
 
-export const setCalendarMarginBottom = (calendarMarginBottom) => ({
-	type: 'SET_CALENDAR_MARGIN_BOTTOM',
-	calendarMarginBottom
-});
-
 export const setScrollbarWidth = (scrollbarWidth) => ({
 	type: 'SET_SCROLLBAR_WIDTH',
 	scrollbarWidth

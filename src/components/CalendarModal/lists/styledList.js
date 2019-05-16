@@ -9,7 +9,7 @@ export const ListContainer = styled.div`
 
 export const List = styled.ul`
 	flex: 1;
-	margin: ${(props) => (props.marginTop ? '2rem 0 0 0' : 0)};
+	${(props) => `${props.isWeather ? `margin: 0` : 'margin: 2rem 0 0 0'};`};
 	&:not(:last-child) {
 		margin-right: 2rem;
 	}
@@ -17,8 +17,9 @@ export const List = styled.ul`
         flex: 1 100%;
         &:not(:last-child) {
 			margin-right: 0;
+			${(props) => (props.isWeather ? `border-bottom: ${props.theme.lightBorder}` : '')}
 	    }
-    `}
+    `};
 `;
 
 export const ListItem = styled.li`
@@ -46,6 +47,13 @@ export const RemoveButton = styled.button`
 	background: none;
 	border: none;
 	margin-right: 1rem;
+	cursor: pointer;
+	transition: all .2s;
+	
+	&:hover {
+		color: ${(props) => props.theme.colorBlue3};
+	}
+
 	&:focus {
 		outline: none;
 	}

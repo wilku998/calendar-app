@@ -24,7 +24,11 @@ export default (points) => ({
 		titleFontStyle: '400',
 		titleMarginBottom: 10,
 		callbacks: {
-			label: (tooltipItem) => points[tooltipItem.index].items.map((e) => `${e.title}: ${formatBudget(e.value)}`),
+			label: (tooltipItem) =>
+				points[tooltipItem.index].items.map((e) => {
+					const sign = e.value > 0 ? '+' : '-';
+					return `${e.title}: ${sign} ${formatBudget(Math.abs(e.value))}`;
+				}),
 			afterTitle: (tooltipItem) => `Budget: ${formatBudget(tooltipItem[0].yLabel)}`,
 			title: (tooltipItem) => `Date: ${points[tooltipItem[0].index].date}`
 		}

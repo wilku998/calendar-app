@@ -18,7 +18,7 @@ export default (points, timePeroid) => {
 			data = points.map((e, i) => ({ x: getMonthName(e.items[0].createdAt.monthNum), y: e.sum }));
 		} else {
 			const startDayNum = parseInt(points[0].items[0].createdAt.dayNum);
-			const endNum = parseInt(points[points.length-1].items[0].createdAt.dayNum);
+			const endNum = parseInt(points[points.length - 1].items[0].createdAt.dayNum);
 			for (let i = startDayNum; i <= endNum; i++) {
 				labels.push(i);
 			}

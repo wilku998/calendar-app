@@ -8,7 +8,7 @@ import { removeItems } from '../../actions/items';
 const RemoveAllModal = ({ removeAllModalProps, toggleRemoveAllModal, removeItems }) => {
 	const { type, modalIsOpen } = removeAllModalProps;
 	const closeModal = () => {
-		toggleRemoveAllModal({modalIsOpen: false, type: undefined});
+		toggleRemoveAllModal({ modalIsOpen: false, type: undefined });
 	};
 
 	const removeAll = async () => {
@@ -21,7 +21,7 @@ const RemoveAllModal = ({ removeAllModalProps, toggleRemoveAllModal, removeItems
 			closeModal={closeModal}
 			confirmFunction={removeAll}
 			modalIsOpen={modalIsOpen}
-			confirmButtonText='Remove'
+			confirmButtonText="Remove"
 			confirmInfo={`Are you sure you want to remove all ${type}?`}
 		/>
 	);

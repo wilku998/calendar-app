@@ -8,8 +8,6 @@ export default (Navigation) => styled(Navigation)`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    ${media.big`
-    `}
     
 `;
 

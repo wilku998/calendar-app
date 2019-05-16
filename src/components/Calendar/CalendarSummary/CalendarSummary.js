@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import formatBudget from '../../../functions/formatBudget'
+import formatBudget from '../../../functions/formatBudget';
 import TimePeroidForm from '../../TimePeroidForm/TimePeroidForm';
 import BudgetChartModal from '../../BudgetChartModal/BudgetChartModal';
 import styleSummary, { Item, ItemsContainer, BudgetItem } from './styledCalendarSummary';
-
 
 const CalendarSummary = ({ className, onDateChange, budget, tasksQuantity, selectedMonth }) => {
 	const [ budgetChartModalIsOpen, toggleBudgetChartModal ] = useState(false);

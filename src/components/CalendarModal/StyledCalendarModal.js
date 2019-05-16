@@ -5,18 +5,16 @@ import media from '../../styledComponents/breakPoints';
 export default (Modal) => styled(Modal)`
 	${({ theme }) => theme.modalStyles}
 	width: 65rem;
+	max-width: 100%;
 	padding: 0 2rem;
-	max-height: 100%;
-	${media.mid`
-			width: 100%;
-	`}
+	max-height: 100%; 
 `;
 
 export const CalendarModalItem = styled('div')`
 	padding: 2rem 0;
 
 	&:not(:last-child){
-			border-bottom: ${(props) => props.theme.darkBorder}
+			border-bottom: ${(props) => props.theme.lightBorder2}
 	}
 
 `;

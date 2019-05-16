@@ -9,7 +9,15 @@ import styleNavigation, { ToggleButtonContainer, LoginButtonContainer, Logo } fr
 import WeatherForm from '../WeatherForm/WeatherForm';
 import MobileLogoutModal from '../simpleModals/MobileLogoutModal';
 
-const Navigation = ({ className, collapsed, toggleCollapsed, isAuth, antdInputsSize, mobileView, toggleSubNavVisible }) => {
+const Navigation = ({
+	className,
+	collapsed,
+	toggleCollapsed,
+	isAuth,
+	antdInputsSize,
+	mobileView,
+	toggleSubNavVisible
+}) => {
 	const [ logoutModalIsOpen, toggleLogoutModal ] = useState(false);
 
 	const onLoginButtonClick = () => {
@@ -29,7 +37,9 @@ const Navigation = ({ className, collapsed, toggleCollapsed, isAuth, antdInputsS
 						<Icon type={collapsed ? 'menu-unfold' : 'menu-fold'} />
 					</Button>
 				</ToggleButtonContainer>
-			) : <Logo>Calendar.App</Logo>}
+			) : (
+				<Logo>Calendar.App</Logo>
+			)}
 
 			<WeatherForm mobileView={mobileView} antdInputsSize={antdInputsSize} />
 			<LoginButtonContainer>

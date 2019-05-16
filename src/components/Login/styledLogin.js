@@ -18,7 +18,7 @@ export const InputPassword = styled(Input.Password)`
 export const LoginContent = styled('section')`
     background-color: ${(props) => props.theme.colorGreyLight3};
     padding: 2rem;
-    width: ${(props) => (props.mobileView ? '100%' : '40rem')};
+    ${(props) => `width: ${props.mobileView ? '100%' : '40rem'}; border: ${props.theme.lightBorder}`};
     display: flex;
     flex-direction: column;
     border-radius: .3rem;

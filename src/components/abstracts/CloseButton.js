@@ -12,7 +12,7 @@ const CloseButton = ({ onClick, className, marginright }) => (
 CloseButton.propTypes = {
 	onClick: PropTypes.func.isRequired,
 	className: PropTypes.string.isRequired,
-	marginright: PropTypes.string.isRequired,
+	marginright: PropTypes.string.isRequired
 };
 
 const style = (CloseButton) => styled(CloseButton)`

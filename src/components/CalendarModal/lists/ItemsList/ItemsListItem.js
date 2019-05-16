@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import { Icon } from 'antd';
 import PropTypes from 'prop-types';
 
-import formatBudget from '../../../../functions/formatBudget'
+import formatBudget from '../../../../functions/formatBudget';
 import { ListItem, ListItemTitle, RemoveButton, TaskDescription } from '../styledList';
 import { removeItem } from '../../../../actions/items';
 
-const ItemsListItem = ({ item, type }) => {
+const ItemsListItem = ({ item, type, removeItem }) => {
 	const isTask = type === 'tasks';
 	const onRemoveButtonClick = () => {
 		removeItem(item.id, type);
@@ -21,11 +21,7 @@ const ItemsListItem = ({ item, type }) => {
 				</RemoveButton>
 				{item.title}
 			</ListItemTitle>
-			{isTask ? (
-				<TaskDescription>{item.description}</TaskDescription>
-			) : (
-				<span>{formatBudget(item.value)}</span>
-			)}
+			{isTask ? <TaskDescription>{item.description}</TaskDescription> : <span>{formatBudget(item.value)}</span>}
 		</ListItem>
 	);
 };

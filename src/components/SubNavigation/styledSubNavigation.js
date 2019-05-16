@@ -5,9 +5,12 @@ export default (SubNavigation) => styled(SubNavigation)`
     overflow-y: auto;
     width: 25rem;
 
-    ::-webkit-scrollbar {
+    @supports (::-webkit-scrollbar){
+        ::-webkit-scrollbar {
         display: none;
     }
+    }
+
 
     ${media.big`
         max-width: 25rem;

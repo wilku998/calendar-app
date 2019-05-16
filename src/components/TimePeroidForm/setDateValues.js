@@ -19,7 +19,7 @@ export default (timePeroid) => {
 
 	let monthValue = timePeroid.month;
 	const months = monthsData.map((e, i) => {
-		const value = i+1 - now.monthInt;
+		const value = i + 1 - now.monthInt;
 		if (e === timePeroid.month) {
 			monthValue = value;
 		}

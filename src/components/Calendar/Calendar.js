@@ -21,7 +21,7 @@ const Calendar = ({
 	openCalendarModal,
 	changeCalendarDate,
 	monthDiff,
-	yearDiff,
+	yearDiff
 }) => {
 	const { monthNum } = selectedMonth;
 	const containerRef = useRef();
@@ -67,7 +67,7 @@ Calendar.propTypes = {
 	changeCalendarDate: PropTypes.func.isRequired,
 	className: PropTypes.string.isRequired,
 	monthDiff: PropTypes.number.isRequired,
-	yearDiff: PropTypes.number.isRequired,
+	yearDiff: PropTypes.number.isRequired
 };
 
 const mapStateToProps = (state) => {
@@ -97,7 +97,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
 	changeCalendarDate: (monthDiff, yearDiff) => dispatch(changeCalendarDate(monthDiff, yearDiff)),
-	openCalendarModal: (selectedDay) => dispatch(toggleCalendarModal(true, selectedDay)),
+	openCalendarModal: (selectedDay) => dispatch(toggleCalendarModal(true, selectedDay))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(styleCalendar(Calendar));

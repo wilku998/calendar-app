@@ -28,11 +28,11 @@ const WeatherForm = ({ antdInputsSize, className, mobileView, searchWeather }) =
 			message.warning(`The location hasn't found`);
 		}
 	};
-	
+
 	const onSubmit = async (e) => {
 		e.preventDefault();
 		await search();
-		setInputValue('')
+		setInputValue('');
 	};
 
 	return (

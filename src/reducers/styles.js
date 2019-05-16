@@ -1,5 +1,5 @@
 export default (
-	state = { windowWidth: 0, subNavCollapsed: false, calendarMarginBottom: 0, antdInputsSize: 'default' },
+	state = { windowWidth: 0, subNavCollapsed: false, antdInputsSize: 'default' },
 	action
 ) => {
 	const { type } = action;

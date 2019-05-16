@@ -10,7 +10,6 @@ Chart.defaults.global.legend.display = false;
 
 const BudgetChart = ({ points, timePeroid }) => {
 	const containerRef = useRef();
-	console.log({ points, timePeroid });
 	useLayoutEffect(
 		() => {
 			const myChart = new Chart(containerRef.current.getContext('2d'), {

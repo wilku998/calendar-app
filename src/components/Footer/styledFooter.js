@@ -3,19 +3,25 @@ import media from '../../styledComponents/breakPoints';
 
 export default styled.footer`
 	display: flex;
-	z-index: -1;
 	font-size: 1.4rem;
 
 	${media.mid`
 		flex-direction: column;
-	`} ${(props) => `
-        background: linear-gradient(to right bottom, ${props.theme.colorGreyDark4}, ${props.theme.colorGreyDark1});
+	`};
+
+	${(props) => `
 		color: ${props.theme.colorGreyLight1};
 		padding: 4rem calc(2rem + ${props.scrollbarwidth}px) 4rem 2rem;	
 		${props.fake
-			? 'opacity: 0;'
-			: `position: fixed;
-			bottom: 0;`}
+			? `
+				opacity: 0;
+			`
+			: `
+				background: linear-gradient(to right bottom, ${props.theme.colorGreyDark4}, ${props.theme.colorGreyDark1});
+				position: fixed;
+				bottom: 0;
+				z-index: -1;
+			`}
     `};
 
 	${media.small`
@@ -38,9 +44,7 @@ export const List = styled.ul`
 		${media.mid`
 			margin-right: 0;
 			margin-bottom: 4rem;
-		`} 
-		
-		${media.small`
+		`} ${media.small`
 			margin-bottom: 2rem;
 		`};
 	}
