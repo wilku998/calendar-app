@@ -4,11 +4,6 @@ import media from '../../styledComponents/breakPoints';
 export default styled.footer`
 	display: flex;
 	font-size: 1.4rem;
-
-	${media.mid`
-		flex-direction: column;
-	`};
-
 	${(props) => `
 		color: ${props.theme.colorGreyLight1};
 		padding: 4rem calc(2rem + ${props.scrollbarwidth}px) 4rem 2rem;	
@@ -24,8 +19,13 @@ export default styled.footer`
 			`}
     `};
 
+	${media.mid`
+		flex-direction: column;
+	`};
+
 	${media.small`
-		padding: 2rem;
+		line-height: 1.3;
+		padding: ${(props) => `2rem calc(2rem + ${props.scrollbarwidth}px) 2rem 2rem`};	
 	`};
 `;
 
@@ -45,13 +45,16 @@ export const List = styled.ul`
 			margin-right: 0;
 			margin-bottom: 4rem;
 		`} ${media.small`
-			margin-bottom: 2rem;
+			margin-bottom: 1rem;
 		`};
 	}
 
 	& > li {
 		&:not(:first-child) {
 			margin-top: 2rem;
+			${media.small`
+				margin-top: 1rem;
+			`};
 		}
 	}
 `;
@@ -66,4 +69,7 @@ export const ListTitle = styled.h3`
         color: ${theme.colorGreyLight4};
         border-bottom: ${theme.darkBorder}
     `};
+	${media.small`
+		padding-bottom: .4rem;
+	`};
 `;

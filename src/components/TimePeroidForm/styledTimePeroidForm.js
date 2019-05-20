@@ -8,8 +8,3 @@ export const StyledSelect = styled(Select)`
 	}
 	font-size: 1.6rem !important;
 `;
-
-export default (form) => styled(form)`
-    display: flex;
-    justify-content: center;
-`

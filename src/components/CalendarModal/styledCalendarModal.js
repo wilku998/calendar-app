@@ -3,15 +3,13 @@ import styled from 'styled-components';
 export default (Modal) => styled(Modal)`
 	${({ theme }) => theme.modalStyles}
 	width: 65rem;
-	max-width: 100%;
 	padding: 0 2rem;
-	max-height: 100%; 
 `;
 
 export const CalendarModalItem = styled('div')`
 	padding: 2rem 0;
 	&:not(:last-child){
-			border-bottom: ${(props) => props.theme.lightBorder2}
+		border-bottom: ${(props) => props.theme.lightBorder2}
 	}
 `;
 

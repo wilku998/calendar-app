@@ -1,11 +1,10 @@
 import styled from 'styled-components';
 
 export default (Modal) => styled(Modal)`
+	${({ theme }) => theme.modalStyles};
 	position: relative;
-	padding: 2rem;
+	padding: 1rem 2rem 2rem 2rem;
 	border-radius: 0.3rem;
-	${({ theme }) => theme.modalStyles}
-
 `;
 
 export const ChartContainer = styled.div`
@@ -13,7 +12,12 @@ export const ChartContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 50rem;
-	max-width: 100%;
 	height: 50rem;
-	max-height: 100%;
+	max-height: 100%; 
+	max-width: 100%; 
+`;
+
+export const FormContainer = styled.div`
+	display: flex;
+	justify-content: space-between;
 `;

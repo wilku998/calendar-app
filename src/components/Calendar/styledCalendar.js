@@ -24,7 +24,7 @@ export const DayName = styled.div`
 
 export const CalendarPaddingContainer = styled('div')`
     box-sizing: content-box;
-    min-width: 600px;
+    min-width: 650px;
     max-width: 1000px;
 		margin: auto;
     padding: 4rem 4rem 8rem 4rem;

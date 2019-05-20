@@ -32,12 +32,6 @@ body{
     max-height: 90vh;
 };
 
-.ant-menu-item{
-    @media only screen and (max-width: 450px){
-        padding-left: 24px !important;
-    }
-};
-
 #root{
   min-height: 100vh;
 }

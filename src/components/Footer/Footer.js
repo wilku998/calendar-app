@@ -1,11 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux';
-
+import PropTypes from 'prop-types'
 import FooterContainer, { List, ListTitle } from './styledFooter';
 
-const Footer = ({ className, scrollbarWidth, fake }) => {
+const Footer = ({ scrollbarWidth, fake }) => {
 	return (
-		<FooterContainer fake={fake} scrollbarwidth={scrollbarWidth} className={className}>
+		<FooterContainer fake={fake} scrollbarwidth={scrollbarWidth}>
 			<List textAlign="justify">
 				<li>
 					<ListTitle textAlign="start">Weather search</ListTitle>
@@ -41,8 +40,8 @@ const Footer = ({ className, scrollbarWidth, fake }) => {
 	);
 };
 
-const mapStateToProps = ({ styles }) => ({
-	scrollbarWidth: styles.scrollbarWidth
-});
-
-export default connect(mapStateToProps)(Footer);
+Footer.propTypes={
+	scrollbarWidth: PropTypes.number.isRequired,
+	fake: PropTypes.bool.isRequired
+}
+export default Footer;

@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { List, ListItem, ListContainer } from './styledList';
 
 const Weather = ({ weather }) => {
-	const half = Math.floor(weather.length / 2);
+	const half = Math.ceil(weather.length / 2);
 	const weatherArrs = [ weather.slice(0, half), weather.slice(half) ];
 
 	return (

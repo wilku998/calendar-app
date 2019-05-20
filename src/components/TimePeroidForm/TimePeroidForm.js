@@ -3,12 +3,11 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import setDateValues from './setDateValues';
-import styleTimePeroidForm, { StyledSelect } from './styledTimePeroidForm';
+import { StyledSelect } from './styledTimePeroidForm';
+
 const { Option } = StyledSelect;
 
-///////////////////////////////////////////
-
-const TimePeroidForm = ({ optionAll, antdInputsSize, timePeroid, onDateChange, className }) => {
+const TimePeroidForm = ({ optionAll, antdInputsSize, timePeroid, onDateChange, selectMargin }) => {
 	const [ monthsData, yearsData ] = setDateValues(timePeroid);
 	const { months, monthValue } = monthsData;
 	const { years, yearValue } = yearsData;
@@ -20,8 +19,13 @@ const TimePeroidForm = ({ optionAll, antdInputsSize, timePeroid, onDateChange, c
 	};
 
 	return (
-		<form className={className}>
-			<StyledSelect size={antdInputsSize} value={yearValue} onChange={onYearChange}>
+		<form>
+			<StyledSelect
+				style={{ margin: selectMargin }}
+				size={antdInputsSize}
+				value={yearValue}
+				onChange={onYearChange}
+			>
 				{optionAll && <Option value="all-years">All</Option>}
 				{years.map((e) => (
 					<Option key={e.value} value={e.value}>
@@ -29,7 +33,12 @@ const TimePeroidForm = ({ optionAll, antdInputsSize, timePeroid, onDateChange, c
 					</Option>
 				))}
 			</StyledSelect>
-			<StyledSelect size={antdInputsSize} value={monthValue} onChange={onMonthChange}>
+			<StyledSelect
+				style={{ margin: selectMargin }}
+				size={antdInputsSize}
+				value={monthValue}
+				onChange={onMonthChange}
+			>
 				{optionAll && <Option value="all-months">All</Option>}
 				{months.map((e) => (
 					<Option key={e.value} value={e.value}>
@@ -45,12 +54,11 @@ TimePeroidForm.propTypes = {
 	onDateChange: PropTypes.func.isRequired,
 	optionAll: PropTypes.bool.isRequired,
 	antdInputsSize: PropTypes.string.isRequired,
-	timePeroid: PropTypes.object.isRequired,
-	className: PropTypes.string.isRequired
+	timePeroid: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
 	antdInputsSize: state.styles.antdInputsSize
 });
 
-export default connect(mapStateToProps)(styleTimePeroidForm(TimePeroidForm));
+export default connect(mapStateToProps)(TimePeroidForm);

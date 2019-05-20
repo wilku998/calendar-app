@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { Menu, Icon } from 'antd';
+import { Menu, Layout, Icon } from 'antd';
 import PropTypes from 'prop-types';
 
 import RemoveAllModal from '../simpleModals/RemoveAllModal';
 import styleSubNav from './styledSubNavigation';
 import { toggleCalendarModal } from '../../actions/calendarModal';
 import theme from '../../styledComponents/theme';
+const { Sider } = Layout;
 const { SubMenu, Item } = Menu;
 
 const SubNavigation = ({ items, openCalendarModal, collapsed, className, mobileView }) => {
@@ -17,10 +18,15 @@ const SubNavigation = ({ items, openCalendarModal, collapsed, className, mobileV
 	};
 
 	return (
-		<nav className={className}>
+		<Sider
+			className={className}
+			trigger={null}
+			collapsible
+			collapsed={collapsed}
+			defaultCollapsed={collapsed}
+		>
 			<RemoveAllModal removeAllModalProps={removeAllModalProps} toggleRemoveAllModal={toggleRemoveAllModal} />
-
-			<Menu mode="inline" theme="dark" inlineCollapsed={collapsed} style={{ minHeight: '100%' }}>
+			<Menu mode="inline" theme="dark" style={{ minHeight: '100%' }}>
 				{items.map((item, iSub) => (
 					<SubMenu
 						key={`sub-${iSub}`}
@@ -52,7 +58,7 @@ const SubNavigation = ({ items, openCalendarModal, collapsed, className, mobileV
 					</SubMenu>
 				))}
 			</Menu>
-		</nav>
+		</Sider>
 	);
 };
 
@@ -87,7 +93,7 @@ const mapStateToProps = ({ items, styles }) => {
 			icon: getIcon(key)
 		})),
 		collapsed: styles.subNavCollapsed,
-		mobileView: styles.windowWidth <= 450
+		mobileView: styles.mobileView
 	};
 };
 

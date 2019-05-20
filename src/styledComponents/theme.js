@@ -1,13 +1,15 @@
 export default {
 	darkBorder: '1px solid #666',
 	lightBorder: '1px solid #ccc',
-	lightBorder2: '1px solid ##999',
+	lightBorder2: '1px solid #999',
 	modalStyles: `
 		background: linear-gradient(to right bottom, #faf9f9, #f4f2f2);
 		box-shadow: 0 2rem 4rem rgba(0, 0, 0, .15);
 		border-radius: .3rem;
 		position: relative;
 		overflow: auto;
+		max-width: 100%;
+		max-height: 100%;
 	`,
 	modalOverlayStyles: {
 		overlay: {

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Icon, Button } from 'antd';
 import PropTypes from 'prop-types';
 
+import { sizes } from '../../styledComponents/breakPoints';
 import { firebase } from '../../database/firebase';
 import { history } from '../../routers/appRouter';
 import styleNavigation, { ToggleButtonContainer, LoginButtonContainer, Logo } from './StyledNavigation';
@@ -62,13 +63,13 @@ Navigation.propTypes = {
 };
 
 const mapStateToProps = ({ auth, styles }) => {
-	const { windowWidth, antdInputsSize } = styles;
+	const { windowWidth, antdInputsSize, subNavCollapsed: collapsed, mobileView } = styles;
 	return {
-		collapsed: styles.subNavCollapsed,
+		collapsed,
 		isAuth: !!auth.uid,
 		antdInputsSize,
-		mobileView: windowWidth <= 450,
-		toggleSubNavVisible: windowWidth <= 1140
+		mobileView,
+		toggleSubNavVisible: windowWidth <= sizes.big * 16
 	};
 };
 

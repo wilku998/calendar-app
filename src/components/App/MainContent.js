@@ -1,22 +1,21 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
 
-import { setScrollbarWidth } from '../../actions/styles';
 import Footer from '../Footer/Footer';
 import Calendar from '../Calendar/Calendar';
 
-const MainContent = ({ className, setScrollbarWidth }) => {
+const MainContent = ({ className }) => {
 	const componentRef = useRef();
+	const [scrollbarWidth, setScrollbarWidth] = useState(0);
 	useLayoutEffect(() => {
-		const scrollbarWidth = componentRef.current.offsetWidth - componentRef.current.clientWidth;
-		setScrollbarWidth(scrollbarWidth);
+		setScrollbarWidth(componentRef.current.offsetWidth - componentRef.current.clientWidth);
 	}, []);
+
 	return (
 		<div ref={componentRef} className={className}>
 			<Calendar />
-			<Footer fake={true} />
-			<Footer fake={false} />
+			<Footer scrollbarWidth={scrollbarWidth} fake={true} />
+			<Footer scrollbarWidth={scrollbarWidth} fake={false} />
 		</div>
 	);
 };
@@ -27,8 +26,4 @@ const style = (MainContent) => styled(MainContent)`
 	overflow-x: hidden;
 `;
 
-const mapDispatchToProps = (dispatch) => ({
-	setScrollbarWidth: (value) => dispatch(setScrollbarWidth(value))
-});
-
-export default connect(undefined, mapDispatchToProps)(style(MainContent));
+export default style(MainContent);

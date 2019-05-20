@@ -18,9 +18,9 @@ CloseButton.propTypes = {
 const style = (CloseButton) => styled(CloseButton)`
 	position: absolute;
 	cursor: pointer;
-	top: 1.5rem;
+	top: 1.2rem;
 	right: ${({ marginright }) => marginright};
-	font-size: 1.8rem;
+	font-size: 2rem;
 	background: none;
 	border: none;
 	transition: all .2s;
