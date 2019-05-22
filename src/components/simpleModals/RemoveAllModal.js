@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import ModalTemplate from './ModalTemplate';
-import { removeItems } from '../../actions/items';
+import { removeItems } from '../../store/actions/items';
 
 const RemoveAllModal = ({ removeAllModalProps, toggleRemoveAllModal, removeItems }) => {
 	const { type, modalIsOpen } = removeAllModalProps;

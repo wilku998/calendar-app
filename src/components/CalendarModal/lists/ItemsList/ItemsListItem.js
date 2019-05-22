@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import formatBudget from '../../../../functions/formatBudget';
 import { ListItem, ListItemTitle, RemoveButton, TaskDescription } from '../styledList';
-import { removeItem } from '../../../../actions/items';
+import { removeItem } from '../../../../store/actions/items';
 
 const ItemsListItem = ({ item, type, removeItem }) => {
 	const isTask = type === 'tasks';
@@ -32,7 +32,7 @@ ItemsListItem.propTypes = {
 		id: PropTypes.string.isRequired,
 		title: PropTypes.string.isRequired,
 		description: PropTypes.string,
-		value: PropTypes.number,
+		value: PropTypes.number
 	}).isRequired,
 	removeItem: PropTypes.func.isRequired,
 	type: PropTypes.string.isRequired

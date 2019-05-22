@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Input, Button, Select, InputNumber } from 'antd';
+import { Input, Button, Select, InputNumber, message } from 'antd';
 import PropTypes from 'prop-types';
 
 import styleForm, { Label, inputStyles, inputValueStyles, selectStyles, fontSize } from './styledForm';
@@ -26,7 +26,11 @@ const BudgetForm = ({ createItem, className }) => {
 	const onTypeChange = (type) => setType(type);
 
 	const addBudget = async () => {
-		if (title.valid && value.valid) {
+		if (!title.valid) {
+			message.warning('Title should have at least 3 characters and less than 21.');
+		} else if (!value.valid) {
+			message.warning('The value must be a number greater than 0 and less than 1,000,000.');
+		} else {
 			await createItem(`${type}s`, {
 				title: title.value,
 				value: Math.round(value.value * 100) / 100

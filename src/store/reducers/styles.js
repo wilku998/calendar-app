@@ -1,4 +1,5 @@
-import { sizes } from '../styledComponents/breakPoints';
+import { sizes } from '../../styledComponents/breakPoints';
+import { SET_WINDOW_WIDTH, TOGGLE_SUB_NAV } from '../actionsNames';
 
 const setMobileView = (width) => width <= sizes.small * 16;
 const setAntdInputSize = (width) => (width > sizes.mid * 16 ? 'default' : 'small');
@@ -14,7 +15,7 @@ const initialState = {
 export default (state = initialState, action) => {
 	const { type } = action;
 	switch (type) {
-		case 'SET_WINDOW_WIDTH': {
+		case SET_WINDOW_WIDTH: {
 			const { windowWidth } = action;
 			const breakPoint = sizes.big * 16;
 			let subNavCollapsed;
@@ -34,7 +35,7 @@ export default (state = initialState, action) => {
 				subNavCollapsed
 			};
 		}
-		case 'TOGGLE_SUB_NAV':
+		case TOGGLE_SUB_NAV:
 			return {
 				...state,
 				subNavCollapsed: !state.subNavCollapsed

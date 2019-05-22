@@ -5,10 +5,11 @@ import './styles/style.scss';
 
 import AppRouter, { history } from './routers/appRouter';
 import configureStore from './store/configureStore';
-import { searchWeather } from './actions/weather';
-import { setItems } from './actions/items';
+import { searchWeather } from './store/actions/weather';
+import { setItems } from './store/actions/items';
 import { firebase } from './database/firebase';
-import { setWindowWidth } from './actions/styles';
+import { setWindowWidth } from './store/actions/styles';
+import { login, logout } from './store/actions/auth';
 import Loading from './components/Loading/Loading';
 
 const store = configureStore();
@@ -37,12 +38,12 @@ const renderApp = () => {
 firebase.auth().onAuthStateChanged(async (user) => {
 	ReactDOM.render(<Loading />, document.getElementById('root'));
 	if (user) {
-		store.dispatch({ type: 'LOGIN', uid: user.uid });
+		store.dispatch(login(user.uid));
 		await store.dispatch(setItems([ 'tasks', 'incomes', 'expenses' ]));
 		renderApp();
 		history.push('/');
 	} else {
-		store.dispatch({ type: 'LOGOUT' });
+		store.dispatch(logout());
 		renderApp();
 	}
 });

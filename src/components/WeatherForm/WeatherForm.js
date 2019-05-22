@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Input, Icon, message } from 'antd';
 import PropTypes from 'prop-types';
 
-import { searchWeather } from '../../actions/weather';
+import { searchWeather } from '../../store/actions/weather';
 import styleForm from './styledWeatherForm';
 
 const InputSearch = Input.Search;

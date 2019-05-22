@@ -25,7 +25,7 @@ export const LoginContent = styled('section')`
     border-radius: .3rem;
     
     ${media.small`
-        width: 100%
+        width: 100%;
     `}
 `;
 
@@ -43,6 +43,4 @@ export const Form = styled('form')`
     }
 `;
 
-export const ErrorMessage = styled.span`
-	color: ${(props) => props.theme.colorRed};
-`;
+export const ErrorMessage = styled.span`color: ${(props) => props.theme.colorRed};`;

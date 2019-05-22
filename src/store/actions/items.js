@@ -1,10 +1,11 @@
 import uuid from 'uuid';
 import { message } from 'antd';
 
-import database from '../database/firebase';
+import { ADD_ITEM, REMOVE_ITEM, SET_ITEMS } from '../actionsNames';
+import database from '../../database/firebase';
 
 const setItemsInRedux = (items, kind) => ({
-	type: 'SET_ITEMS',
+	type: SET_ITEMS,
 	items,
 	kind
 });
@@ -30,7 +31,7 @@ export const setItems = (refs) => {
 };
 
 const addItemInRedux = (item, kind) => ({
-	type: 'ADD_ITEM',
+	type: ADD_ITEM,
 	item,
 	kind
 });
@@ -61,7 +62,7 @@ export const removeItems = (kind) => {
 };
 
 const removeItemInRedux = (id, kind) => ({
-	type: 'REMOVE_ITEM',
+	type: REMOVE_ITEM,
 	id,
 	kind
 });

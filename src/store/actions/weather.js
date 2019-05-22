@@ -1,7 +1,8 @@
 import axios from 'axios';
+import { SET_WEATHER } from '../actionsNames';
 
 export const setWeather = (fiveDaysWeather) => ({
-	type: 'SET_WEATHER',
+	type: SET_WEATHER,
 	fiveDaysWeather
 });
 

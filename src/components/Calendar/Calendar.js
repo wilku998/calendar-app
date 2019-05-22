@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import daysNames from '../../staticData/daysNames';
-import { changeCalendarDate } from '../../actions/calendar';
-import { toggleCalendarModal } from '../../actions/calendarModal';
+import { changeCalendarDate } from '../../store/actions/calendar';
+import { toggleCalendarModal } from '../../store/actions/calendarModal';
 import styleCalendar, { DayName, CalendarContainer, CalendarPaddingContainer } from './styledCalendar';
 import CalendarSummary from './CalendarSummary/CalendarSummary';
 import CalendarDay from './CalendarDay/CalendarDay';

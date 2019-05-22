@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Input, Button } from 'antd';
+import { Input, Button, message } from 'antd';
 
 import styleForm, { Label, SpanLabelDescription, inputStyles, fontSize } from './styledForm';
 import setInputColor from '../../../functions/setInputColor';
 import formValidation from './validation';
 import useTitle from './titleHook';
+
 const { TextArea } = Input;
 
 const TaskForm = ({ createItem, className }) => {
@@ -20,7 +21,11 @@ const TaskForm = ({ createItem, className }) => {
 	};
 
 	const addTask = async () => {
-		if (title.valid && description.valid) {
+		if (!title.valid) {
+			message.warning('Title should have at least 3 characters and less than 21.');
+		} else if (!description.valid) {
+			message.warning('Description length can\'t be greater than 400 characters and maximum word length is 20.');
+		} else {
 			await createItem('tasks', {
 				title: title.value,
 				description: description.value

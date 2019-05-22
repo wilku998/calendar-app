@@ -2,11 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Modal from 'react-modal';
-import { Icon } from 'antd';
 
-import { addItem } from '../../actions/items';
+import { addItem } from '../../store/actions/items';
 import filterData from '../../functions/filterData';
-import { toggleCalendarModal } from '../../actions/calendarModal';
+import { toggleCalendarModal } from '../../store/actions/calendarModal';
 import getMonthName from '../../functions/getMonthName';
 import TaskForm from './forms/TaskForm';
 import BudgetForm from './forms/BudgetForm';

@@ -9,11 +9,12 @@ import { history } from '../../routers/appRouter';
 import styleNavigation, { ToggleButtonContainer, LoginButtonContainer, Logo } from './StyledNavigation';
 import WeatherForm from '../WeatherForm/WeatherForm';
 import MobileLogoutModal from '../simpleModals/MobileLogoutModal';
+import { toggleSubNav } from '../../store/actions/styles';
 
 const Navigation = ({
 	className,
 	collapsed,
-	toggleCollapsed,
+	toggleSubNav,
 	isAuth,
 	antdInputsSize,
 	mobileView,
@@ -34,7 +35,7 @@ const Navigation = ({
 			<MobileLogoutModal logoutModalIsOpen={logoutModalIsOpen} toggleLogoutModal={toggleLogoutModal} />
 			{toggleSubNavVisible ? (
 				<ToggleButtonContainer>
-					<Button size={antdInputsSize} type="primary" onClick={toggleCollapsed}>
+					<Button size={antdInputsSize} type="primary" onClick={toggleSubNav}>
 						<Icon type={collapsed ? 'menu-unfold' : 'menu-fold'} />
 					</Button>
 				</ToggleButtonContainer>
@@ -56,7 +57,7 @@ const Navigation = ({
 Navigation.propTypes = {
 	className: PropTypes.string.isRequired,
 	collapsed: PropTypes.bool.isRequired,
-	toggleCollapsed: PropTypes.func.isRequired,
+	toggleSubNav: PropTypes.func.isRequired,
 	isAuth: PropTypes.bool.isRequired,
 	antdInputsSize: PropTypes.string.isRequired,
 	mobileView: PropTypes.bool.isRequired,
@@ -75,7 +76,7 @@ const mapStateToProps = ({ auth, styles }) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-	toggleCollapsed: () => dispatch({ type: 'TOGGLE_SUB_NAV' })
+	toggleSubNav: () => dispatch(toggleSubNav())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(styleNavigation(Navigation));

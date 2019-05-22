@@ -1,12 +1,14 @@
+import { LOGIN, LOGOUT } from '../actionsNames';
+
 export default (state = {}, action) => {
 	const { type } = action;
 
 	switch (type) {
-		case 'LOGIN':
+		case LOGIN:
 			return {
 				uid: action.uid
 			};
-		case 'LOGOUT':
+		case LOGOUT:
 			return {};
 		default:
 			return state;

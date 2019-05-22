@@ -1,4 +1,5 @@
-import removeItem from '../functions/removeItemFromArr';
+import removeItem from '../../functions/removeItemFromArr';
+import { ADD_ITEM, REMOVE_ITEM, SET_ITEMS, LOGOUT } from '../actionsNames';
 
 const initialState = {
 	incomes: [],
@@ -9,24 +10,24 @@ const initialState = {
 export default (state = { ...initialState }, action) => {
 	const { type, kind } = action;
 	switch (type) {
-		case 'ADD_ITEM':
+		case ADD_ITEM:
 			return {
 				...state,
 				[kind]: [ ...state[kind], action.item ]
 			};
-		case 'REMOVE_ITEM': {
+		case REMOVE_ITEM: {
 			const { id } = action;
 			return {
 				...state,
 				[kind]: removeItem(state[kind], id)
 			};
 		}
-		case 'SET_ITEMS':
+		case SET_ITEMS:
 			return {
 				...state,
 				[kind]: action.items
 			};
-		case 'LOGOUT':
+		case LOGOUT:
 			return {
 				...initialState
 			};

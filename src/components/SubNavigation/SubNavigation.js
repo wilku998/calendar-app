@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import RemoveAllModal from '../simpleModals/RemoveAllModal';
 import styleSubNav from './styledSubNavigation';
-import { toggleCalendarModal } from '../../actions/calendarModal';
+import { toggleCalendarModal } from '../../store/actions/calendarModal';
 import theme from '../../styledComponents/theme';
 
 const { Sider } = Layout;
