@@ -13,7 +13,7 @@ const setDate = ({ year, monthNum, dayNum }, timePeroid) => {
 };
 
 export default (incomes, expenses, timePeroid) => {
-	let points = [];
+	const points = [];
 	const items = [ ...incomes, ...expenses.map((e) => ({ ...e, value: e.value * -1 })) ];
 	let sum = 0;
 
@@ -23,9 +23,7 @@ export default (incomes, expenses, timePeroid) => {
 		foundedIndex > -1 ? points[foundedIndex].items.push(item) : points.push({ date: itemDate, items: [ item ] });
 	});
 
-	points.sort((a, b) => {
-		return parseInt(a.date.replace('-', '')) - parseInt(b.date.replace('-', ''));
-	});
+	points.sort((a, b) => parseInt(a.date.replace('-', '')) - parseInt(b.date.replace('-', '')));
 
 	return points.map((e, i) => {
 		sum = getSumOfBudgetItems(e.items) + sum;

@@ -17,13 +17,12 @@ import { ListContainer } from './lists/styledList';
 import theme from '../../styledComponents/theme';
 import CloseButton from '../abstracts/CloseButton';
 import StyleModal, { ModalContent, CalendarModalItem, CalendarModalTitle } from './styledCalendarModal';
-//styledCalendarModal
+
 const CelandarModal = ({ modalIsOpen, closeModal, selectedDay, tasks, incomes, expenses, addItem, className }) => {
 	const { weather, dayNum, monthNum, year } = selectedDay;
 	const fullDate = `${dayNum} ${getMonthName(monthNum)} ${year}`;
 
 	const createItem = async (type, item) => {
-		const { dayNum, monthNum, year } = selectedDay;
 		await addItem(type, {
 			...item,
 			createdAt: {
@@ -46,7 +45,7 @@ const CelandarModal = ({ modalIsOpen, closeModal, selectedDay, tasks, incomes, e
 				<CloseButton marginright="0" onClick={closeModal} />
 
 				<CalendarModalItem>
-					<CalendarModalTitle mainTitle={true} withoutMargin={!weather}>
+					<CalendarModalTitle mainTitle withoutMargin={!weather}>
 						{fullDate}
 					</CalendarModalTitle>
 					{weather && <WeatherList weather={weather} />}
@@ -93,11 +92,18 @@ const mapStateToProps = (state) => {
 };
 
 CelandarModal.propTypes = {
-	tasks: PropTypes.array.isRequired,
-	incomes: PropTypes.array.isRequired,
-	expenses: PropTypes.array.isRequired,
-	selectedDay: PropTypes.object.isRequired,
+	tasks: PropTypes.arrayOf(PropTypes.object).isRequired,
+	incomes: PropTypes.arrayOf(PropTypes.object).isRequired,
+	expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
 	modalIsOpen: PropTypes.bool.isRequired,
-	closeModal: PropTypes.func.isRequired
+	closeModal: PropTypes.func.isRequired,
+	addItem: PropTypes.func.isRequired,
+	className: PropTypes.string.isRequired,
+	selectedDay: PropTypes.exact({
+		dayNum: PropTypes.string,
+		monthNum: PropTypes.string,
+		year: PropTypes.string,
+		weather: PropTypes.array
+	}).isRequired
 };
 export default StyleModal(connect(mapStateToProps, mapDispatchToProps)(CelandarModal));

@@ -34,7 +34,12 @@ const Calendar = ({
 			const diff = clikedMonthNumInt - selectedMonthNumInt;
 			changeCalendarDate(monthDiff + diff, Math.abs(diff) === 11 ? yearDiff - Math.sign(diff) : yearDiff);
 		} else {
-			openCalendarModal(day);
+			openCalendarModal({
+				dayNum: day.dayNum,
+				monthNum: day.monthNum,
+				year: day.year,
+				weather: day.weather
+			});
 		}
 	};
 
@@ -59,8 +64,14 @@ const Calendar = ({
 };
 
 Calendar.propTypes = {
-	days: PropTypes.array.isRequired,
-	selectedMonth: PropTypes.object.isRequired,
+	days: PropTypes.arrayOf(PropTypes.object).isRequired,
+	selectedMonth: PropTypes.exact({
+		days: PropTypes.arrayOf(PropTypes.object),
+		month: PropTypes.string.isRequired,
+		monthNum: PropTypes.string.isRequired,
+		year: PropTypes.string.isRequired,
+		momentFunction: PropTypes.object.isRequired
+	}).isRequired,
 	tasksQuantity: PropTypes.number.isRequired,
 	budget: PropTypes.number.isRequired,
 	openCalendarModal: PropTypes.func.isRequired,

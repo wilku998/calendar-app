@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Input } from 'antd';
+import media from '../../styledComponents/breakPoints';
 
 export default (Login) => styled(Login)`
     width: 100%;
@@ -18,10 +19,14 @@ export const InputPassword = styled(Input.Password)`
 export const LoginContent = styled('section')`
     background-color: ${(props) => props.theme.colorGreyLight3};
     padding: 2rem;
-    ${(props) => `width: ${props.mobileView ? '100%' : '40rem'}; border: ${props.theme.lightBorder}`};
+    width: 40rem;
     display: flex;
     flex-direction: column;
     border-radius: .3rem;
+    
+    ${media.small`
+        width: 100%
+    `}
 `;
 
 export const Label = styled('label')`
@@ -36,4 +41,8 @@ export const Form = styled('form')`
     & > * {
         margin-top: 1rem;
     }
+`;
+
+export const ErrorMessage = styled.span`
+	color: ${(props) => props.theme.colorRed};
 `;

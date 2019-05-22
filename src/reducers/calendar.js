@@ -18,7 +18,7 @@ const setInitialState = () => {
 export default (state = { ...setInitialState() }, action) => {
 	const { type } = action;
 	switch (type) {
-		case 'CHANGE_CALENDAR_DATE':
+		case 'CHANGE_CALENDAR_DATE': {
 			const { monthDiff, yearDiff } = action;
 			const selectedMonth = createMonthObject(momentOperation(now.momentFunc, monthDiff, yearDiff));
 
@@ -29,7 +29,7 @@ export default (state = { ...setInitialState() }, action) => {
 				monthDiff,
 				yearDiff
 			};
-
+		}
 		default:
 			return state;
 	}

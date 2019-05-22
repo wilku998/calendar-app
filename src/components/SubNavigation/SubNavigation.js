@@ -7,6 +7,7 @@ import RemoveAllModal from '../simpleModals/RemoveAllModal';
 import styleSubNav from './styledSubNavigation';
 import { toggleCalendarModal } from '../../actions/calendarModal';
 import theme from '../../styledComponents/theme';
+
 const { Sider } = Layout;
 const { SubMenu, Item } = Menu;
 
@@ -18,27 +19,23 @@ const SubNavigation = ({ items, openCalendarModal, collapsed, className, mobileV
 	};
 
 	return (
-		<Sider
-			className={className}
-			trigger={null}
-			collapsible
-			collapsed={collapsed}
-			defaultCollapsed={collapsed}
-		>
+		<Sider className={className} trigger={null} collapsible collapsed={collapsed} defaultCollapsed={collapsed}>
 			<RemoveAllModal removeAllModalProps={removeAllModalProps} toggleRemoveAllModal={toggleRemoveAllModal} />
 			<Menu mode="inline" theme="dark" style={{ minHeight: '100%' }}>
 				{items.map((item, iSub) => (
 					<SubMenu
 						key={`sub-${iSub}`}
 						title={
-							mobileView ? collapsed ? (
+							// eslint-disable-next-line no-nested-ternary
+							mobileView ? (
+								<span>
+									<Icon type={item.icon} />
+									<span>{item.key}</span>
+								</span>
+							) : collapsed ? (
 								<Icon type={item.icon} />
 							) : (
 								<span>{item.key}</span>
-							) : (
-								<span>
-									<Icon type={item.icon} /> <span>{item.key}</span>
-								</span>
 							)
 						}
 					>
@@ -63,7 +60,7 @@ const SubNavigation = ({ items, openCalendarModal, collapsed, className, mobileV
 };
 
 SubNavigation.propTypes = {
-	items: PropTypes.array.isRequired,
+	items: PropTypes.arrayOf(PropTypes.object).isRequired,
 	openCalendarModal: PropTypes.func.isRequired,
 	collapsed: PropTypes.bool.isRequired,
 	className: PropTypes.string.isRequired,
@@ -75,6 +72,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const getIcon = (key) => {
+	// eslint-disable-next-line default-case
 	switch (key) {
 		case 'tasks':
 			return 'book';

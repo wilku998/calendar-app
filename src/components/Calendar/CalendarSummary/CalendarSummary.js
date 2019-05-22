@@ -38,7 +38,13 @@ CalendarSummary.propTypes = {
 	onDateChange: PropTypes.func.isRequired,
 	budget: PropTypes.number.isRequired,
 	tasksQuantity: PropTypes.number.isRequired,
-	selectedMonth: PropTypes.object.isRequired
+	selectedMonth: PropTypes.PropTypes.exact({
+		days: PropTypes.arrayOf(PropTypes.object).isRequired,
+		month: PropTypes.string.isRequired,
+		monthNum: PropTypes.string.isRequired,
+		year: PropTypes.string.isRequired,
+		momentFunction: PropTypes.object.isRequired
+	}).isRequired,
 };
 
 export default styleSummary(CalendarSummary);

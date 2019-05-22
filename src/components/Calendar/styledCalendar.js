@@ -13,11 +13,11 @@ export default (Calendar) => styled(Calendar)`
 
 export const DayName = styled.div`
 	flex: 1 14.2857%;
-	${(props) =>
-		`border-left: ${props.theme.darkBorder};
+	${(props) => `
+    border-left: ${props.theme.darkBorder};
     border-top: ${props.theme.darkBorder};
-    background-color: ${props.theme.colorGreyDark6};`
-  };
+    background-color: ${props.theme.colorGreyDark6};
+  `};
 	padding: .15rem 1rem;
 	text-align: end;
 `;

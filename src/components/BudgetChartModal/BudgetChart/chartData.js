@@ -19,7 +19,7 @@ export default (points, timePeroid) => {
 		} else {
 			const startDayNum = parseInt(points[0].items[0].createdAt.dayNum);
 			const endNum = parseInt(points[points.length - 1].items[0].createdAt.dayNum);
-			for (let i = startDayNum; i <= endNum; i++) {
+			for (let i = startDayNum; i <= endNum; i += 1) {
 				labels.push(i);
 			}
 			data = points.map((e, i) => ({ x: parseInt(e.items[0].createdAt.dayNum), y: e.sum }));

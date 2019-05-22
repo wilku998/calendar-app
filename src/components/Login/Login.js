@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Input, Radio, Button, Icon } from 'antd';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -7,100 +7,117 @@ import validator from 'validator';
 
 import { firebase } from '../../database/firebase';
 import setInputColor from '../../functions/setInputColor';
-import styleLogin, { InputPassword, Label, Form, LoginContent } from './styledLogin';
+import styleLogin, { InputPassword, Label, Form, LoginContent, ErrorMessage } from './styledLogin';
 
 const RadioGroup = Radio.Group;
 
-const Login = ({ className, mobileView, antdSize }) => {
+const Login = ({ className, antdInputsSize }) => {
 	const [ type, setType ] = useState('login');
 	const [ errorMessage, setErrorMessage ] = useState('');
 	const [ email, setEmail ] = useState({ value: '', valid: false });
 	const [ password, setPassword ] = useState({ value: '', valid: false });
 	const [ confirmPassword, setConfirmPassword ] = useState({ value: '', valid: false });
+	const setFunctions = { setEmail, setPassword, setConfirmPassword };
 
 	const formValidation = (value, property) => {
+		// eslint-disable-next-line default-case
 		switch (property) {
 			case 'email':
 				return validator.isEmail(value);
 			case 'password':
 				return value.length >= 6;
 			case 'confirmPassword':
-				return value.length >= 6 && value === password.value;
+				return value === password.value;
 		}
 	};
 
-	const createFormPropertyObject = (e, property) => {
-		const value = e.target.value;
-		const valid = formValidation(value, property);
+	const onFormChange = (value, name, action) => {
+		const valid = formValidation(value, name);
 		const inputColor = setInputColor(value, valid, '');
-		return { value, valid, inputColor };
+		setFunctions[action]({ value, valid, inputColor });
+	};
+
+	const onInputChange = ({ target }) => {
+		const { value, name, dataset } = target;
+		onFormChange(value, name, dataset.action);
 	};
 
 	const onTypeChange = (e) => {
 		setType(e.target.value);
 	};
 
-	const onEmailChange = (e) => {
-		setEmail({
-			...createFormPropertyObject(e, 'email')
-		});
-	};
-
-	const onPasswordChange = (e) => {
-		setPassword({
-			...createFormPropertyObject(e, 'password')
-		});
-	};
-
-	const onConfirmPasswordChange = (e) => {
-		setConfirmPassword({
-			...createFormPropertyObject(e, 'confirmPassword')
-		});
-	};
-
 	const onSubmit = async () => {
-		if (email.valid && password.valid) {
+		let message;
+		if (!email.valid) {
+			message = 'Email is invalid.';
+		} else if (!password.valid) {
+			message = 'Password should have at least 6 characters.';
+		} else {
 			try {
 				if (confirmPassword.valid && type === 'register') {
 					await firebase.auth().createUserWithEmailAndPassword(email.value, password.value);
 				} else if (type === 'login') {
 					await firebase.auth().signInWithEmailAndPassword(email.value, password.value);
+				} else {
+					message = 'Passwords have to be identical.';
 				}
 			} catch (error) {
-				setErrorMessage(error.message);
+				message = error.message;
 			}
+		}
+		if (message) {
+			setErrorMessage(message);
 		}
 	};
 
+	useEffect(
+		() => {
+			if (type === 'register') {
+				onFormChange(confirmPassword.value, 'confirmPassword', 'setConfirmPassword');
+			}
+		},
+		[ password ]
+	);
+
 	return (
 		<div className={className}>
-			<LoginContent mobileView={mobileView}>
+			<LoginContent>
 				<Link to="/">
-					<Button size={antdSize} type="primary">
-						<Icon type="left" />Go back
+					<Button size={antdInputsSize} type="primary">
+						<Icon type="left" />
+						Go back
 					</Button>
 				</Link>
 				<Form>
 					<Label>
-						E-mail<Input
+						E-mail
+						<Input
+							data-action="setEmail"
+							name="email"
 							style={{ backgroundColor: email.inputColor }}
 							value={email.value}
-							onChange={onEmailChange}
+							onChange={onInputChange}
 						/>
 					</Label>
 					<Label>
-						Password<InputPassword
+						Password
+						<InputPassword
+							data-action="setPassword"
+							name="password"
 							backgroundcolor={password.inputColor}
 							value={password.value}
-							onChange={onPasswordChange}
+							onChange={onInputChange}
 						/>
 					</Label>
 					{type === 'register' && (
 						<Label>
-							Confirm password<InputPassword
+							Confirm password
+							<InputPassword
+								data-action="setConfirmPassword"
+								name="confirmPassword"
 								backgroundcolor={confirmPassword.inputColor}
 								value={confirmPassword.value}
-								onChange={onConfirmPasswordChange}
+								onChange={onInputChange}
 							/>
 						</Label>
 					)}
@@ -108,8 +125,8 @@ const Login = ({ className, mobileView, antdSize }) => {
 						<Radio value="login">Login</Radio>
 						<Radio value="register">Create an account</Radio>
 					</RadioGroup>
-					{errorMessage !== '' && <span>{errorMessage}</span>}
-					<Button size={antdSize} onClick={onSubmit} type="primary">
+					{errorMessage !== '' && <ErrorMessage>{errorMessage}</ErrorMessage>}
+					<Button size={antdInputsSize} onClick={onSubmit} type="primary">
 						submit
 					</Button>
 				</Form>
@@ -119,16 +136,14 @@ const Login = ({ className, mobileView, antdSize }) => {
 };
 
 Login.propTypes = {
-	className: PropTypes.string,
-	mobileView: PropTypes.bool,
-	antdSize: PropTypes.string
+	className: PropTypes.string.isRequired,
+	antdInputsSize: PropTypes.string.isRequired
 };
 
 const mapStateToProps = ({ styles }) => {
-	const { windowWidth } = styles;
+	const { antdInputsSize } = styles;
 	return {
-		antdSize: windowWidth > 750 ? 'default' : 'small',
-		mobileView: windowWidth <= 450
+		antdInputsSize
 	};
 };
 

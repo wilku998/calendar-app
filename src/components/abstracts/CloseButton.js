@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 const CloseButton = ({ onClick, className, marginright }) => (
-	<button marginright={marginright} className={className} onClick={onClick}>
+	<button type="button" marginright={marginright} className={className} onClick={onClick}>
 		<Icon type="close-circle" />
 	</button>
 );

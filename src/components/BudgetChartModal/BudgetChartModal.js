@@ -24,15 +24,14 @@ const BudgetChartModal = ({ closeModal, modalIsOpen, incomes, expenses, selected
 				monthNum: 'all-months',
 				year: yearValue
 			};
-		} else {
-			const momentFunction = momentOperation(now.momentFunc, monthValue, yearValue);
-			const allMonths = monthValue === 'all-months';
-			return {
-				month: allMonths ? monthValue : momentFunction.format('MMMM'),
-				monthNum: allMonths ? monthValue : momentFunction.format('MM'),
-				year: momentFunction.format('YYYY')
-			};
 		}
+		const momentFunction = momentOperation(now.momentFunc, monthValue, yearValue);
+		const allMonths = monthValue === 'all-months';
+		return {
+			month: allMonths ? monthValue : momentFunction.format('MMMM'),
+			monthNum: allMonths ? monthValue : momentFunction.format('MM'),
+			year: momentFunction.format('YYYY')
+		};
 	};
 
 	const onDateChange = (monthValue, yearValue) => {
@@ -54,8 +53,13 @@ const BudgetChartModal = ({ closeModal, modalIsOpen, incomes, expenses, selected
 			style={theme.modalOverlayStyles}
 		>
 			<FormContainer>
-				<TimePeroidForm selectMargin='1rem 1.5rem 0 0' timePeroid={timePeroid} onDateChange={onDateChange} optionAll={true} />
-				<Button style={{marginTop: '1rem'}} size={antdInputsSize} type="primary" onClick={closeModal}>
+				<TimePeroidForm
+					selectMargin="1rem 1.5rem 0 0"
+					timePeroid={timePeroid}
+					onDateChange={onDateChange}
+					optionAll
+				/>
+				<Button style={{ marginTop: '1rem' }} size={antdInputsSize} type="primary" onClick={closeModal}>
 					Close
 				</Button>
 			</FormContainer>
@@ -67,9 +71,15 @@ const BudgetChartModal = ({ closeModal, modalIsOpen, incomes, expenses, selected
 BudgetChartModal.propTypes = {
 	closeModal: PropTypes.func.isRequired,
 	modalIsOpen: PropTypes.bool.isRequired,
-	incomes: PropTypes.array.isRequired,
-	expenses: PropTypes.array.isRequired,
-	selectedMonth: PropTypes.object.isRequired,
+	incomes: PropTypes.arrayOf(PropTypes.object).isRequired,
+	expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+	selectedMonth: PropTypes.exact({
+		days: PropTypes.arrayOf(PropTypes.object).isRequired,
+		month: PropTypes.string.isRequired,
+		monthNum: PropTypes.string.isRequired,
+		year: PropTypes.string.isRequired,
+		momentFunction: PropTypes.object.isRequired
+	}).isRequired,
 	className: PropTypes.string.isRequired,
 	antdInputsSize: PropTypes.string.isRequired
 };

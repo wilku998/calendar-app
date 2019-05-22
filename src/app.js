@@ -12,6 +12,7 @@ import { setWindowWidth } from './actions/styles';
 import Loading from './components/Loading/Loading';
 
 const store = configureStore();
+
 window.addEventListener('resize', () => {
 	store.dispatch(setWindowWidth(window.innerWidth));
 });

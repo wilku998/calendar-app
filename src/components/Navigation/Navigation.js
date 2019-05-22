@@ -45,7 +45,8 @@ const Navigation = ({
 			<WeatherForm mobileView={mobileView} antdInputsSize={antdInputsSize} />
 			<LoginButtonContainer>
 				<Button size={antdInputsSize} type="primary" onClick={onLoginButtonClick}>
-					{mobileView ? <Icon type="user" /> : isAuth ? 'logout' : 'login'}
+					{mobileView && <Icon type="user" />}
+					{!mobileView && (isAuth ? 'logout' : 'login')}
 				</Button>
 			</LoginButtonContainer>
 		</nav>

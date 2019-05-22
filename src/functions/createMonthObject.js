@@ -1,4 +1,5 @@
 const getRowPos = (day) => {
+	// eslint-disable-next-line default-case
 	switch (day) {
 		case 'Mon':
 			return 1;
@@ -19,11 +20,9 @@ const getRowPos = (day) => {
 
 export default (date) => {
 	const days = [];
-	for (let i = 1; i <= date.daysInMonth(); i++) {
-		const day = date.date(i).format('ddd');
+	for (let i = 1; i <= date.daysInMonth(); i += 1) {
 		days.push({
-			day,
-			calendarRowPos: getRowPos(day),
+			calendarRowPos: getRowPos(date.date(i).format('ddd')),
 			dayNum: i.toString()
 		});
 	}

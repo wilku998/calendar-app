@@ -28,7 +28,10 @@ const RemoveAllModal = ({ removeAllModalProps, toggleRemoveAllModal, removeItems
 };
 
 RemoveAllModal.propTypes = {
-	removeAllModalProps: PropTypes.object.isRequired,
+	removeAllModalProps: PropTypes.exact({
+		type: PropTypes.string,
+		modalIsOpen: PropTypes.bool.isRequired
+	}).isRequired,
 	toggleRemoveAllModal: PropTypes.func.isRequired,
 	removeItems: PropTypes.func.isRequired
 };

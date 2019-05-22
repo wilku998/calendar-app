@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import FooterContainer, { List, ListTitle } from './styledFooter';
 
 const Footer = ({ scrollbarWidth, fake }) => {
@@ -40,8 +40,8 @@ const Footer = ({ scrollbarWidth, fake }) => {
 	);
 };
 
-Footer.propTypes={
+Footer.propTypes = {
 	scrollbarWidth: PropTypes.number.isRequired,
 	fake: PropTypes.bool.isRequired
-}
+};
 export default Footer;

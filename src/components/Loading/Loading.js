@@ -16,6 +16,4 @@ Loading.propTypes = {
 	className: PropTypes.string.isRequired
 };
 
-
-
 export default styleLoading(Loading);

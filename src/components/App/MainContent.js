@@ -1,12 +1,12 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-
+import PropTypes from 'prop-types';
 import Footer from '../Footer/Footer';
 import Calendar from '../Calendar/Calendar';
 
 const MainContent = ({ className }) => {
 	const componentRef = useRef();
-	const [scrollbarWidth, setScrollbarWidth] = useState(0);
+	const [ scrollbarWidth, setScrollbarWidth ] = useState(0);
 	useLayoutEffect(() => {
 		setScrollbarWidth(componentRef.current.offsetWidth - componentRef.current.clientWidth);
 	}, []);
@@ -18,6 +18,10 @@ const MainContent = ({ className }) => {
 			<Footer scrollbarWidth={scrollbarWidth} fake={false} />
 		</div>
 	);
+};
+
+MainContent.propTypes = {
+	className: PropTypes.string.isRequired
 };
 
 const style = (MainContent) => styled(MainContent)`

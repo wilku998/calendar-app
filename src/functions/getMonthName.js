@@ -1,4 +1,5 @@
 export default (number) => {
+	// eslint-disable-next-line default-case
 	switch (number) {
 		case '01':
 			return 'January';

@@ -28,7 +28,7 @@ const CalendarDay = ({ day, dayClick, disabled, className }) => {
 	};
 
 	return (
-		<div className={className} disabled={disabled} onClick={onDayClick}>
+		<div role="button" className={className} disabled={disabled} onClick={onDayClick}>
 			<StyledDayPadding>
 				<StyledDayContent>
 					<CalendarDayInfo>
@@ -45,8 +45,18 @@ const CalendarDay = ({ day, dayClick, disabled, className }) => {
 };
 
 CalendarDay.propTypes = {
-	day: PropTypes.object.isRequired,
+	day: PropTypes.exact({
+		containTasks: PropTypes.bool.isRequired,
+		containIncomes: PropTypes.bool.isRequired,
+		containExpenses: PropTypes.bool.isRequired,
+		weather: PropTypes.array,
+		calendarRowPos: PropTypes.number.isRequired,
+		dayNum: PropTypes.string.isRequired,
+		monthNum: PropTypes.string.isRequired,
+		year: PropTypes.string.isRequired,
+	}).isRequired,
 	dayClick: PropTypes.func.isRequired,
-	disabled: PropTypes.bool.isRequired
+	disabled: PropTypes.bool.isRequired,
+	className: PropTypes.string.isRequired
 };
 export default React.memo(StyleDay(CalendarDay));

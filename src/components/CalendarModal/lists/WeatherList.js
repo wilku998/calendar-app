@@ -11,11 +11,14 @@ const Weather = ({ weather }) => {
 	return (
 		<ListContainer>
 			{weatherArrs.map((weather, i) => (
-				<List isWeather={true} key={i}>
+				<List isWeather key={i}>
 					{weather.map((e, i) => (
 						<ListItem padding="small" key={i}>
 							<WeatherItem>
-								<img src={`http://openweathermap.org/img/w/${e.weather[0].icon}.png`} />
+								<img
+									alt={e.weather.description}
+									src={`http://openweathermap.org/img/w/${e.weather[0].icon}.png`}
+								/>
 								{e.main.temp}℃
 							</WeatherItem>
 							<span>{e.dt_txt.split(' ')[1]}</span>
@@ -28,7 +31,7 @@ const Weather = ({ weather }) => {
 };
 
 Weather.propTypes = {
-	weather: PropTypes.array.isRequired
+	weather: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 const WeatherItem = styled.span`

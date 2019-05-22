@@ -27,7 +27,13 @@ const ItemsListItem = ({ item, type, removeItem }) => {
 };
 
 ItemsListItem.propTypes = {
-	item: PropTypes.object.isRequired,
+	item: PropTypes.exact({
+		createdAt: PropTypes.object.isRequired,
+		id: PropTypes.string.isRequired,
+		title: PropTypes.string.isRequired,
+		description: PropTypes.string,
+		value: PropTypes.number,
+	}).isRequired,
 	removeItem: PropTypes.func.isRequired,
 	type: PropTypes.string.isRequired
 };

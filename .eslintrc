@@ -1,0 +1,33 @@
+{
+    "extends": "airbnb",
+    "env": {
+      "node": true,
+      "browser": true
+    },
+    "rules": {
+      "linebreak-style": 0,
+      "comma-dangle": "off",
+      "no-unused-vars": [
+        "error", 
+        {
+          "vars": "local",
+          "args": "none"
+        }
+      ],
+      "indent": ["error", "tab", {"SwitchCase": 1}],
+      "react/jsx-indent": ["error", "tab"],
+      "react/jsx-indent-props": ["error", "tab"],
+      "array-bracket-spacing": "off",
+      "object-curly-newline": "off",
+      "no-unused-expressions": ["error", { "allowTernary": true }],
+      "max-len": "off",
+      "no-tabs": 0,
+      "react/jsx-filename-extension": 0,
+      "radix": "off",
+      "arrow-parens": [
+        2,
+        "always",
+        {"requireForBlockBody": false}
+      ]
+    }
+}

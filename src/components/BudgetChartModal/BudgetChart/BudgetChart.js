@@ -30,8 +30,12 @@ const BudgetChart = ({ points, timePeroid }) => {
 };
 
 BudgetChart.propTypes = {
-	points: PropTypes.array.isRequired,
-	timePeroid: PropTypes.object.isRequired
+	points: PropTypes.arrayOf(PropTypes.object).isRequired,
+	timePeroid: PropTypes.shape({
+		month: PropTypes.string.isRequired,
+		monthNum: PropTypes.string.isRequired,
+		year: PropTypes.string.isRequired
+	}).isRequired
 };
 
 export default BudgetChart;

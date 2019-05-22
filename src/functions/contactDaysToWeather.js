@@ -8,7 +8,7 @@ export default (days, weather) => {
 				(e) => e.monthNum === todayMonth && parseInt(e.dayNum) === parseInt(day) && e.year === year
 				// parseInt because if day is 3 'e.dayNum' would by 3 and 'day' 03
 			);
-			startWeatherIndex++;
+			startWeatherIndex += 1;
 		}
 	});
 
@@ -20,7 +20,7 @@ export default (days, weather) => {
 					...day,
 					weather: weather[startWeatherIndex + contactedDays]
 				};
-				contactedDays++;
+				contactedDays += 1;
 				return obj;
 			}
 			return day;
